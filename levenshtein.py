@@ -13,4 +13,9 @@ def lev_add(word):
     w = word[:r] + l + word[r:]
     assert(len(w) == len(word) + 1)
     return w
-  
+    
+def lev_subst(word):
+    l = chr(ord('a') + random.randint(0,25))
+    r = random.randint(1, len(word) -1)
+    w = word[:r] + l + word[r+1:]  
+    assert(l
