@@ -26,4 +26,11 @@ def lev2(word):
     if r == 0: 
         return lev_del(lev_del(word))
     elif r == 1: 
-        return lev_add(lev_add
+        return lev_add(lev_add(word)) 
+    else:
+        return lev_subst(word)
+
+
+for n in range(2,100):
+    words = set([lev2('Levenshtein') for i in range(n)])
+    text = 'What do the words %s all have in common?'
