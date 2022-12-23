@@ -33,4 +33,12 @@ def lev2(word):
 
 for n in range(2,100):
     words = set([lev2('Levenshtein') for i in range(n)])
-    text = 'What do the words %s all have in common?'
+    text = 'What do the words %s all have in common?' % ', '.join(words)
+    print '%3d: %3d %s' % (n, len(text), text)
+    if len(text) > 140:
+        break
+    good_text = text
+    
+print '-' * 80
+print good_text    
+       
