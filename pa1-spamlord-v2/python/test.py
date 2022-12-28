@@ -11,4 +11,8 @@ def get_personal_info(path):
     
 if __name__ == '__main__':
     if len(sys.argv) <= 1:
-        D('Usage: 
+        D('Usage: ' + sys.argv[0] + ' path')
+        exit()
+ 
+    get_personal_info(sys.argv[1])
+    
