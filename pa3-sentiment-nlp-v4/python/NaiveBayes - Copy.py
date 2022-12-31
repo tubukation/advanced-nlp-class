@@ -3,4 +3,8 @@
 # 2012
 
 #
-# The area for you to implement is marke
+# The area for you to implement is marked with TODO!
+# Generally, you should not need to touch things *not* marked TODO
+#
+# Remember that when you submit your code, it is not run from the command line 
+# and your main()
