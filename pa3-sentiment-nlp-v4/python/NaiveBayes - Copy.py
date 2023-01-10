@@ -15,3 +15,14 @@ import sys
 import getopt
 import os
 import math
+import re
+
+_PUNCTUATION = set([';', '.', ',', '"', '(', ')', '&', ':', '?', '[', ']'])
+
+def _N(word):
+    return 'NOT_' + word
+
+_NEGATIVES = set([
+    'not', 'cannot', 'wont',
+    'no', 
+    'never'
