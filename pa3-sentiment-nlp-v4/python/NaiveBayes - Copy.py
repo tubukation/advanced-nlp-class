@@ -36,4 +36,8 @@ _ENGLISH_STOP_WORDS = set([
     'ain\'t', 'all', 
     'allow', 'allows', 'almost', 'alone', 'along', 'already', 'also', 
     'although', 
-    'always', 'am', '
+    'always', 'am', 'among', 'amongst', 'an', 'and', 'another', 'any', 'anybody', 
+    'anyhow', 'anyone', 'anything', 'anyway', 'anyways', 'anywhere', 'apart', 
+    'appear', 
+    #'appreciate', 
+  
