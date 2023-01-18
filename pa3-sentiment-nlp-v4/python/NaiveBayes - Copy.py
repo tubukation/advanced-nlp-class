@@ -25,4 +25,10 @@ def _N(word):
 _NEGATIVES = set([
     'not', 'cannot', 'wont',
     'no', 
-    'never'
+    'never', 
+    'cant', 
+    #'against','although',
+    ])    
+_ENGLISH_STOP_WORDS = set([ 
+    'a', 'a\'s', 'able', 'about', 'above', 'according', 'accordingly', 'across', 
+    'actually', 'afte
