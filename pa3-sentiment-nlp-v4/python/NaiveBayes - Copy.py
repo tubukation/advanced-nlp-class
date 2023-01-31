@@ -40,4 +40,8 @@ _ENGLISH_STOP_WORDS = set([
     'anyhow', 'anyone', 'anything', 'anyway', 'anyways', 'anywhere', 'apart', 
     'appear', 
     #'appreciate', 
-  
+    'appropriate', 'are', 
+    #'aren\'t', 
+    'around', 'as', 
+    'aside', 'ask', 'asking', 'associated', 'at', 'available', 'away', 'awfully', 
+    'b', 'be', 'became', 'be
