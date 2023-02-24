@@ -50,4 +50,7 @@ _ENGLISH_STOP_WORDS = set([
     'c', 
     #'c\'mon', 
     'c\'s', 'came', 'can', 'can\'t', 'cannot', 'cant', 'cause', 
-    'causes', 'certain', 'certainly', 'changes', 'c
+    'causes', 'certain', 'certainly', 'changes', 'clearly', 'co', 'com', 'come', 
+    'comes', 'concerning', 'consequently', 'consider', 'considering', 'contain', 
+    'containing', 'contains', 'corresponding', 'could', 'couldn\'t', 'course', 
+    'curre
