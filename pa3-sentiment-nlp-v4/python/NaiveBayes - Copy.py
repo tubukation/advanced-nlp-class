@@ -53,4 +53,10 @@ _ENGLISH_STOP_WORDS = set([
     'causes', 'certain', 'certainly', 'changes', 'clearly', 'co', 'com', 'come', 
     'comes', 'concerning', 'consequently', 'consider', 'considering', 'contain', 
     'containing', 'contains', 'corresponding', 'could', 'couldn\'t', 'course', 
-    'curre
+    'currently', 'd', 'definitely', 'described', 'despite', 'did', 
+    #'didn\'t', 
+    'different', 'do', 'does',
+    #'doesn\'t', 'doing', 
+    #'don\'t', 
+    'done', 'down', 
+    #'do
