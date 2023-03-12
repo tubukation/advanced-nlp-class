@@ -59,4 +59,7 @@ _ENGLISH_STOP_WORDS = set([
     #'doesn\'t', 'doing', 
     #'don\'t', 
     'done', 'down', 
-    #'do
+    #'downwards', 
+    'during', 'e', 'each', 'edu', 'eg', 'eight', 'either', 'else', 
+    'elsewhere', 'enough', 'entirely', 'especially', 'et', 'etc', 'even', 'ever', 
+    'every', 'everybody', 'everyon
