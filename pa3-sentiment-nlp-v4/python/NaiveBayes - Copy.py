@@ -66,4 +66,7 @@ _ENGLISH_STOP_WORDS = set([
     'example', 
     #'except', 
     'f', 'far', 'few', 'fifth', 'first', 'five', 'followed', 
-    'following', 'follows', 'for', 'fo
+    'following', 'follows', 'for', 'former', 'formerly', 'forth', 'four', 'from', 
+    'further', 'furthermore', 'g', 'get', 'gets', 'getting', 'given', 'gives', 
+    'go', 'goes', 'going', 'gone', 'got', 'gotten', 'greetings', 'h', 'had', 
+    #'h
