@@ -76,3 +76,8 @@ _ENGLISH_STOP_WORDS = set([
     'his', 'hither', 'hopefully', 'how', 'howbeit', 'however', 'i', 'i\'d', 
     'i\'ll', 'i\'m', 'i\'ve', 'ie', 'if', 
     #'ignored', 
+    'immediate', 'in', 'inasmuch', 
+    'inc', 'indeed', 'indicate', 'indicated', 'indicates', 'inner', 'insofar', 
+    'instead', 'into', 'inward', 'is', 
+    #'isn\'t',
+    'it', 'it\'
