@@ -83,4 +83,8 @@ _ENGLISH_STOP_WORDS = set([
     'it', 'it\'d', 'it\'ll', 'it\'s', 
     'its', 'itself', 'j', 'just', 'k', 'keep', 'keeps', 'kept', 'know', 'known', 
     'knows', 'l', 'last', 'lately', 'later', 'latter', 'latterly', 'least', 'less', 
-    'lest',
+    'lest', 'let', 'let\'s', 'like', 
+    #'liked',
+    'likely', 'little', 'look', 
+    'looking', 'looks', 'ltd', 'm', 'mainly', 'many', 'may', 'maybe', 'me', 'mean', 
+    'meanw
