@@ -69,4 +69,7 @@ _ENGLISH_STOP_WORDS = set([
     'following', 'follows', 'for', 'former', 'formerly', 'forth', 'four', 'from', 
     'further', 'furthermore', 'g', 'get', 'gets', 'getting', 'given', 'gives', 
     'go', 'goes', 'going', 'gone', 'got', 'gotten', 'greetings', 'h', 'had', 
-    #'h
+    #'hadn\'t', 
+    'happens', 'hardly', 'has', 'hasn\'t', 'have', 'haven\'t', 'having', 
+    'he', 'he\'s', 'hello', 'help', 'hence', 'her', 'here', 'here\'s', 'hereafter', 
+    'hereby', 'herein', 'hereupon', 'hers', 
