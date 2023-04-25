@@ -95,4 +95,7 @@ _ENGLISH_STOP_WORDS = set([
     'nothing', 'novel', 'now', 'nowhere', 'o', 'obviously', 'of', 'off', 
     'often', 'oh', 'ok', 'okay', 'old', 'on', 'once', 'one', 'ones', 'only', 
     'onto', 'or', 'other', 'others', 'otherwise', 'ought', 'our', 'ours', 
-    'ourselves', 'out', 'outside', 'over', 'overall', 'own', 'p'
+    'ourselves', 'out', 'outside', 'over', 'overall', 'own', 'p', 'particular', 
+    'particularly', 'per', 'perhaps', 'placed', 'please', 'plus', 'possible', 
+    'presumably', 'probably', 'provides', 'q', 'que', 'quite', 'qv', 'r', 'rather', 
+    'rd', 're',
