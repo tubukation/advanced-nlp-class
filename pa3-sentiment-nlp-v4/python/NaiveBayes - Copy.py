@@ -109,4 +109,6 @@ _ENGLISH_STOP_WORDS = set([
     'take', 'taken', 'tell', 'tends', 'th', 'than', 'thank', 'thanks', 'thanx', 
     'that', 'that\'s', 'thats', 'the', 'their', 'theirs', 'them', 'themselves', 
     'then', 'thence', 'there', 'there\'s', 'thereafter', 'thereby', 'therefore', 
-    'therein', 'theres', 'thereup
+    'therein', 'theres', 'thereupon', 'these', 'they', 'they\'d', 'they\'ll', 
+    'they\'re', 'they\'ve', 'think', 'third', 'this', 'thorough', 'thoroughly', 
+    'those', 'though', 'three', 'through', 'throu
