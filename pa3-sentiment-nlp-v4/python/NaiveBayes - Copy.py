@@ -113,4 +113,6 @@ _ENGLISH_STOP_WORDS = set([
     'they\'re', 'they\'ve', 'think', 'third', 'this', 'thorough', 'thoroughly', 
     'those', 'though', 'three', 'through', 'throughout', 'thru', 'thus', 'to', 
     'together', 'too', 'took', 'toward', 'towards', 'tried', 'tries', 'truly', 
-    'try', 'trying', 'twice', 'two', 'u', 'un', 'under', 'unfo
+    'try', 'trying', 'twice', 'two', 'u', 'un', 'under', 'unfortunately', 'unless', 
+    'unlikely', 'until', 'unto', 'up', 'upon', 'us', 'use', 'used', 'useful', 
+    'uses', 'using', 'usually', 'uucp', 'v', 'value', 'various', 'very', 'via', 
