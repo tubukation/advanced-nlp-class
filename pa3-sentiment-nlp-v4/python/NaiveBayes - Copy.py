@@ -116,3 +116,6 @@ _ENGLISH_STOP_WORDS = set([
     'try', 'trying', 'twice', 'two', 'u', 'un', 'under', 'unfortunately', 'unless', 
     'unlikely', 'until', 'unto', 'up', 'upon', 'us', 'use', 'used', 'useful', 
     'uses', 'using', 'usually', 'uucp', 'v', 'value', 'various', 'very', 'via', 
+    'viz', 'vs', 'w', 'want', 'wants', 'was', 'wasn\'t', 'way', 'we', 'we\'d', 
+    'we\'ll', 'we\'re', 'we\'ve', 'welcome', 'well', 'went', 'were', 'weren\'t', 
+    'what', 'wha
