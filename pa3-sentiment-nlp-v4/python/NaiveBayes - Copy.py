@@ -120,4 +120,6 @@ _ENGLISH_STOP_WORDS = set([
     'we\'ll', 'we\'re', 'we\'ve', 'welcome', 'well', 'went', 'were', 'weren\'t', 
     'what', 'what\'s', 'whatever', 'when', 'whence', 'whenever', 'where', 
     'where\'s', 'whereafter', 'whereas', 'whereby', 'wherein', 'whereupon', 
-    'wherever', 'whether', 'w
+    'wherever', 'whether', 'which', 'while', 'whither', 'who', 'who\'s', 'whoever', 
+    'whole', 'whom', 'whose', 'why', 'will', 'willing', 'wish', 'with', 'within', 
+    'without', 'won\'t', 'wonder', 'would'
