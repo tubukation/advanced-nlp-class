@@ -129,4 +129,9 @@ _ENGLISH_STOP_WORDS = set([
 ]) 
 
 # Don't exclude ?-
-_MY_EX
+_MY_EXCLUSIONS = set([
+    '&nbsp', ';', '.', ',', '"', "'", '(', ')', '&', ':',
+    '\17'])
+
+_EXCLUSIONS = (_MY_EXCLUSIONS | _ENGLISH_STOP_WORDS)
+_EXCLUSIONS = _EXCLUSIONS # | set([_N(w) for w in _EXCLUSIONS]) 
