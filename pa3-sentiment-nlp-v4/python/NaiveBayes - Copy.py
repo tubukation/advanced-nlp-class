@@ -135,3 +135,14 @@ _MY_EXCLUSIONS = set([
 
 _EXCLUSIONS = (_MY_EXCLUSIONS | _ENGLISH_STOP_WORDS)
 _EXCLUSIONS = _EXCLUSIONS # | set([_N(w) for w in _EXCLUSIONS]) 
+
+def _U(ngram):
+    return ngram.split(' ')
+
+def _B(w1, w2):
+    return '%s %s' % (w1, w2)
+
+def _T(w1, w2, w3):
+    return '%s %s %s' % (w1, w2, w3)   
+    
+def _exclude(
