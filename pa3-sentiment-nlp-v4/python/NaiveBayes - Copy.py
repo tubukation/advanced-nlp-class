@@ -151,4 +151,10 @@ def _exclude(words):
 def _get_bigrams(words):    
     return [_B(words[i-1],words[i]) for i in range(1,len(words))]
 
-def _get_t
+def _get_trigrams(words):    
+    return [_T(words[i-2],words[i-1],words[i]) for i in range(2,len(words))]
+
+_RE_NEGATIVE = re.compile(r"[a-z]+n't$")   
+
+def _is_negative(word):
+    if _RE_NEGATIVE.search(wo
