@@ -145,4 +145,10 @@ def _B(w1, w2):
 def _T(w1, w2, w3):
     return '%s %s %s' % (w1, w2, w3)   
     
-def _exclude(
+def _exclude(words):
+    return [w for w in words if w not in _EXCLUSIONS] 
+
+def _get_bigrams(words):    
+    return [_B(words[i-1],words[i]) for i in range(1,len(words))]
+
+def _get_t
