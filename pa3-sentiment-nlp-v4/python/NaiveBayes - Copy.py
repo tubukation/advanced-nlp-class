@@ -174,4 +174,11 @@ def _polarize(words):
         out.append(_N(w) if negating else w)
         if _is_negative(w):
             negating = True 
-            num_neg
+            num_negative += 1
+        if _is_punctuation(w):
+            negating = False 
+            num_positive += 1
+    return out
+
+if False:
+    test = "not at all. good wouldn't like this. not
