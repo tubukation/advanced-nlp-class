@@ -157,4 +157,14 @@ def _get_trigrams(words):
 _RE_NEGATIVE = re.compile(r"[a-z]+n't$")   
 
 def _is_negative(word):
-    if _RE_NEGATIVE.search(wo
+    if _RE_NEGATIVE.search(word):
+        return True
+    return word in _NEGATIVES
+
+def _is_punctuation(word):
+    return word[-1] in _PUNCTUATION
+
+num_negative = 0
+num_positive = 0    
+def _polarize(words):
+    global num_ne
