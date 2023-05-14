@@ -167,4 +167,11 @@ def _is_punctuation(word):
 num_negative = 0
 num_positive = 0    
 def _polarize(words):
-    global num_ne
+    global num_negative, num_positive
+    out = []
+    negating = False
+    for w in words:
+        out.append(_N(w) if negating else w)
+        if _is_negative(w):
+            negating = True 
+            num_neg
