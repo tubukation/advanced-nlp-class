@@ -181,4 +181,12 @@ def _polarize(words):
     return out
 
 if False:
-    test = "not at all. good wouldn't like this. not
+    test = "not at all. good wouldn't like this. not not nice".split()
+    print test
+    print _polarize(test)
+    exit()
+    
+def _preprocess(words):
+    words = _polarize(words)
+    # Has bad effect
+    #words = [w[:-1] if w[-1] in _P
