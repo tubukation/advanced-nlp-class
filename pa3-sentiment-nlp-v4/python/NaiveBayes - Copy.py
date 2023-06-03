@@ -198,4 +198,11 @@ _CLASS_INDEX = {'pos': 0, 'neg': 1}
 
 class NaiveBayes:
   class TrainSplit:
-    """Represents a set of trai
+    """Represents a set of training/testing data. self.train is a list of Examples, as is self.test. 
+    """
+    def __init__(self):
+      self.train = []
+      self.test = []
+
+  class Example:
+    """Rep
