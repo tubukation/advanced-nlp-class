@@ -189,4 +189,13 @@ if False:
 def _preprocess(words):
     words = _polarize(words)
     # Has bad effect
-    #words = [w[:-1] if w[-1] in _P
+    #words = [w[:-1] if w[-1] in _PUNCTUATION else w for w in words]
+    words = _exclude(words)
+
+    return words
+    
+_CLASS_INDEX = {'pos': 0, 'neg': 1}     
+
+class NaiveBayes:
+  class TrainSplit:
+    """Represents a set of trai
