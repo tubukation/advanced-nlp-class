@@ -212,4 +212,10 @@ class NaiveBayes:
         self.klass = ''
         self.words = []
 
-  def __init__(sel
+  def __init__(self):
+    """NaiveBayes initialization"""
+    self.FILTER_STOP_WORDS = False
+    self.stopList = set(self.readFile('../data/english.stop'))
+    self.numFolds = 10
+    
+    # 
