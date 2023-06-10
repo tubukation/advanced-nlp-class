@@ -218,4 +218,10 @@ class NaiveBayes:
     self.stopList = set(self.readFile('../data/english.stop'))
     self.numFolds = 10
     
-    # 
+    # PW: *gram_counts[word] = (num_pos, num_neg)
+    self.unigram_counts = {}
+    self.unigram_keys = set([]) 
+    self.bigram_counts = {}
+    self.bigram_keys = set([])
+    self.trigram_counts = {}
+    self
