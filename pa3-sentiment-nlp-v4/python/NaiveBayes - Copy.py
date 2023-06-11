@@ -234,4 +234,11 @@ class NaiveBayes:
         """ TODO
             'words' is a list of words to classify. Return 'pos' or 'neg' classification.
         """
-        words = _preprocess(w
+        words = _preprocess(words)
+        unigrams = words
+        bigrams = _get_bigrams(words)
+        trigrams = _get_trigrams(words)
+
+        if True:
+            # "Binarize"
+            # Changes cv fold results but no
