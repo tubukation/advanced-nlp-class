@@ -224,4 +224,10 @@ class NaiveBayes:
     self.bigram_counts = {}
     self.bigram_keys = set([])
     self.trigram_counts = {}
-    self
+    self.trigram_keys = set([])
+    self.class_count = [0,0]
+    
+  #############################################################################
+  # TODO TODO TODO TODO TODO 
+  
+  def class
