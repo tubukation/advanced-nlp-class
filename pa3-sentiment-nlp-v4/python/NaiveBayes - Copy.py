@@ -230,4 +230,8 @@ class NaiveBayes:
   #############################################################################
   # TODO TODO TODO TODO TODO 
   
-  def class
+  def classify(self, words):
+        """ TODO
+            'words' is a list of words to classify. Return 'pos' or 'neg' classification.
+        """
+        words = _preprocess(w
