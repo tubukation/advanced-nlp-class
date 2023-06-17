@@ -241,4 +241,10 @@ class NaiveBayes:
 
         if True:
             # "Binarize"
-            # Changes cv fold results but no
+            # Changes cv fold results but not average accuracy
+            unigrams = set(unigrams)
+            bigrams = set(bigrams)
+            trigrams = set(trigrams)
+
+        if False:
+            def show_best_worst(c
