@@ -247,4 +247,7 @@ class NaiveBayes:
             trigrams = set(trigrams)
 
         if False:
-            def show_best_worst(c
+            def show_best_worst(counts, keys, name):
+                pure_pos = [k for k in keys if counts[k][1] == 0]
+                pure_neg = [k for k in keys if counts[k][0] == 0]
+                pos_counts = dict([(k,counts[k]
