@@ -250,4 +250,8 @@ class NaiveBayes:
             def show_best_worst(counts, keys, name):
                 pure_pos = [k for k in keys if counts[k][1] == 0]
                 pure_neg = [k for k in keys if counts[k][0] == 0]
-                pos_counts = dict([(k,counts[k]
+                pos_counts = dict([(k,counts[k][0]) for k in pure_pos])
+                neg_counts = dict([(k,counts[k][1]) for k in pure_neg])
+                
+                def save(cnts, polarity):
+              
