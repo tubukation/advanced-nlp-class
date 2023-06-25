@@ -256,4 +256,9 @@ class NaiveBayes:
                 def save(cnts, polarity):
                     lines = ['%-20s : %3d' % (k,cnts[k]) 
                         for k in sorted(cnts.keys(), key=lambda k: -cnts[k])]
-                    file('extreme.%s.%s' % (polarit
+                    file('extreme.%s.%s' % (polarity, name), 'wt').write('\n'.join(lines))    
+                save(pos_counts, 'pos')
+                save(neg_counts, 'neg')
+
+            print 'negative:', num_negative
+            print 'positive:',
