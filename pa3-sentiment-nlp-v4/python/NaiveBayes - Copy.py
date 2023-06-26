@@ -264,4 +264,9 @@ class NaiveBayes:
             print 'positive:', num_positive 
             show_best_worst(self.unigram_counts, self.unigram_keys, 'unigrams')  
             show_best_worst(self.bigram_counts,  self.bigram_keys,  'bigrams')  
-            show_b
+            show_best_worst(self.trigram_counts, self.trigram_keys, 'trigrams')  
+            exit()
+
+        def get_score(counts, alpha, total_weight):
+            p,n = counts
+            if p + n == 0
