@@ -261,4 +261,7 @@ class NaiveBayes:
                 save(neg_counts, 'neg')
 
             print 'negative:', num_negative
-            print 'positive:',
+            print 'positive:', num_positive 
+            show_best_worst(self.unigram_counts, self.unigram_keys, 'unigrams')  
+            show_best_worst(self.bigram_counts,  self.bigram_keys,  'bigrams')  
+            show_b
