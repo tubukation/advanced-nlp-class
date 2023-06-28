@@ -269,4 +269,9 @@ class NaiveBayes:
 
         def get_score(counts, alpha, total_weight):
             p,n = counts
-            if p + n == 0
+            if p + n == 0:
+                return 0.0
+            t = float(p+n+1)
+            t = 1.0
+            fac = math.log(p+n) if total_weight else math.sqrt(math.log(p+n))
+            #fac = 1.0
