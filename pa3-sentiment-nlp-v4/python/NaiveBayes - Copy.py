@@ -275,3 +275,8 @@ class NaiveBayes:
             t = 1.0
             fac = math.log(p+n) if total_weight else math.sqrt(math.log(p+n))
             #fac = 1.0
+            return (math.log(p/t+alpha) - math.log(n/t+alpha)) *fac
+            
+        def unigram_score(k):
+            return get_score(self.unigram_counts.get(k, [0,0]), 5.0, False)
+  
