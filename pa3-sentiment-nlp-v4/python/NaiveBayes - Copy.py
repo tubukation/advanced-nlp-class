@@ -279,4 +279,8 @@ class NaiveBayes:
             
         def unigram_score(k):
             return get_score(self.unigram_counts.get(k, [0,0]), 5.0, False)
-  
+            
+        def bigram_score(k):
+            if k not in self.bigram_keys:
+                w1,w2 = _U(k) 
+                return (unigram_score(w1) + unigram_score(w2)) / 1
