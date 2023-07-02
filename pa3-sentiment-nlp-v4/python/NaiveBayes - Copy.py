@@ -288,4 +288,8 @@ class NaiveBayes:
 
         def trigram_score(k):
             if k not in self.trigram_keys:
-                w1,w2,w3 =
+                w1,w2,w3 = _U(k)
+                return (bigram_score(_B(w1,w2)) + bigram_score(_B(w2,w3))) * 1.0 
+            return get_score(self.trigram_counts.get(k, [0,0]), 0.1, True)
+
+      
