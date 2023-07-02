@@ -296,4 +296,9 @@ class NaiveBayes:
         prior = math.log(p) - math.log(n)    
         likelihood = sum([trigram_score(k) for k in trigrams])
         posterior = prior + likelihood
+        return 'pos' if posterior > 0 else 'neg'
   
+  def addExample(self, klass, words):
+        """
+         * TODO
+         * Train your model on an example document with label klass ('p
