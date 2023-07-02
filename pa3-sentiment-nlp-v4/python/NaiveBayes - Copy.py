@@ -292,4 +292,8 @@ class NaiveBayes:
                 return (bigram_score(_B(w1,w2)) + bigram_score(_B(w2,w3))) * 1.0 
             return get_score(self.trigram_counts.get(k, [0,0]), 0.1, True)
 
-      
+        p,n = self.class_count
+        prior = math.log(p) - math.log(n)    
+        likelihood = sum([trigram_score(k) for k in trigrams])
+        posterior = prior + likelihood
+  
