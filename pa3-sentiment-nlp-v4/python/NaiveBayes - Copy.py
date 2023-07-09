@@ -305,4 +305,11 @@ class NaiveBayes:
          * words, a list of strings.
          * You should store whatever data structures you use for your classifier 
          * in the NaiveBayes class.
-     
+         * Returns nothing
+        """
+        kls = _CLASS_INDEX[klass]
+        
+        words = _preprocess(words)
+        unigrams = words
+        bigrams = _get_bigrams(words)
+  
