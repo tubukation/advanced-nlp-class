@@ -322,4 +322,9 @@ class NaiveBayes:
             
         def update_ngrams(ngrams, ngram_counts, ngram_keys):
             for k in ngrams:
-                count 
+                count = ngram_counts.get(k, [0,0])
+                count[kls] += 1
+                ngram_counts[k] = count
+                ngram_keys.add(k)
+        
+        self.class_count[kls]
