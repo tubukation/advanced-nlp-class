@@ -327,4 +327,7 @@ class NaiveBayes:
                 ngram_counts[k] = count
                 ngram_keys.add(k)
         
-        self.class_count[kls]
+        self.class_count[kls] += 1
+        update_ngrams(unigrams, self.unigram_counts, self.unigram_keys)
+        update_ngrams(bigrams,  self.bigram_counts,  self.bigram_keys)
+        update_ngrams(trigrams, self.trigram
