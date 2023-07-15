@@ -317,4 +317,9 @@ class NaiveBayes:
         if True:
             # "Binarize"
             unigrams = set(unigrams)
-            bigrams = se
+            bigrams = set(bigrams)
+            trigrams = set(trigrams)
+            
+        def update_ngrams(ngrams, ngram_counts, ngram_keys):
+            for k in ngrams:
+                count 
