@@ -330,4 +330,10 @@ class NaiveBayes:
         self.class_count[kls] += 1
         update_ngrams(unigrams, self.unigram_counts, self.unigram_keys)
         update_ngrams(bigrams,  self.bigram_counts,  self.bigram_keys)
-        update_ngrams(trigrams, self.trigram
+        update_ngrams(trigrams, self.trigram_counts, self.trigram_keys)
+
+        # TODO TODO TODO TODO TODO 
+  #############################################################################
+  
+  
+  def readFile(self, 
