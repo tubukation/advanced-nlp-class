@@ -342,4 +342,14 @@ class NaiveBayes:
      * unless you don't like the way we segment files.
     """
     contents = []
-    f
+    f = open(fileName)
+    for line in f:
+      contents.append(line)
+    f.close()
+    result = self.segmentWords('\n'.join(contents)) 
+    return result
+
+  
+  def segmentWords(self, s):
+    """
+     * Spli
