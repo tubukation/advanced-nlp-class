@@ -352,4 +352,12 @@ class NaiveBayes:
   
   def segmentWords(self, s):
     """
-     * Spli
+     * Splits lines on whitespace for file reading
+    """
+    return s.split()
+
+  
+  def trainSplit(self, trainDir):
+    """Takes in a trainDir, returns one TrainSplit with train set."""
+    split = self.TrainSplit()
+  
