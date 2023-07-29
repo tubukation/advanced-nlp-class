@@ -375,4 +375,10 @@ class NaiveBayes:
     return split
 
   def train(self, split):
-    for example in split.
+    for example in split.train:
+      words = example.words
+      if self.FILTER_STOP_WORDS:
+        words =  self.filterStopWords(words)
+      self.addExample(example.klass, words)
+
+  def crossValid
