@@ -381,4 +381,7 @@ class NaiveBayes:
         words =  self.filterStopWords(words)
       self.addExample(example.klass, words)
 
-  def crossValid
+  def crossValidationSplits(self, trainDir):
+    """Returns a lsit of TrainSplits corresponding to the cross validation splits."""
+    splits = [] 
+    posTrainFileNames = os.listdir('%s/pos/' %
