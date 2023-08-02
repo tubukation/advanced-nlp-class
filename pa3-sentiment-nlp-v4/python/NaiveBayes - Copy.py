@@ -402,4 +402,12 @@ class NaiveBayes:
         example.words = self.readFile('%s/neg/%s' % (trainDir, fileName))
         example.klass = 'neg'
         if fileName[2] == str(fold):
-          split.test.append(
+          split.test.append(example)
+        else:
+          split.train.append(example)
+      splits.append(split)
+    return splits
+
+
+  def test(self, split):
+    """Returns a list of labels for split.test."""
