@@ -425,4 +425,8 @@ class NaiveBayes:
     trainData = [] 
     testData = []
     splits = []
-    trainDi
+    trainDir = args[0]
+    if len(args) == 1: 
+      print '[INFO]\tPerforming %d-fold cross-validation on data set:\t%s' % (self.numFolds, trainDir)
+
+      posTrainFileNames = os.listdir('
