@@ -434,4 +434,8 @@ class NaiveBayes:
       for fold in range(0, self.numFolds):
         split = self.TrainSplit()
         for fileName in posTrainFileNames:
-          examp
+          example = self.Example()
+          example.words = self.readFile('%s/pos/%s' % (trainDir, fileName))
+          example.klass = 'pos'
+          if fileName[2] == str(fold):
+            split.tes
