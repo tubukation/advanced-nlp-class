@@ -448,4 +448,9 @@ class NaiveBayes:
           if fileName[2] == str(fold):
             split.test.append(example)
           else:
-            split
+            split.train.append(example)
+        splits.append(split)
+    elif len(args) == 2:
+      split = self.TrainSplit()
+      testDir = args[1]
+      print '[INFO]\tTraining on data set:\t%s te
