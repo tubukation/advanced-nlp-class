@@ -453,4 +453,7 @@ class NaiveBayes:
     elif len(args) == 2:
       split = self.TrainSplit()
       testDir = args[1]
-      print '[INFO]\tTraining on data set:\t%s te
+      print '[INFO]\tTraining on data set:\t%s testing on data set:\t%s' % (trainDir, testDir)
+      posTrainFileNames = os.listdir('%s/pos/' % trainDir)
+      negTrainFileNames = os.listdir('%s/neg/' % trainDir)
+      for fileName i
