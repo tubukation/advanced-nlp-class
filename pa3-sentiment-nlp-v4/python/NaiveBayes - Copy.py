@@ -474,4 +474,8 @@ class NaiveBayes:
         example.words = self.readFile('%s/pos/%s' % (testDir, fileName)) 
         example.klass = 'pos'
         split.test.append(example)
-     
+      for fileName in negTestFileNames:
+        example = self.Example()
+        example.words = self.readFile('%s/neg/%s' % (testDir, fileName)) 
+        example.klass = 'neg'
+    
