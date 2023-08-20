@@ -478,4 +478,11 @@ class NaiveBayes:
         example = self.Example()
         example.words = self.readFile('%s/neg/%s' % (testDir, fileName)) 
         example.klass = 'neg'
-    
+        split.test.append(example)
+      splits.append(split)
+    return splits
+  
+  def filterStopWords(self, words):
+    """Filters stop words."""
+    filtered = []
+    for wo
