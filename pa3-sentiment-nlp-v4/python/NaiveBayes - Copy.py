@@ -485,4 +485,11 @@ class NaiveBayes:
   def filterStopWords(self, words):
     """Filters stop words."""
     filtered = []
-    for wo
+    for word in words:
+      if not word in self.stopList and word.strip() != '':
+        filtered.append(word)
+    return filtered
+
+def main():
+  nb = NaiveBayes()
+  (options, args) = getopt.ge
