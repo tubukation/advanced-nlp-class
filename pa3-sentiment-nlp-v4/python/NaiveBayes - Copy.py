@@ -492,4 +492,12 @@ class NaiveBayes:
 
 def main():
   nb = NaiveBayes()
-  (options, args) = getopt.ge
+  (options, args) = getopt.getopt(sys.argv[1:], 'f')
+  if ('-f','') in options:
+    nb.FILTER_STOP_WORDS = True
+  
+  splits = nb.buildSplits(args)
+  avgAccuracy = 0.0
+  fold = 0
+  for split in splits:
+    classifier = NaiveBayes
