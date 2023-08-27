@@ -500,4 +500,10 @@ def main():
   avgAccuracy = 0.0
   fold = 0
   for split in splits:
-    classifier = NaiveBayes
+    classifier = NaiveBayes()
+    accuracy = 0.0
+    for example in split.train:
+      words = example.words
+      if nb.FILTER_STOP_WORDS:
+        words =  classifier.filterStopWords(words)
+      classifier.addEx
