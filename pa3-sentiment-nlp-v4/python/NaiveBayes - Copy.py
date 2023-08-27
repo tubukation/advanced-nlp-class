@@ -506,4 +506,9 @@ def main():
       words = example.words
       if nb.FILTER_STOP_WORDS:
         words =  classifier.filterStopWords(words)
-      classifier.addEx
+      classifier.addExample(example.klass, words)
+  
+    for example in split.test:
+      words = example.words
+      if nb.FILTER_STOP_WORDS:
+        words =  classifier.filterStopWords(wor
