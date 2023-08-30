@@ -511,4 +511,11 @@ def main():
     for example in split.test:
       words = example.words
       if nb.FILTER_STOP_WORDS:
-        words =  classifier.filterStopWords(wor
+        words =  classifier.filterStopWords(words)
+      guess = classifier.classify(words)
+      if example.klass == guess:
+        accuracy += 1.0
+
+    accuracy = accuracy / len(split.test)
+    avgAccuracy += accuracy
+    print '[INF
