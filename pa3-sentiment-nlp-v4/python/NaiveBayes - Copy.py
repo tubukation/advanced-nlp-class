@@ -518,4 +518,9 @@ def main():
 
     accuracy = accuracy / len(split.test)
     avgAccuracy += accuracy
-    print '[INF
+    print '[INFO]\tFold %d Accuracy: %f' % (fold, accuracy) 
+    fold += 1
+  avgAccuracy = avgAccuracy / fold
+  print '[INFO]\tAccuracy: %f' % avgAccuracy
+
+if __name__ == "__m
