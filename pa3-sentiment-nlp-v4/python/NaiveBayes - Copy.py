@@ -523,4 +523,5 @@ def main():
   avgAccuracy = avgAccuracy / fold
   print '[INFO]\tAccuracy: %f' % avgAccuracy
 
-if __name__ == "__m
+if __name__ == "__main__":
+    main()
