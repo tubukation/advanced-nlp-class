@@ -177,3 +177,194 @@ def _polarize(words):
         if _is_punctuation(w):
             negating = False 
             num_positive += 1
+    return out
+
+if False:
+    test = "not at all. good wouldn't like this. not not nice".split()
+    print test
+    print _polarize(test)
+    exit()
+    
+def _preprocess(words):
+    words = _polarize(words)
+    # Has bad effect
+    #words = [w[:-1] if w[-1] in _PUNCTUATION else w for w in words]
+    words = _exclude(words)
+
+    return words
+    
+_CLASS_INDEX = {'pos': 0, 'neg': 1}     
+
+class NaiveBayes:
+  class TrainSplit:
+    """Represents a set of training/testing data. self.train is a list of Examples, as is self.test. 
+    """
+    def __init__(self):
+      self.train = []
+      self.test = []
+
+  class Example:
+    """Represents a document with a label. klass is 'pos' or 'neg' by convention.
+       words is a list of strings.
+    """
+    def __init__(self):
+        self.klass = ''
+        self.words = []
+
+  def __init__(self):
+    """NaiveBayes initialization"""
+    self.FILTER_STOP_WORDS = False
+    self.stopList = set(self.readFile('../data/english.stop'))
+    self.numFolds = 10
+    
+    # PW: *gram_counts[word] = (num_pos, num_neg)
+    self.unigram_counts = {}
+    self.unigram_keys = set([]) 
+    self.bigram_counts = {}
+    self.bigram_keys = set([])
+    self.trigram_counts = {}
+    self.trigram_keys = set([])
+    self.class_count = [0,0]
+    self.derived = False
+    
+  #############################################################################
+  # TODO TODO TODO TODO TODO 
+  
+  def classify(self, words):
+        """ TODO
+            'words' is a list of words to classify. Return 'pos' or 'neg' classification.
+        """
+        words = _preprocess(words)
+        unigrams = words
+        bigrams = _get_bigrams(words)
+        trigrams = _get_trigrams(words)
+
+        # "Binarize"
+        unigrams = set(unigrams)
+        bigrams = set(bigrams)
+        trigrams = set(trigrams)
+            
+        def get_cntv(counts):
+            cntp = sum([p for p,n in counts.values()])
+            cntn = sum([n for p,n in counts.values()])
+            v = len(counts.keys())
+            return cntp,cntn,v 
+            
+        if not self.derived:    
+            self.cntv_unigrams = get_cntv(self.unigram_counts)
+            self.cntv_bigrams  = get_cntv(self.bigram_counts)   
+            self.cntv_trigrams = get_cntv(self.trigram_counts) 
+            self.derived = True
+
+        if False:
+            def show_best_worst(counts, keys, name):
+                pure_pos = [k for k in keys if counts[k][1] == 0]
+                pure_neg = [k for k in keys if counts[k][0] == 0]
+                pos_counts = dict([(k,counts[k][0]) for k in pure_pos])
+                neg_counts = dict([(k,counts[k][1]) for k in pure_neg])
+                
+                def save(cnts, polarity):
+                    lines = ['%-20s : %3d' % (k,cnts[k]) 
+                        for k in sorted(cnts.keys(), key=lambda k: -cnts[k])]
+                    file('extreme.%s.%s' % (polarity, name), 'wt').write('\n'.join(lines))    
+                save(pos_counts, 'pos')
+                save(neg_counts, 'neg')
+
+            print 'negative:', num_negative
+            print 'positive:', num_positive 
+            show_best_worst(self.unigram_counts, self.unigram_keys, 'unigrams')  
+            show_best_worst(self.bigram_counts,  self.bigram_keys,  'bigrams')  
+            show_best_worst(self.trigram_counts, self.trigram_keys, 'trigrams')  
+            exit()
+
+        def get_score(counts, cntv, alpha):
+            p,n = counts
+            if p == n:
+                return 0
+            cntp,cntn,v  = cntv
+            dp = cntp + v * alpha
+            dn = cntn + v * alpha
+            return math.log((p+alpha)/dp) - math.log((n+alpha)/dn) 
+            
+        def unigram_score(k):
+            return get_score(self.unigram_counts.get(k, [0,0]), self.cntv_unigrams, 3.5)
+            
+        def bigram_score(k):
+            if k not in self.bigram_keys:
+                w1,w2 = _U(k) 
+                return (unigram_score(w1) + unigram_score(w2)) * 0.1 
+            return get_score(self.bigram_counts.get(k, [0,0]), self.cntv_bigrams, 3.5)
+
+        def trigram_score(k):
+            if k not in self.trigram_keys:
+                w1,w2,w3 = _U(k)
+                return (bigram_score(_B(w1,w2)) + bigram_score(_B(w2,w3))) * 0.5 
+            return get_score(self.trigram_counts.get(k, [0,0]), self.cntv_trigrams, 3.5)
+
+        p,n = self.class_count
+        prior = math.log(p) - math.log(n)    
+        likelihood = sum([trigram_score(k) for k in trigrams])
+        posterior = prior + likelihood
+        return 'pos' if posterior > 0 else 'neg'
+  
+  def addExample(self, klass, words):
+        """
+         * TODO
+         * Train your model on an example document with label klass ('pos' or 'neg') and
+         * words, a list of strings.
+         * You should store whatever data structures you use for your classifier 
+         * in the NaiveBayes class.
+         * Returns nothing
+        """
+        kls = _CLASS_INDEX[klass]
+        
+        words = _preprocess(words)
+        unigrams = words
+        bigrams = _get_bigrams(words)
+        trigrams = _get_trigrams(words)
+      
+        # "Binarize"
+        unigrams = set(unigrams)
+        bigrams = set(bigrams)
+        trigrams = set(trigrams)
+        
+        def update_ngrams(ngrams, ngram_counts, ngram_keys):
+            for k in ngrams:
+                count = ngram_counts.get(k, [0,0])
+                count[kls] += 1
+                ngram_counts[k] = count
+                ngram_keys.add(k)
+        
+        self.class_count[kls] += 1
+        update_ngrams(unigrams, self.unigram_counts, self.unigram_keys)
+        update_ngrams(bigrams,  self.bigram_counts,  self.bigram_keys)
+        update_ngrams(trigrams, self.trigram_counts, self.trigram_keys)
+
+        # TODO TODO TODO TODO TODO 
+  #############################################################################
+  
+  
+  def readFile(self, fileName):
+    """
+     * Code for reading a file.  you probably don't want to modify anything here, 
+     * unless you don't like the way we segment files.
+    """
+    contents = []
+    f = open(fileName)
+    for line in f:
+      contents.append(line)
+    f.close()
+    result = self.segmentWords('\n'.join(contents)) 
+    return result
+
+  
+  def segmentWords(self, s):
+    """
+     * Splits lines on whitespace for file reading
+    """
+    return s.split()
+
+  
+  def trainSplit(self, trainDir):
+    """Takes in a trainDir, returns one TrainSplit with train set."""
+    split = self.TrainSplit()
