@@ -16,4 +16,8 @@ import getopt
 import os
 import math
 
-_ENGLISH_STO
+_ENGLISH_STOP_WORDS = set([ 
+    'a', 'a\'s', 'able', 'about', 'above', 'according', 'accordingly', 'across', 
+    'actually', 'after', 'afterwards', 'again', 
+    'against', # Seems to be a key word to omit
+ 
