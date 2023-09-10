@@ -22,4 +22,10 @@ _ENGLISH_STOP_WORDS = set([
     'against', # Seems to be a key word to omit
     'ain\'t', 'all', 
     'allow', 'allows', 'almost', 'alone', 'along', 'already', 'also', 'although', 
-    'always', 'am', 'among', 'amongst', 'an', 'and', 'another', '
+    'always', 'am', 'among', 'amongst', 'an', 'and', 'another', 'any', 'anybody', 
+    'anyhow', 'anyone', 'anything', 'anyway', 'anyways', 'anywhere', 'apart', 
+    'appear', 
+    #'appreciate', 
+    'appropriate', 'are', 
+    #'aren\'t', 
+    'around', 
