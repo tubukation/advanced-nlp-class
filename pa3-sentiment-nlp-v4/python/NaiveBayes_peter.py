@@ -28,4 +28,7 @@ _ENGLISH_STOP_WORDS = set([
     #'appreciate', 
     'appropriate', 'are', 
     #'aren\'t', 
-    'around', 
+    'around', 'as', 
+    'aside', 'ask', 'asking', 'associated', 'at', 'available', 'away', 'awfully', 
+    'b', 'be', 'became', 'because', 'become', 'becomes', 'becoming', 'been', 
+    'before', 'beforehand', 'behind', 'bei
