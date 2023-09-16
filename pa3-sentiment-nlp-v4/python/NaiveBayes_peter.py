@@ -35,4 +35,7 @@ _ENGLISH_STOP_WORDS = set([
     'besides', 'best', 'better', 'between', 'beyond', 'both', 'brief', 'but', 'by', 
     'c', 
     #'c\'mon', 
-    'c\'s', 'came', 'can', 'can
+    'c\'s', 'came', 'can', 'can\'t', 'cannot', 'cant', 'cause', 
+    'causes', 'certain', 'certainly', 'changes', 'clearly', 'co', 'com', 'come', 
+    'comes', 'concerning', 'consequently', 'consider', 'considering', 'contain', 
+   
