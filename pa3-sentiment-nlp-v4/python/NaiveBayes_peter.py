@@ -31,4 +31,8 @@ _ENGLISH_STOP_WORDS = set([
     'around', 'as', 
     'aside', 'ask', 'asking', 'associated', 'at', 'available', 'away', 'awfully', 
     'b', 'be', 'became', 'because', 'become', 'becomes', 'becoming', 'been', 
-    'before', 'beforehand', 'behind', 'bei
+    'before', 'beforehand', 'behind', 'being', 'believe', 'below', 'beside', 
+    'besides', 'best', 'better', 'between', 'beyond', 'both', 'brief', 'but', 'by', 
+    'c', 
+    #'c\'mon', 
+    'c\'s', 'came', 'can', 'can
