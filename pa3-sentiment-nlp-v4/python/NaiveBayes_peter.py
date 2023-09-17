@@ -41,4 +41,10 @@ _ENGLISH_STOP_WORDS = set([
     'containing', 'contains', 'corresponding', 'could', 'couldn\'t', 'course', 
     'currently', 'd', 'definitely', 'described', 'despite', 'did', 
     #'didn\'t', 
-  
+    'different', 'do', 'does',
+    #'doesn\'t', 'doing', 
+    #'don\'t', 
+    'done', 'down', 
+    #'downwards', 
+    'during', 'e', 'each', 'edu', 'eg', 'eight', 'either', 'else', 
+    
