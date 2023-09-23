@@ -49,4 +49,7 @@ _ENGLISH_STOP_WORDS = set([
     'during', 'e', 'each', 'edu', 'eg', 'eight', 'either', 'else', 
     'elsewhere', 'enough', 'entirely', 'especially', 'et', 'etc', 'even', 'ever', 
     'every', 'everybody', 'everyone', 'everything', 'everywhere', 'ex', 'exactly', 
-    '
+    'example', 
+    #'except', 
+    'f', 'far', 'few', 'fifth', 'first', 'five', 'followed', 
+    'following', 'follows', 'for', 'former', 'formerly', 'forth', 'four', 'from', 
