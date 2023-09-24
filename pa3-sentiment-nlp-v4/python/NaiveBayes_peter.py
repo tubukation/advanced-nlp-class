@@ -66,4 +66,7 @@ _ENGLISH_STOP_WORDS = set([
     'inc', 'indeed', 'indicate', 'indicated', 'indicates', 'inner', 'insofar', 
     'instead', 'into', 'inward', 'is', 
     #'isn\'t',
-    'it', 'it\'d', 'it\'ll', 'it\'s',
+    'it', 'it\'d', 'it\'ll', 'it\'s', 
+    'its', 'itself', 'j', 'just', 'k', 'keep', 'keeps', 'kept', 'know', 'known', 
+    'knows', 'l', 'last', 'lately', 'later', 'latter', 'latterly', 'least', 'less', 
+    'lest', 'let', 
