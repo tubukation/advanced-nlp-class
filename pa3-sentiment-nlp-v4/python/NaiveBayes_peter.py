@@ -73,4 +73,6 @@ _ENGLISH_STOP_WORDS = set([
     #'liked',
     'likely', 'little', 'look', 
     'looking', 'looks', 'ltd', 'm', 'mainly', 'many', 'may', 'maybe', 'me', 'mean', 
-    'meanwhile', 'merely', 'might', 'more', 
+    'meanwhile', 'merely', 'might', 'more', 'moreover', 'most', 'mostly', 'much', 
+    'must', 'my', 'myself', 'n', 'name', 'namely', 'nd', 'near', 'nearly', 
+    'necessary', 'need', 'needs', 'neither', 'never', 'nevertheless', 'ne
