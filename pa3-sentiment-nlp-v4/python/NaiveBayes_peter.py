@@ -79,4 +79,6 @@ _ENGLISH_STOP_WORDS = set([
     'next', 'nine', 'no', 'nobody', 'non', 'none', 'noone', 'nor', 'normally', 
     #'not', 
     'nothing', 'novel', 'now', 'nowhere', 'o', 'obviously', 'of', 'off', 
-    'often', 'oh', 'ok', 'okay', 
+    'often', 'oh', 'ok', 'okay', 'old', 'on', 'once', 'one', 'ones', 'only', 
+    'onto', 'or', 'other', 'others', 'otherwise', 'ought', 'our', 'ours', 
+    'ourselves', 'out', 'outside', 'over', 'overall', 'own', 
