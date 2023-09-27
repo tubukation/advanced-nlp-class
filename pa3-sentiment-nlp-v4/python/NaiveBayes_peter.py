@@ -84,4 +84,6 @@ _ENGLISH_STOP_WORDS = set([
     'ourselves', 'out', 'outside', 'over', 'overall', 'own', 'p', 'particular', 
     'particularly', 'per', 'perhaps', 'placed', 'please', 'plus', 'possible', 
     'presumably', 'probably', 'provides', 'q', 'que', 'quite', 'qv', 'r', 'rather', 
-    
+    'rd', 're', 'really', 'reasonably', 'regarding', 'regardless', 'regards', 
+    'relatively', 'respectively', 'right', 's', 'said', 'same', 'saw', 'say', 
+    'saying', 'says', 'sec
