@@ -86,4 +86,6 @@ _ENGLISH_STOP_WORDS = set([
     'presumably', 'probably', 'provides', 'q', 'que', 'quite', 'qv', 'r', 'rather', 
     'rd', 're', 'really', 'reasonably', 'regarding', 'regardless', 'regards', 
     'relatively', 'respectively', 'right', 's', 'said', 'same', 'saw', 'say', 
-    'saying', 'says', 'sec
+    'saying', 'says', 'second', 'secondly', 'see', 'seeing', 'seem', 'seemed', 
+    'seeming', 'seems', 'seen', 'self', 'selves', 'sensible', 'sent', 'serious', 
+    'seriously', 'seven', 'several', 'shall', 's
