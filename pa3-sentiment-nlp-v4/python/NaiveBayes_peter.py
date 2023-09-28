@@ -90,4 +90,7 @@ _ENGLISH_STOP_WORDS = set([
     'seeming', 'seems', 'seen', 'self', 'selves', 'sensible', 'sent', 'serious', 
     'seriously', 'seven', 'several', 'shall', 'she', 'should', 'shouldn\'t', 
     'since', 'six', 'so', 'some', 'somebody', 'somehow', 'someone', 'something', 
-    'sometime', 'sometimes', 'somewhat', 'somewhere', 'soon', 'sorry', '
+    'sometime', 'sometimes', 'somewhat', 'somewhere', 'soon', 'sorry', 'specified', 
+    'specify', 'specifying', 'still', 'sub', 'such', 'sup', 'sure', 't', 't\'s', 
+    'take', 'taken', 'tell', 'tends', 'th', 'than', 'thank', 'thanks', 'thanx', 
+  
