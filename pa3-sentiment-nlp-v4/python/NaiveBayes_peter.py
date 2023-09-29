@@ -97,4 +97,6 @@ _ENGLISH_STOP_WORDS = set([
     'then', 'thence', 'there', 'there\'s', 'thereafter', 'thereby', 'therefore', 
     'therein', 'theres', 'thereupon', 'these', 'they', 'they\'d', 'they\'ll', 
     'they\'re', 'they\'ve', 'think', 'third', 'this', 'thorough', 'thoroughly', 
-    'those', 'though', 'three', 'through', 'throughout'
+    'those', 'though', 'three', 'through', 'throughout', 'thru', 'thus', 'to', 
+    'together', 'too', 'took', 'toward', 'towards', 'tried', 'tries', 'truly', 
+    'try', 'trying', 'twice', 'two', 'u', 'un', 'under', 'un
