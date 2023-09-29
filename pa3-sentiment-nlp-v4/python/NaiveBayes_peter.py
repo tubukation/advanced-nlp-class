@@ -93,4 +93,6 @@ _ENGLISH_STOP_WORDS = set([
     'sometime', 'sometimes', 'somewhat', 'somewhere', 'soon', 'sorry', 'specified', 
     'specify', 'specifying', 'still', 'sub', 'such', 'sup', 'sure', 't', 't\'s', 
     'take', 'taken', 'tell', 'tends', 'th', 'than', 'thank', 'thanks', 'thanx', 
-  
+    'that', 'that\'s', 'thats', 'the', 'their', 'theirs', 'them', 'themselves', 
+    'then', 'thence', 'there', 'there\'s', 'thereafter', 'thereby', 'therefore', 
+    'therein', 'theres', 'th
