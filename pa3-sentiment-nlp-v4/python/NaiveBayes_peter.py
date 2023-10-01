@@ -108,4 +108,11 @@ _ENGLISH_STOP_WORDS = set([
     'where\'s', 'whereafter', 'whereas', 'whereby', 'wherein', 'whereupon', 
     'wherever', 'whether', 'which', 'while', 'whither', 'who', 'who\'s', 'whoever', 
     'whole', 'whom', 'whose', 'why', 'will', 'willing', 'wish', 'with', 'within', 
-    'without', 'won\'t', 'wonder', 'would', 'wouldn\'t', 'x', 'y', 'yes', 'y
+    'without', 'won\'t', 'wonder', 'would', 'wouldn\'t', 'x', 'y', 'yes', 'yet', 
+    'you', 'you\'d', 'you\'ll', 'you\'re', 'you\'ve', 'your', 'yours', 'yourself', 
+    'yourselves', 'z', 
+    #'zero', 
+]) 
+
+# Don't exclude ?-
+_MY_EXCLUSIONS = set(['&nbsp', ';
