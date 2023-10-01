@@ -115,4 +115,10 @@ _ENGLISH_STOP_WORDS = set([
 ]) 
 
 # Don't exclude ?-
-_MY_EXCLUSIONS = set(['&nbsp', ';
+_MY_EXCLUSIONS = set(['&nbsp', ';', '.', ',', '"', "'", '(', ')', '&', '-'])
+_EXCLUSIONS = _MY_EXCLUSIONS | _ENGLISH_STOP_WORDS
+
+_CLASS_INDEX = {'pos': 0, 'neg': 1} 
+
+_NEGATIVE_WORDS = [
+    'embarrassing', 'horri
