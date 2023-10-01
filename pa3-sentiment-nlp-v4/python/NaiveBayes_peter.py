@@ -104,4 +104,6 @@ _ENGLISH_STOP_WORDS = set([
     'uses', 'using', 'usually', 'uucp', 'v', 'value', 'various', 'very', 'via', 
     'viz', 'vs', 'w', 'want', 'wants', 'was', 'wasn\'t', 'way', 'we', 'we\'d', 
     'we\'ll', 'we\'re', 'we\'ve', 'welcome', 'well', 'went', 'were', 'weren\'t', 
-    'what', 'what\'s', 'whatev
+    'what', 'what\'s', 'whatever', 'when', 'whence', 'whenever', 'where', 
+    'where\'s', 'whereafter', 'whereas', 'whereby', 'wherein', 'whereupon', 
+    'wherever', 'whether', 'which', 'while', 'whither', 'who', 'w
