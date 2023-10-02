@@ -139,4 +139,12 @@ def _T(w1, w2, w3):
     
 def _exclude(words):
     return [w for w in words if w not in _EXCLUSIONS] 
-   
+    
+def _dump(word_counts, fold):
+    def word_score(k):
+        p,n = word_counts[k]
+        return math.log(p+1) - math.log(n+1)
+    
+    def count_line(k):
+        p,n = word_counts[k]
+ 
