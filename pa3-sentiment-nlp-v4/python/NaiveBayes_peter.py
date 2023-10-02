@@ -121,4 +121,11 @@ _EXCLUSIONS = _MY_EXCLUSIONS | _ENGLISH_STOP_WORDS
 _CLASS_INDEX = {'pos': 0, 'neg': 1} 
 
 _NEGATIVE_WORDS = [
-    'embarrassing', 'horri
+    'embarrassing', 'horrid', 'predictable', 'ridiculous', 'unoriginal',
+    'loathing', 'badness', 'half-assed'
+]
+_NEGATIVE_BIGRAMS = [
+    'but why'
+]    
+_NEGATIVE_TRIGRAMS = [
+    'what the hell
