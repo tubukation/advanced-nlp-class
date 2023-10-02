@@ -147,4 +147,8 @@ def _dump(word_counts, fold):
     
     def count_line(k):
         p,n = word_counts[k]
- 
+        return '%-20s %3d %3d %.2f' % (k, p, n, word_score(k))
+   
+    wckeys = sorted(word_counts.keys(), key=word_score)
+    text = '\n'.join([count_line(k) for k in wckeys])  
+   
