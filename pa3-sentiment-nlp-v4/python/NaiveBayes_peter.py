@@ -128,4 +128,15 @@ _NEGATIVE_BIGRAMS = [
     'but why'
 ]    
 _NEGATIVE_TRIGRAMS = [
-    'what the hell
+    'what the hell'
+]
+
+def _B(w1, w2):
+    return '%s %s' % (w1, w2)
+
+def _T(w1, w2, w3):
+    return '%s %s %s' % (w1, w2, w3)   
+    
+def _exclude(words):
+    return [w for w in words if w not in _EXCLUSIONS] 
+   
