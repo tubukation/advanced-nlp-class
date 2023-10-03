@@ -151,4 +151,9 @@ def _dump(word_counts, fold):
    
     wckeys = sorted(word_counts.keys(), key=word_score)
     text = '\n'.join([count_line(k) for k in wckeys])  
-   
+    file('word.counts.%d' % fold, 'wt').write(text)
+
+class NaiveBayes:
+    class TrainSplit:
+        """Represents a set of training/testing data. 
+            self.train is a list of Examples, as 
