@@ -156,4 +156,11 @@ def _dump(word_counts, fold):
 class NaiveBayes:
     class TrainSplit:
         """Represents a set of training/testing data. 
-            self.train is a list of Examples, as 
+            self.train is a list of Examples, as is self.test. 
+        """
+        def __init__(self):
+            self.train = []
+            self.test = []
+
+    class Example:
+        """Represents a document with a label. klass is
