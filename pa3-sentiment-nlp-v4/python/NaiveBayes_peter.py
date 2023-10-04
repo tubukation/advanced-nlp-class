@@ -171,4 +171,9 @@ class NaiveBayes:
             self.words = []
 
     def __init__(self):
-        """Nai
+        """NaiveBayes initialization"""
+        self.FILTER_STOP_WORDS = False
+        self.stopList = set(self.readFile('../data/english.stop'))
+        
+        if False:
+            #
