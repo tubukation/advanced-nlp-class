@@ -163,4 +163,12 @@ class NaiveBayes:
             self.test = []
 
     class Example:
-        """Represents a document with a label. klass is
+        """Represents a document with a label. klass is 'pos' or 'neg' by convention.
+           words is a list of strings.
+        """
+        def __init__(self):
+            self.klass = ''
+            self.words = []
+
+    def __init__(self):
+        """Nai
