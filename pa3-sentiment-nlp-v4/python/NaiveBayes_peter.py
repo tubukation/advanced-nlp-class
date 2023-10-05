@@ -193,4 +193,11 @@ class NaiveBayes:
             
         self.numFolds = 10
         
-        # PW: word_counts[word] = 
+        # PW: word_counts[word] = (num_pos, num_neg)
+        self.word_counts = {}
+        self.bigram_counts = {}
+        self.bigram_keys = set([])
+        self.trigram_counts = {}
+        self.trigram_keys = set([])
+
+   
