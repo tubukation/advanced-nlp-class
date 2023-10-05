@@ -180,4 +180,10 @@ class NaiveBayes:
             print '----------------'
             lines = []
             ln = ''
-            words = ["'%s', " % x.replace("'", r"\'") for x in sorted(sel
+            words = ["'%s', " % x.replace("'", r"\'") for x in sorted(self.stopList)]
+            for w in words:
+                if len(ln) + len(w) > 80:
+                    lines.append((' ' *4) + ln)
+                    ln = ''
+                ln += w
+            lines.
