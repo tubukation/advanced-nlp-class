@@ -186,4 +186,11 @@ class NaiveBayes:
                     lines.append((' ' *4) + ln)
                     ln = ''
                 ln += w
-            lines.
+            lines.append(ln)
+  
+            file('stop.word.list', 'wt').write('\n'.join(lines))
+            exit()
+            
+        self.numFolds = 10
+        
+        # PW: word_counts[word] = 
