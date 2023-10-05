@@ -176,4 +176,8 @@ class NaiveBayes:
         self.stopList = set(self.readFile('../data/english.stop'))
         
         if False:
-            #
+            # Write English stop words to python script
+            print '----------------'
+            lines = []
+            ln = ''
+            words = ["'%s', " % x.replace("'", r"\'") for x in sorted(sel
