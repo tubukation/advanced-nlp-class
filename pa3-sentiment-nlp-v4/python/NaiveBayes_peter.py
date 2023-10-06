@@ -209,4 +209,9 @@ class NaiveBayes:
         """
         def word_score(w):
             """Returns +1 smoothed log(pos/neg) for w """
-            p,n = self.word_count
+            p,n = self.word_counts.get(w, [0,0])
+            return math.log(p+1) - math.log(n+1)
+            
+        def bigram_score(i):
+            """Returns +1 smoothed log(pos/neg) for w """
+            
