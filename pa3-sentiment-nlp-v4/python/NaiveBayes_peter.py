@@ -205,4 +205,8 @@ class NaiveBayes:
   
     def classify(self, words):
         """ TODO
-          'words' is a list of
+          'words' is a list of words to classify. Return 'pos' or 'neg' classification.
+        """
+        def word_score(w):
+            """Returns +1 smoothed log(pos/neg) for w """
+            p,n = self.word_count
