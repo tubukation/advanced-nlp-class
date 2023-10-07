@@ -214,4 +214,7 @@ class NaiveBayes:
             
         def bigram_score(i):
             """Returns +1 smoothed log(pos/neg) for w """
-            
+            k = _B(words[i-1],words[i])
+            if k not in self.bigram_keys:
+                return (word_score(words[i-1]) + word_score(words[i-1])) / 20.0 
+            p,n = self.bigram_counts.get(k, [0,0])
