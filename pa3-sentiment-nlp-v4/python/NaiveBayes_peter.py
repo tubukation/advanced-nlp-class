@@ -226,4 +226,9 @@ class NaiveBayes:
             if k not in self.trigram_keys:
                 return (bigram_score(i-1) + bigram_score(i)) 
             p,n = self.trigram_counts.get(k, [0,0])
-            # High laplace is like weighting down 
+            # High laplace is like weighting down trigrams?
+            return math.log(p+0.2) - math.log(n+0.2)
+        
+        words = _exclude(words)
+        score = sum([trigram_score(i) for i in range(2,len(words))])
+        return
