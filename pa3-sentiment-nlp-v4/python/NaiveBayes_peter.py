@@ -218,3 +218,9 @@ class NaiveBayes:
             if k not in self.bigram_keys:
                 return (word_score(words[i-1]) + word_score(words[i-1])) / 20.0 
             p,n = self.bigram_counts.get(k, [0,0])
+            return math.log(p+0.5) - math.log(n+0.5) 
+
+        def trigram_score(i):
+            """Returns +1 smoothed log(pos/neg) for w """
+            k = _T(words[i-2],words[i-1],words[i])
+        
