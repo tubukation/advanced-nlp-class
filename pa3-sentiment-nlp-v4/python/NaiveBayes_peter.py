@@ -223,4 +223,7 @@ class NaiveBayes:
         def trigram_score(i):
             """Returns +1 smoothed log(pos/neg) for w """
             k = _T(words[i-2],words[i-1],words[i])
-        
+            if k not in self.trigram_keys:
+                return (bigram_score(i-1) + bigram_score(i)) 
+            p,n = self.trigram_counts.get(k, [0,0])
+            # High laplace is like weighting down 
