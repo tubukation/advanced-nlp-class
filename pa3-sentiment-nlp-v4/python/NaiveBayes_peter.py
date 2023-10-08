@@ -231,4 +231,9 @@ class NaiveBayes:
         
         words = _exclude(words)
         score = sum([trigram_score(i) for i in range(2,len(words))])
-        return
+        return 'pos' if score > 0 else 'neg'
+
+    def addExample(self, klass, words):
+        """
+         * TODO
+         * Train your model on an example document with label kl
