@@ -236,4 +236,8 @@ class NaiveBayes:
     def addExample(self, klass, words):
         """
          * TODO
-         * Train your model on an example document with label kl
+         * Train your model on an example document with label klass ('pos' or 'neg') and
+         * words, a list of strings.
+         * You should store whatever data structures you use for your classifier 
+         * in the NaiveBayes class.
+    
