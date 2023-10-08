@@ -240,4 +240,11 @@ class NaiveBayes:
          * words, a list of strings.
          * You should store whatever data structures you use for your classifier 
          * in the NaiveBayes class.
-    
+         * Returns nothing
+        """
+        words = _exclude(words)
+        kls = _CLASS_INDEX[klass]
+        for w in words:
+            count = self.word_counts.get(w, [0,0])
+            count[kls] += 1
+  
