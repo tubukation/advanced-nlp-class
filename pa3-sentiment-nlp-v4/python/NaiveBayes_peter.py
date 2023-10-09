@@ -252,4 +252,10 @@ class NaiveBayes:
 
         w0 = words[0]
         for w in words[1:]:
-            k = _
+            k = _B(w0,w)
+            count = self.bigram_counts.get(k, [0,0])
+            count[kls] += 1
+            self.bigram_counts[k] = count
+            self.bigram_keys.add(k)
+            w0 = w
+          
