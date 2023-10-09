@@ -258,4 +258,11 @@ class NaiveBayes:
             self.bigram_counts[k] = count
             self.bigram_keys.add(k)
             w0 = w
-          
+            
+        w0 = words[0]
+        w1 = words[1]
+        for w in words[2:]:
+            k = _T(w0,w1,w)
+            count = self.trigram_counts.get(k, [0,0])
+            count[kls] += 1
+     
