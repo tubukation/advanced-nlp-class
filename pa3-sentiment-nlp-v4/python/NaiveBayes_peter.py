@@ -247,4 +247,9 @@ class NaiveBayes:
         for w in words:
             count = self.word_counts.get(w, [0,0])
             count[kls] += 1
-  
+            self.word_counts[w] = count
+        #print 'words=%4d, word_counts=%6d' % (len(words), len(self.word_counts)) 
+
+        w0 = words[0]
+        for w in words[1:]:
+            k = _
