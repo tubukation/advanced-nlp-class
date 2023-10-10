@@ -271,4 +271,9 @@ class NaiveBayes:
             w1 = w    
 
     # TODO TODO TODO TODO TODO 
-    ##################################################
+    #############################################################################
+ 
+    def readFile(self, fileName):
+        """
+         * Code for reading a file.  you probably don't want to modify anything here, 
+         * unless you d
