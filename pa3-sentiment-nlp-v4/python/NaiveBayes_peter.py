@@ -276,4 +276,9 @@ class NaiveBayes:
     def readFile(self, fileName):
         """
          * Code for reading a file.  you probably don't want to modify anything here, 
-         * unless you d
+         * unless you don't like the way we segment files.
+        """
+        contents = []
+        f = open(fileName)
+        for line in f:
+            contents.append(line
