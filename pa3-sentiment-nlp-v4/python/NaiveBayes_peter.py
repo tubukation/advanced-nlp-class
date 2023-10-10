@@ -281,4 +281,11 @@ class NaiveBayes:
         contents = []
         f = open(fileName)
         for line in f:
-            contents.append(line
+            contents.append(line)
+        f.close()
+        result = self.segmentWords('\n'.join(contents)) 
+        return result
+  
+    def segmentWords(self, s):
+        """
+        * Splits lines on whitespace for f
