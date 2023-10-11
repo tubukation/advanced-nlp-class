@@ -294,4 +294,7 @@ class NaiveBayes:
   
     def trainSplit(self, trainDir):
         """Takes in a trainDir, returns one TrainSplit with train set."""
-        
+        split = self.TrainSplit()
+        posTrainFileNames = os.listdir('%s/pos/' % trainDir)
+        negTrainFileNames = os.listdir('%s/neg/' % trainDir)
+        for fileName in posTrainFileNam
