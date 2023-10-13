@@ -311,4 +311,10 @@ class NaiveBayes:
 
     def train(self, split):
         for example in split.train:
-            word
+            words = example.words
+            if self.FILTER_STOP_WORDS:
+                words = self.filterStopWords(words)
+            self.addExample(example.klass, words)
+
+    def crossValidationSplits(self, trainDir):
+ 
