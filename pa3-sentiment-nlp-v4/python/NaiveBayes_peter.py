@@ -324,4 +324,7 @@ class NaiveBayes:
         #for fileName in trainFileNames:
         for fold in range(0, self.numFolds):
             split = self.TrainSplit()
+            for fileName in posTrainFileNames:
+                example = self.Example()
+                example.words = self.readFile('%s/pos/%s' % (trainDir, fileName))
         
