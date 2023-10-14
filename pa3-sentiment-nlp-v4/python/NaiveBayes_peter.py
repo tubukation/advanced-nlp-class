@@ -320,4 +320,8 @@ class NaiveBayes:
         """Returns a list of TrainSplits corresponding to the cross validation splits."""
         splits = [] 
         posTrainFileNames = os.listdir('%s/pos/' % trainDir)
-        ne
+        negTrainFileNames = os.listdir('%s/neg/' % trainDir)
+        #for fileName in trainFileNames:
+        for fold in range(0, self.numFolds):
+            split = self.TrainSplit()
+        
