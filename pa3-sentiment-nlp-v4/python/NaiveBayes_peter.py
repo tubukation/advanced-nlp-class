@@ -339,4 +339,11 @@ class NaiveBayes:
                 if fileName[2] == str(fold):
                     split.test.append(example)
                 else:
-                    split.tr
+                    split.train.append(example)
+            splits.append(split)
+            return splits
+
+    def test(self, split):
+        """Returns a list of labels for split.test."""
+        labels = []
+        for example in s
