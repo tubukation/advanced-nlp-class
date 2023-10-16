@@ -346,4 +346,8 @@ class NaiveBayes:
     def test(self, split):
         """Returns a list of labels for split.test."""
         labels = []
-        for example in s
+        for example in split.test:
+            words = example.words
+            if self.FILTER_STOP_WORDS:
+                words = self.filterStopWords(words)
+            guess = self.classify(wo
