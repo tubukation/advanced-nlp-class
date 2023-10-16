@@ -350,4 +350,11 @@ class NaiveBayes:
             words = example.words
             if self.FILTER_STOP_WORDS:
                 words = self.filterStopWords(words)
-            guess = self.classify(wo
+            guess = self.classify(words)
+            labels.append(guess)
+        return labels
+  
+    def buildSplits(self, args):
+        """Builds the splits for training/testing"""
+        trainData = [] 
+        
