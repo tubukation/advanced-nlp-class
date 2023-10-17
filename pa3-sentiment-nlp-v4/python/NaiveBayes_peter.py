@@ -357,4 +357,8 @@ class NaiveBayes:
     def buildSplits(self, args):
         """Builds the splits for training/testing"""
         trainData = [] 
-        
+        testData = []
+        splits = []
+        trainDir = args[0]
+        if len(args) == 1: 
+          print '[INFO]\tPerforming %d-fold cross-validation on data set:\
