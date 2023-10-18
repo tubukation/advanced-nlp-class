@@ -365,4 +365,8 @@ class NaiveBayes:
 
           posTrainFileNames = os.listdir('%s/pos/' % trainDir)
           negTrainFileNames = os.listdir('%s/neg/' % trainDir)
-          for fold in range(0, sel
+          for fold in range(0, self.numFolds):
+            split = self.TrainSplit()
+            for fileName in posTrainFileNames:
+              example = self.Example()
+              example.words = self.readFile('%s/pos/%s' % (tr
