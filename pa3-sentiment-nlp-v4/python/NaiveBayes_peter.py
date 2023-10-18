@@ -374,4 +374,8 @@ class NaiveBayes:
               # !@#$
               example.filename = '%s/pos/%s' % (trainDir, fileName)
               if fileName[2] == str(fold):
-        
+                split.test.append(example)
+              else:
+                split.train.append(example)
+            for fileName in negTrainFileNames:
+              example = self.Exam
