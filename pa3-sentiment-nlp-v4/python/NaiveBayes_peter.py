@@ -382,4 +382,9 @@ class NaiveBayes:
               example.words = self.readFile('%s/neg/%s' % (trainDir, fileName))
               example.klass = 'neg'
               # !@#$
-              example.filename = '%s/neg/%s' % (train
+              example.filename = '%s/neg/%s' % (trainDir, fileName)
+              if fileName[2] == str(fold):
+                split.test.append(example)
+              else:
+                split.train.append(example)
+            
