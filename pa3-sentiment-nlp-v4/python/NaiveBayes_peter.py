@@ -378,4 +378,8 @@ class NaiveBayes:
               else:
                 split.train.append(example)
             for fileName in negTrainFileNames:
-              example = self.Exam
+              example = self.Example()
+              example.words = self.readFile('%s/neg/%s' % (trainDir, fileName))
+              example.klass = 'neg'
+              # !@#$
+              example.filename = '%s/neg/%s' % (train
