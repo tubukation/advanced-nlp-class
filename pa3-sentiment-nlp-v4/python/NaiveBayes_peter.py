@@ -387,4 +387,9 @@ class NaiveBayes:
                 split.test.append(example)
               else:
                 split.train.append(example)
+            splits.append(split)
             
+        elif len(args) == 2:
+          split = self.TrainSplit()
+          testDir = args[1]
+          print '[INFO]\tTraining on data set:\t%s testing on data
