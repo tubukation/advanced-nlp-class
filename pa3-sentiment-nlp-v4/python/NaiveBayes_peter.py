@@ -395,4 +395,8 @@ class NaiveBayes:
           print '[INFO]\tTraining on data set:\t%s testing on data set:\t%s' % (trainDir, testDir)
           posTrainFileNames = os.listdir('%s/pos/' % trainDir)
           negTrainFileNames = os.listdir('%s/neg/' % trainDir)
-          for fileName in posTrainFileN
+          for fileName in posTrainFileNames:
+            example = self.Example()
+            example.words = self.readFile('%s/pos/%s' % (trainDir, fileName))
+            example.klass = 'pos'
+            split
