@@ -402,4 +402,9 @@ class NaiveBayes:
             split.train.append(example)
           for fileName in negTrainFileNames:
             example = self.Example()
-            example.words = self.readFile('%s/neg/%s' % (trainDir, fileNa
+            example.words = self.readFile('%s/neg/%s' % (trainDir, fileName))
+            example.klass = 'neg'
+            split.train.append(example)
+
+          posTestFileNames = os.listdir('%s/pos/' % testDir)
+          negTestFile
