@@ -421,4 +421,8 @@ class NaiveBayes:
           splits.append(split)
         return splits
   
-    d
+    def filterStopWords(self, words):
+        """Filters stop words."""
+        filtered = []
+        for word in words:
+            if not word in self.stopList and word.strip() 
