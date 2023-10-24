@@ -415,4 +415,10 @@ class NaiveBayes:
             split.test.append(example)
           for fileName in negTestFileNames:
             example = self.Example()
-            example.words = s
+            example.words = self.readFile('%s/neg/%s' % (testDir, fileName)) 
+            example.klass = 'neg'
+            split.test.append(example)
+          splits.append(split)
+        return splits
+  
+    d
