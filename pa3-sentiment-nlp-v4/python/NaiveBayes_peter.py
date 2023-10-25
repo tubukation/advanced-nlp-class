@@ -438,4 +438,9 @@ def main():
     splits = nb.buildSplits(args)
     totAccuracy = 0.0
     for fold, split in enumerate(splits):
-        classifier = Naiv
+        classifier = NaiveBayes()
+        accuracy = 0.0
+        for example in split.train:
+            words = example.words
+            if nb.FILTER_STOP_WORDS:
+                words = classifier.fi
