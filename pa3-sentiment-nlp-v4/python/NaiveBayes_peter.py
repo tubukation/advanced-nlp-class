@@ -443,4 +443,9 @@ def main():
         for example in split.train:
             words = example.words
             if nb.FILTER_STOP_WORDS:
-                words = classifier.fi
+                words = classifier.filterStopWords(words)
+            classifier.addExample(example.klass, words)
+            
+        #_dump(classifier.trigram_counts, fold)    
+      
+        for example in spl
