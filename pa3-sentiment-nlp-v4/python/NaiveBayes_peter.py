@@ -448,4 +448,8 @@ def main():
             
         #_dump(classifier.trigram_counts, fold)    
       
-        for example in spl
+        for example in split.test:
+            words = example.words
+            if nb.FILTER_STOP_WORDS:
+                words = classifier.filterStopWords(words)
+            guess = cla
