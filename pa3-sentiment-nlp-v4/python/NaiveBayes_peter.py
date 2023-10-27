@@ -452,4 +452,10 @@ def main():
             words = example.words
             if nb.FILTER_STOP_WORDS:
                 words = classifier.filterStopWords(words)
-            guess = cla
+            guess = classifier.classify(words)
+            if example.klass == guess:
+                accuracy += 1.0
+            #else:
+            #    print example.filename
+ 
+        accuracy = accuracy / len(split.tes
