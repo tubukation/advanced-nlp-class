@@ -462,4 +462,7 @@ def main():
         totAccuracy += accuracy
         print '[INFO]\tFold %d Accuracy: %f' % (fold, accuracy) 
     avgAccuracy = totAccuracy / len(splits)
-    print '[INFO]\tAccuracy: %f' % a
+    print '[INFO]\tAccuracy: %f' % avgAccuracy
+
+if __name__ == "__main__":
+    main()
