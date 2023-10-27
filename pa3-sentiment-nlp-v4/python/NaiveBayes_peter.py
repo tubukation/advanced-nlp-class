@@ -458,4 +458,8 @@ def main():
             #else:
             #    print example.filename
  
-        accuracy = accuracy / len(split.tes
+        accuracy = accuracy / len(split.test)
+        totAccuracy += accuracy
+        print '[INFO]\tFold %d Accuracy: %f' % (fold, accuracy) 
+    avgAccuracy = totAccuracy / len(splits)
+    print '[INFO]\tAccuracy: %f' % a
