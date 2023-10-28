@@ -19,4 +19,9 @@ def main(argv):
     featureFactory = FeatureFactory()
 
     # read the train and test data
-    trainData
+    trainData = featureFactory.readData(argv[0])
+    testData = featureFactory.readData(argv[1])
+    
+    # add the features
+    trainDataWithFeatures = featureFactory.setFeaturesTrain(trainData);
+    tes
