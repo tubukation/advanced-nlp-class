@@ -28,4 +28,8 @@ def main(argv):
 
     # write the updated data into JSON files
     featureFactory.writeData(trainDataWithFeatures, 'trainWithFeatures');
- 
+    featureFactory.writeData(testDataWithFeatures, 'testWithFeatures');
+    
+    # run MEMM 
+    output = Popen(['java', '-cp', '../java/classes', '-Xmx2G' ,'MEMM'
+   
