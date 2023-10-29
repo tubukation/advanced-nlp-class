@@ -32,4 +32,7 @@ def main(argv):
     
     # run MEMM 
     output = Popen(['java', '-cp', '../java/classes', '-Xmx2G' ,'MEMM'
-   
+                    ,'trainWithFeatures.json', 'testWithFeatures.json',
+                    printOp], stdout=PIPE).communicate()[0]
+                    
+    # java -cp classes -Xmx1G MEMM trainW
