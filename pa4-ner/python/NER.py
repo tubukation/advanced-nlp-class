@@ -24,4 +24,8 @@ def main(argv):
     
     # add the features
     trainDataWithFeatures = featureFactory.setFeaturesTrain(trainData);
-    tes
+    testDataWithFeatures = featureFactory.setFeaturesTest(testData);
+
+    # write the updated data into JSON files
+    featureFactory.writeData(trainDataWithFeatures, 'trainWithFeatures');
+ 
