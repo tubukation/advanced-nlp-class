@@ -35,4 +35,9 @@ def main(argv):
                     ,'trainWithFeatures.json', 'testWithFeatures.json',
                     printOp], stdout=PIPE).communicate()[0]
                     
-    # java -cp classes -Xmx1G MEMM trainW
+    # java -cp classes -Xmx1G MEMM trainWithFeatures.json testWithFeatures.json                
+    # java -cp ../java/classes -Xmx1G MEMM trainWithFeatures.json testWithFeatures.json           
+    
+    print output
+
+if __name__ == '__
