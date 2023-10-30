@@ -40,4 +40,10 @@ def main(argv):
     
     print output
 
-if __name__ == '__
+if __name__ == '__main__':
+    main(sys.argv[1:])
+    
+    
+    
+
+
