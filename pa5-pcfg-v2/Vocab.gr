@@ -1,0 +1,80 @@
+
+# This is a hand-generated set of preterminal rules.
+# It specifies a simple tag set which will be handled by the S2
+# grammar and which can (though doesn't necessarily need to be)
+# handled by the S1 grammar.
+#
+# The weights given here may be changed, but no new vocabulary
+# items are to be added.
+
+# Miscellaneous items that don't fit into any of our simple tags are
+# given to _Misc.  You will want to develop your own tags for these!
+
+# Singular and mass nouns.  Notice that only the
+# ones that start with consonants get our Noun tag.
+1	Noun	castle
+1	Noun	king
+1	Noun	defeater
+1	Noun	sovereign
+1	Noun	servant
+1	Noun	corner
+1	Noun	land
+1	Noun	quest
+1	Noun	chalice
+1	Noun	master
+1	Noun	horse
+1	Noun	fruit
+1	Noun	swallow
+1	Noun	sun
+1	Noun	winter
+1	Noun	coconut
+1	Noun	pound
+1	Noun	husk
+1	Noun	home
+1	Noun	weight
+1	Noun	story
+
+# Determiners.
+1	Det	a
+1	Det	another
+1	Det	any
+1	Det	each
+1	Det	every
+1	Det	no
+1	Det	that
+1	Det	the
+1	Det	this
+
+# Prepositions.
+1	Prep	above
+1	Prep	across
+1	Prep	at
+1	Prep	below
+1	Prep	by
+1	Prep	for
+1	Prep	from
+1	Prep	into
+1	Prep	near
+1	Prep	of
+1	Prep	on
+1	Prep	over
+1	Prep	through
+1	Prep	with
+
+# Proper nouns.  Note that our Proper tag is just for people.
+1	Proper	Arthur
+1	Proper	Guinevere
+1	Proper	Sir Lancelot
+1	Proper	Sir Bedevere
+1	Proper	Zoot
+1	Proper	Dingo
+1	Proper	Patsy
+1	Proper	Uther Pendragon
+
+# Verbs (third person singular present).
+# Note that only transitive verbs get our VerbT tag,
+# and some of those could also function as intransitives!
+1	VerbT	has
+1	VerbT	covers
+1	VerbT	is
+1	VerbT	drinks

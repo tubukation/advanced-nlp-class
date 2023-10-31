@@ -80,4 +80,14 @@
 10	NP	DT Proper
 
 10	Nbar	Noun
-#1	N
+#1	Nbar	NNP
+2	Nbar	Proper
+1	Nbar	Proper2
+1	Nbar	Nbar PP
+
+10	PP	Prep NP
+10	PP	TO NP
+
+9	VERB	VerbT
+1	VERB	VB
+
