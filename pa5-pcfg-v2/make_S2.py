@@ -112,3 +112,46 @@ if __name__ == '__main__':
     # ngram counts by terminal e.g. 'speak'
     raw_unigram_counts = get_unigram_counts(data)
     raw_bigram_counts = get_bigram_counts(data)
+    raw_trigram_counts = get_trigram_counts(data)
+
+    # Compute ngram    counts by pre-terminal. e.g. 'verb'
+    # Note unigram counts are +1 smoothed
+    unigram_counts = {}
+    bigram_counts = {}
+    trigram_counts = {}
+
+    for k1,v1 in terminals.items():
+        unigram_counts[k1] = 1 + sum([raw_unigram_counts.get(w1,0) 
+            for w1 in v1])
+        for k2,v2 in terminals.items():
+            bigram_counts[(k1,k2)] = sum([raw_bigram_counts.get((w1,w2),0) 
+                for w1 in v1 
+                    for w2 in v2])
+            for k3,v3 in terminals.items():
+                trigram_counts[(k1,k2,k3)] = sum([raw_trigram_counts.get((w1,w2,w3),0) 
+                    for w1 in v1 
+                        for w2 in v2
+                            for w3 in v3])
+
+    # Write S2.gr to stdout
+    # Probalilities are weighted pre-terminal counts
+    # Weights are 1:10:60
+    # This is a funny weighting scheme. See WEIGHT_* in code below but
+    #  I think it applies the necessary ratios
+    # WEIGHT_UNIGRAM = 1 is implicit
+    WEIGHT_BIGRAM = 10
+    WEIGHT_TRIGRAM = 60
+    print '1\tS2'
+    for k1 in sorted(terminals.keys()):
+        print '%d\tS2\t_%s' % (unigram_counts[k1], k1)
+    for k1 in sorted(terminals.keys()):
+        n1 = unigram_counts[k1]
+        print '%d\t_%s\t%s' % (1, k1, k1)
+        for k2 in sorted(terminals.keys()):
+            n2 = bigram_counts[(k1,k2)]
+            if n2:
+                print '%d\t_%s\t%s _%s' % (WEIGHT_BIGRAM * n2, k1, k1, k2)
+            for k3 in sorted(terminals.keys()):
+                n3 = trigram_counts[(k1,k2,k3)]
+                if n3:
+                    print '%d\t_%s\t%s %s _%s' % (WEIGHT_TRIGRAM * n3, k1, k1, k2, k3)
