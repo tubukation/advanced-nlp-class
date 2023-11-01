@@ -264,3 +264,88 @@
 1	MD	can
 1	MD	could
 1	MD	may
+1	MD	might
+1	MD	must
+1	MD	ought
+1	MD	shall
+1	MD	should
+1	MD	will
+1	MD	would
+
+
+# Verbs (past participle).
+1	VBN	had
+1	VBN	spoken
+1	VBN	covered
+1	VBN	been
+1	VBN	ridden
+1	VBN	drunk
+1	VBN	grown
+1	VBN	carried
+1	VBN	suggested
+1	VBN	migrated
+1	VBN	known
+
+# Verbs (past tense).
+1	VBD	had
+1	VBD	spoke
+1	VBD	covered
+1	VBD	was
+1	VBD	were
+1	VBD	rode
+1	VBD	drank
+1	VBD	grew
+1	VBD	carried
+1	VBD	suggested
+1	VBD	migrated
+1	VBD	knew
+
+
+# More third person singular verbs.
+1	VBZ	speaks
+1	VBZ	grows
+1	VBZ	goes
+1	VBZ	migrates
+1	VBZ	suggests
+1	VBZ	knows
+
+1	DT	either
+
+# Coordinating conjunctions.
+1	CC	and
+1	CC	but
+1	CC	or
+1	CC	either
+1	CC	nor
+1	CC	neither
+1	CC	so
+
+
+
+
+# Possessive personal pronouns
+1	PRP$	her
+1	PRP$	his
+1	PRP$	its
+1	PRP$	their
+
+# Adverbs.
+1	RB	again
+1	RB	already
+1	RB	currently
+1	RB	frequently
+1	RB	precisely
+1	RB	south
+1	RB	successfully
+1	RB	unfortunately
+
+
+# Pauses.
+1	PAUSE	,
+1	PAUSE2 	...
+1	PAUSE2 	--
+1	PAUSE2 	;
+1	PAUSE2 	:
+
+# 'not'
+1	RB	not
