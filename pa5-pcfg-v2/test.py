@@ -15,4 +15,14 @@ word_text = '''1	JJ	bloody
 1	JJ	sensational
 1	JJ	comparable
 1	JJ	angolian
-1	JJ	y
+1	JJ	yellow
+1	JJ	plodding
+'''
+
+import re
+RE_JJ = re.compile(r'JJ\s+(\w+)')
+def get_jj(line):
+	return RE_JJ.search(line).group(1)
+
+def get_lines(text):
+	return [ln.strip() for ln in text.split('\n') if ln.str
