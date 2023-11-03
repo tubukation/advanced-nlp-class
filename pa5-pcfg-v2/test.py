@@ -25,4 +25,13 @@ def get_jj(line):
 	return RE_JJ.search(line).group(1)
 
 def get_lines(text):
-	return [ln.strip() for ln in text.split('\n') if ln.str
+	return [ln.strip() for ln in text.split('\n') if ln.strip()]
+
+word_lines = get_lines(word_text)
+words = [get_jj(ln) for ln in word_lines]
+
+text = file('dev.sen', 'rt').read()
+lines = get_lines(text)
+
+def get_matching_lines(word):
+	return [ln for ln in lines i
