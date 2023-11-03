@@ -34,4 +34,11 @@ text = file('dev.sen', 'rt').read()
 lines = get_lines(text)
 
 def get_matching_lines(word):
-	return [ln for ln in lines i
+	return [ln for ln in lines if word in ln]
+
+for w in words:
+	matching_lines = get_matching_lines(w)
+	ln = matching_lines[0] if matching_lines else ''
+	print '%20s : %d %s' % (w, len(matching_lines), ln)
+
+
