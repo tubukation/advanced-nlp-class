@@ -516,3 +516,204 @@ public class PCFGParserTester {
         private static Tree<String> binarizeTreeHelper(Tree<String> tree,
                                                    int numChildrenGenerated, 
                                                    String intermediateLabel) {
+            Tree<String> leftTree = tree.getChildren().get(numChildrenGenerated);
+            List<Tree<String>> children = new ArrayList<Tree<String>>();
+            children.add(binarizeTree(leftTree));
+            if (numChildrenGenerated < tree.getChildren().size() - 1) {
+                Tree<String> rightTree = binarizeTreeHelper(tree, numChildrenGenerated + 1, 
+                                                intermediateLabel + "_" + leftTree.getLabel());
+                children.add(rightTree);
+            }
+            return new Tree<String>(intermediateLabel, children);
+        } 
+ 
+        public static Tree<String> unAnnotateTree(Tree<String> annotatedTree) {
+
+          // Remove intermediate nodes (labels beginning with "@"
+          // Remove all material on node labels which follow their base symbol 
+          // (cuts at the leftmost -, ^, or : character)
+          // Examples: a node with label @NP->DT_JJ will be spliced out, 
+          // and a node with label NP^S will be reduced to NP
+
+            Tree<String> debinarizedTree =
+                Trees.spliceNodes(annotatedTree, new Filter<String>() {
+                    public boolean accept(String s) {
+                        return s.startsWith("@");
+                    }
+                });
+            Tree<String> unAnnotatedTree = (new Trees.FunctionNodeStripper()).transformTree(debinarizedTree);
+            return unAnnotatedTree;
+        }
+    }
+
+
+  // Lexicon ====================================================================
+
+  /**
+   * Simple default implementation of a lexicon, which scores word,
+   * tag pairs with a smoothed estimate of P(tag|word)/P(tag).
+   */
+    public static class Lexicon {
+
+        CounterMap<String,String> wordToTagCounters = new CounterMap<String, String>();
+        double totalTokens = 0.0;
+        double totalWordTypes = 0.0;
+        Counter<String> tagCounter = new Counter<String>();
+        Counter<String> wordCounter = new Counter<String>();
+        Counter<String> typeTagCounter = new Counter<String>();
+
+        public Set<String> getAllTags() {
+            return tagCounter.keySet();
+        }
+
+        public boolean isKnown(String word) {
+            return wordCounter.keySet().contains(word);
+        }
+
+        /* Returns a smoothed estimate of P(word|tag) */
+        public double scoreTagging(String word, String tag) {
+            double p_tag = tagCounter.getCount(tag) / totalTokens;
+            double c_word = wordCounter.getCount(word);
+            double c_tag_and_word = wordToTagCounters.getCount(word, tag);
+            if (c_word < 10) { // rare or unknown
+                c_word += 1.0;
+                c_tag_and_word += typeTagCounter.getCount(tag) / totalWordTypes;
+            }
+            double p_word = (1.0 + c_word) / (totalTokens + totalWordTypes);
+            double p_tag_given_word = c_tag_and_word / c_word;
+            return p_tag_given_word / p_tag * p_word;
+        }
+
+        /* Builds a lexicon from the observed tags in a list of training trees. */
+        public Lexicon(List<Tree<String>> trainTrees) {
+            for (Tree<String> trainTree : trainTrees) {
+                List<String> words = trainTree.getYield();
+                List<String> tags = trainTree.getPreTerminalYield();
+                for (int position = 0; position < words.size(); position++) {
+                    String word = words.get(position);
+                    String tag = tags.get(position);
+                    tallyTagging(word, tag);
+                }
+            }
+        }
+
+        private void tallyTagging(String word, String tag) {
+            if (! isKnown(word)) {
+                totalWordTypes += 1.0;
+                typeTagCounter.incrementCount(tag, 1.0);
+            }
+            totalTokens += 1.0;
+            tagCounter.incrementCount(tag, 1.0);
+            wordCounter.incrementCount(word, 1.0);
+            wordToTagCounters.incrementCount(word, tag, 1.0);
+        }
+    }
+
+  // Grammar ====================================================================
+
+  /**
+   * Simple implementation of a PCFG grammar, offering the ability to
+   * look up rules by their child symbols.  Rule probability estimates
+   * are just relative frequency estimates off of training trees.
+   */
+    public static class Grammar {
+
+        Map<String, List<BinaryRule>> binaryRulesByLeftChild = new HashMap<String, List<BinaryRule>>();
+        Map<String, List<BinaryRule>> binaryRulesByRightChild = new HashMap<String, List<BinaryRule>>();
+        Map<String, List<UnaryRule>> unaryRulesByChild = new HashMap<String, List<UnaryRule>>();
+
+        /* Rules in grammar are indexed by child for easy access when
+         * doing bottom up parsing. 
+         */
+        public List<BinaryRule> getBinaryRulesByLeftChild(String leftChild) {
+            return CollectionUtils.getValueList(binaryRulesByLeftChild, leftChild);
+        }
+
+        public List<BinaryRule> getBinaryRulesByRightChild(String rightChild) {
+            return CollectionUtils.getValueList(binaryRulesByRightChild, rightChild);
+        }
+
+        public List<UnaryRule> getUnaryRulesByChild(String child) {
+            return CollectionUtils.getValueList(unaryRulesByChild, child);
+        }
+
+        public String toString() {
+          StringBuilder sb = new StringBuilder();
+          List<String> ruleStrings = new ArrayList<String>();
+          for (String leftChild : binaryRulesByLeftChild.keySet()) {
+            for (BinaryRule binaryRule : getBinaryRulesByLeftChild(leftChild)) {
+              ruleStrings.add(binaryRule.toString());
+            }
+          }
+          for (String child : unaryRulesByChild.keySet()) {
+            for (UnaryRule unaryRule : getUnaryRulesByChild(child)) {
+              ruleStrings.add(unaryRule.toString());
+            }
+          }
+          for (String ruleString : CollectionUtils.sort(ruleStrings)) {
+            sb.append(ruleString);
+            sb.append("\n");
+          }
+          return sb.toString();
+        }
+
+        private void addBinary(BinaryRule binaryRule) {
+            CollectionUtils.addToValueList(binaryRulesByLeftChild, binaryRule.getLeftChild(), binaryRule);
+            CollectionUtils.addToValueList(binaryRulesByRightChild, binaryRule.getRightChild(), binaryRule);
+        }
+
+        private void addUnary(UnaryRule unaryRule) {
+            CollectionUtils.addToValueList(unaryRulesByChild, unaryRule.getChild(), unaryRule);
+        }
+
+        /* A builds PCFG using the observed counts of binary and unary
+         * productions in the training trees to estimate the probabilities
+         * for those rules.  
+         */ 
+        public Grammar(List<Tree<String>> trainTrees) {
+            Counter<UnaryRule> unaryRuleCounter = new Counter<UnaryRule>();
+            Counter<BinaryRule> binaryRuleCounter = new Counter<BinaryRule>();
+            Counter<String> symbolCounter = new Counter<String>();
+            for (Tree<String> trainTree : trainTrees) {
+                tallyTree(trainTree, symbolCounter, unaryRuleCounter, binaryRuleCounter);
+            }
+            for (UnaryRule unaryRule : unaryRuleCounter.keySet()) {
+                double unaryProbability = unaryRuleCounter.getCount(unaryRule) / symbolCounter.getCount(unaryRule.getParent());
+                unaryRule.setScore(unaryProbability);
+                addUnary(unaryRule);
+            }
+            for (BinaryRule binaryRule : binaryRuleCounter.keySet()) {
+                double binaryProbability = binaryRuleCounter.getCount(binaryRule) / symbolCounter.getCount(binaryRule.getParent());
+                binaryRule.setScore(binaryProbability);
+                addBinary(binaryRule);
+            }
+        }
+
+        private void tallyTree(Tree<String> tree, Counter<String> symbolCounter,
+                               Counter<UnaryRule> unaryRuleCounter, 
+                               Counter<BinaryRule> binaryRuleCounter) {
+            if (tree.isLeaf()) return;
+            if (tree.isPreTerminal()) return;
+            if (tree.getChildren().size() == 1) {
+                UnaryRule unaryRule = makeUnaryRule(tree);
+                symbolCounter.incrementCount(tree.getLabel(), 1.0);
+                unaryRuleCounter.incrementCount(unaryRule, 1.0);
+            }
+            if (tree.getChildren().size() == 2) {
+                BinaryRule binaryRule = makeBinaryRule(tree);
+                symbolCounter.incrementCount(tree.getLabel(), 1.0);
+                binaryRuleCounter.incrementCount(binaryRule, 1.0);
+            }
+            if (tree.getChildren().size() < 1 || tree.getChildren().size() > 2) {
+                throw new RuntimeException("Attempted to construct a Grammar with an illegal tree: "+tree);
+            }
+            for (Tree<String> child : tree.getChildren()) {
+                tallyTree(child, symbolCounter, unaryRuleCounter,  binaryRuleCounter);
+            }
+        }
+
+        private UnaryRule makeUnaryRule(Tree<String> tree) {
+            return new UnaryRule(tree.getLabel(), tree.getChildren().get(0).getLabel());
+        }
+
+        private BinaryRule makeBinaryRule(Tree<String> tree) {
