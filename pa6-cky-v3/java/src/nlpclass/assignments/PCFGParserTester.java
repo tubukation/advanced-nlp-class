@@ -906,3 +906,108 @@ public class PCFGParserTester {
       Tree<String> normalizedTree = treeTransformer.transformTree(tree);
       // System.out.println(Trees.PennTreeRenderer.render(normalizedTree));
       normalizedTreeList.add(normalizedTree);
+    }
+    return normalizedTreeList;
+  }
+
+
+  private static List<Tree<String>> readMASCTrees(String basePath) {
+    System.out.println("MASC basepath: " + basePath);
+    Collection<Tree<String>> trees = MASCTreebankReader.readTrees(basePath);
+    // normalize trees
+    Trees.TreeTransformer<String> treeTransformer = new Trees.StandardTreeNormalizer();
+    List<Tree<String>> normalizedTreeList = new ArrayList<Tree<String>>();
+    for (Tree<String> tree : trees) {
+      Tree<String> normalizedTree = treeTransformer.transformTree(tree);
+      // System.out.println(Trees.PennTreeRenderer.render(normalizedTree));
+      normalizedTreeList.add(normalizedTree);
+    }
+    return normalizedTreeList;
+  }
+  
+  
+  public static void main(String[] args) {
+
+    // set up default options ..............................................
+    Map<String, String> options = new HashMap<String, String>();
+    options.put("--path",      "../data/parser/");
+    options.put("--data",      "masc");
+    options.put("--parser",    "nlpclass.assignments.PCFGParserTester$BaselineParser");
+    options.put("--maxLength", "20");
+
+    // let command-line options supersede defaults .........................
+    options.putAll(CommandLineUtils.simpleCommandLineParser(args));
+    System.out.println("PCFGParserTester options:");
+    for (Map.Entry<String, String> entry: options.entrySet()) {
+        System.out.printf("  %-12s: %s%n", entry.getKey(), entry.getValue());
+    }
+    System.out.println();
+
+    MAX_LENGTH = Integer.parseInt(options.get("--maxLength"));
+
+    Parser parser;
+    try {
+        Class parserClass = Class.forName(options.get("--parser"));
+        parser = (Parser) parserClass.newInstance();
+    } catch (Exception e) {
+        throw new RuntimeException(e);
+    }
+    System.out.println("Using parser: " + parser);
+
+    String basePath = options.get("--path");
+    String preBasePath = basePath;
+    String dataSet = options.get("--data");
+    if (!basePath.endsWith("/")) {
+        basePath += "/";
+    }
+    //basePath += dataSet;
+    System.out.println("Data will be loaded from: " + basePath + "\n");
+
+    List<Tree<String>> trainTrees = new ArrayList<Tree<String>>();
+    List<Tree<String>> validationTrees = new ArrayList<Tree<String>>();
+    List<Tree<String>> testTrees = new ArrayList<Tree<String>>();
+
+    if (dataSet.equals("miniTest")) {
+        // training data: first 3 of 4 datums
+        basePath += "parser/"+dataSet;
+        System.out.println("Loading training trees...");
+        trainTrees = readTrees(basePath, 1, 3);
+        System.out.println("done.");
+
+        // test data: last of 4 datums
+        System.out.println("Loading test trees...");
+        testTrees = readTrees(basePath, 4, 4);
+        System.out.println("done.");
+    }
+    else if (dataSet.equals("masc")) {
+        basePath += "parser/";
+        // training data: MASC train
+        System.out.println("Loading MASC training trees... from: "+basePath+"masc/train");
+        trainTrees.addAll(readMASCTrees(basePath+"masc/train", 0, 38));
+        System.out.println("done.");
+        System.out.println("Train trees size: "+trainTrees.size());
+
+        System.out.println("First train tree: "+Trees.PennTreeRenderer.render(trainTrees.get(0)));
+        System.out.println("Last train tree: "+Trees.PennTreeRenderer.render(trainTrees.get(trainTrees.size()-1)));
+
+        // test data: MASC devtest
+        System.out.println("Loading MASC test trees...");
+        testTrees.addAll(readMASCTrees(basePath+"masc/devtest", 0, 11));
+        //testTrees.addAll(readMASCTrees(basePath+"masc/blindtest", 0, 8));
+        System.out.println("Test trees size: "+testTrees.size());
+        System.out.println("done.");
+
+        System.out.println("First test tree: "+Trees.PennTreeRenderer.render(testTrees.get(0)));
+        System.out.println("Last test tree: "+Trees.PennTreeRenderer.render(testTrees.get(testTrees.size()-1)));
+    }
+    else if (!dataSet.equals("miniTest") && !dataSet.equals("masc")){
+      throw new RuntimeException("Bad data set: " + dataSet + ": use miniTest or masc."); 
+    }
+
+    System.out.println("\nTraining parser...");
+    parser.train(trainTrees);
+
+    System.out.println("\nTesting parser...");
+    testParser(parser, testTrees);
+  }
+}
