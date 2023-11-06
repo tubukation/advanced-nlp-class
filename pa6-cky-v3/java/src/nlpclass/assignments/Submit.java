@@ -99,3 +99,167 @@ public class Submit {
   private String homework_id() {
     return "6";
   }
+
+
+  private List<String> validParts() {
+    List<String> parts = new ArrayList<String>();
+    parts.add("Development Sentences");
+    parts.add("Test Sentences");
+    return parts;
+  }
+    
+  private List<List<String>> sources() {
+      List<List<String>> srcs = new ArrayList<List<String>>();
+      List<String> tmp;
+      tmp = new ArrayList<String>();
+      tmp.add("src/nlpclass/assignments/PCFGParserTester.java");
+      srcs.add(tmp);  // once for train
+      tmp = new ArrayList<String>();
+      tmp.add("src/nlpclass/assignments/PCFGParserTester.java");
+      srcs.add(tmp);  // once for test
+      return srcs;
+  }
+
+  private String challenge_url() {
+    return "https://class.coursera.org/nlp/assignment/challenge";
+    //return "https://class.coursera.org/nlp-staging/assignment/challenge";
+  }
+
+  private String submit_url() {
+    return "https://class.coursera.org/nlp/assignment/submit";
+    //return "https://class.coursera.org/nlp-staging/assignment/submit";
+  }
+
+ 
+  private static List<Tree<String>> readMASCTrees(String basePath, int low, int high) {
+    Collection<Tree<String>> trees = MASCTreebankReader.readTrees(basePath, low, high);
+    // normalize trees
+    Trees.TreeTransformer<String> treeTransformer = new Trees.StandardTreeNormalizer();
+    List<Tree<String>> normalizedTreeList = new ArrayList<Tree<String>>();
+    for (Tree<String> tree : trees) {
+      Tree<String> normalizedTree = treeTransformer.transformTree(tree);
+      normalizedTreeList.add(normalizedTree);
+    }
+    return normalizedTreeList;
+  }
+
+
+  private static double testParser(Parser parser, List<Tree<String>> testTrees, PrintStream out) {
+    EnglishPennTreebankParseEvaluator.LabeledConstituentEval<String> eval = 
+      new EnglishPennTreebankParseEvaluator.LabeledConstituentEval<String>
+      (Collections.singleton("ROOT"), 
+       new HashSet<String>(Arrays.asList(new String[] {"''", "``", ".", ":", ","})));
+    int numTrees = testTrees.size();
+    for (int i = 0; i < numTrees; i++) {
+      int treenum = i + 1;
+      out.println("== Parsing tree " + treenum + " of " + numTrees + "...");
+      Tree<String> testTree = testTrees.get(i);
+
+      List<String> testSentence = testTree.getYield();
+      if (testSentence.size() > MAX_LENGTH)
+        continue;
+      Tree<String> guessedTree = parser.getBestParse(testSentence);
+
+      //out.println("Guess:\n"+Trees.PennTreeRenderer.render(guessedTree));
+      //out.println("Gold:\n"+Trees.PennTreeRenderer.render(testTree));
+
+      eval.evaluate(guessedTree, testTree);
+    }
+    return eval.display(true);
+  }
+
+ 
+
+  protected String output(int partId, String ch_aux) {
+      System.out.println(String.format("== getting output for part: %d", partId));
+      //System.out.println(String.format("== getting output for part: %d, ch_aux: %s", partId, ch_aux));
+      if (ch_aux == null) {
+        System.out.println("== Error receiving data from server. Please try again.");
+      }
+
+      /* override stdout */
+      PrintStream out = System.out;
+      System.setOut(new PrintStream(new OutputStream() {
+        @Override public void write(int b) throws IOException {}
+      }));
+
+      int version = 1;
+
+      //Parser parser = new BaselineParser();
+      Parser parser = new PCFGParser();
+      String basePath = "../data/parser/masc/";
+
+      out.println("== Training parser...");
+      List<Tree<String>> trainTrees = readMASCTrees(basePath + "train", 0, 38);
+      parser.train(trainTrees);
+      out.println("== done training.");
+
+      double f1;
+      if (partId == 1) {
+        out.println("== Reading in development set...");
+        List<Tree<String>> testTrees = readMASCTrees(basePath + "devtest", 0, 11);
+        out.println("== Testing on development set...");
+        f1 = testParser(parser, testTrees, out);
+      } else if (partId == 2) {
+        out.println("== Reading in test set...");
+
+        StringReader testTreeReader = new StringReader(ch_aux);
+        Trees.PennTreeReader ptr = new Trees.PennTreeReader(testTreeReader);
+
+        List<Tree<String>> rawTestTrees = new ArrayList<Tree<String>>();
+        while (ptr.hasNext()) {
+          rawTestTrees.add(ptr.next());
+        }
+
+        Trees.TreeTransformer<String> treeTransformer = new Trees.StandardTreeNormalizer();
+        List<Tree<String>> testTrees = new ArrayList<Tree<String>>();
+        for (Tree<String> tree : rawTestTrees) {
+          Tree<String> normalizedTree = treeTransformer.transformTree(tree);
+          testTrees.add(normalizedTree);
+        }
+
+        out.println("== Testing on test set...");
+        f1 = testParser(parser, testTrees, out);
+      } else {
+        out.println("!!! Invalid part choice: " + partId);
+        System.setOut(out);
+        return null;
+      }
+
+      System.setOut(out);
+      String jsonSubmit = "[" + partId + "," + version + "," + f1 + "]";
+
+      return jsonSubmit;
+  }
+
+  // ========================= CHALLENGE HELPERS =========================
+
+  private String source(int partId) {
+    StringBuffer src = new StringBuffer();
+    List<List<String>> src_files = sources();
+    if(partId < src_files.size()) {
+      List<String> flist = src_files.get(partId - 1);
+      for(String fname : flist) {
+        try {
+          BufferedReader reader = new BufferedReader(new FileReader(fname));
+          String line;
+          while((line = reader.readLine()) != null) {
+            src.append(line);
+          }
+          reader.close();
+          src.append("||||||||");
+        } catch (IOException e) {
+          System.err.println(String.format("!! Error reading file '%s': %s",
+                                            fname, e.getMessage()));
+          return src.toString();
+        }
+      }
+    }
+    return src.toString();
+  }
+
+
+  private boolean isValidPartId(int partId) {
+    List<String> partNames = validParts();
+    return (partId >= 1 && partId <= partNames.size() + 1);
+  }
