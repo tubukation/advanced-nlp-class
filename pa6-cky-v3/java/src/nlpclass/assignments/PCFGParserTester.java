@@ -717,3 +717,192 @@ public class PCFGParserTester {
         }
 
         private BinaryRule makeBinaryRule(Tree<String> tree) {
+            return new BinaryRule(tree.getLabel(), 
+                                  tree.getChildren().get(0).getLabel(), 
+                                  tree.getChildren().get(1).getLabel());
+        }
+    }
+
+
+  // BinaryRule =================================================================
+
+  /* A binary grammar rule with score representing its probability. */
+  public static class BinaryRule {
+
+    String parent;
+    String leftChild;
+    String rightChild;
+    double score;
+
+    public String getParent() {
+      return parent;
+    }
+
+    public String getLeftChild() {
+      return leftChild;
+    }
+
+    public String getRightChild() {
+      return rightChild;
+    }
+
+    public double getScore() {
+      return score;
+    }
+
+    public void setScore(double score) {
+      this.score = score;
+    }
+
+    public boolean equals(Object o) {
+      if (this == o) return true;
+      if (!(o instanceof BinaryRule)) return false;
+
+      final BinaryRule binaryRule = (BinaryRule) o;
+
+      if (leftChild != null ? !leftChild.equals(binaryRule.leftChild) : binaryRule.leftChild != null) 
+        return false;
+      if (parent != null ? !parent.equals(binaryRule.parent) : binaryRule.parent != null) 
+        return false;
+      if (rightChild != null ? !rightChild.equals(binaryRule.rightChild) : binaryRule.rightChild != null) 
+        return false;
+
+      return true;
+    }
+
+    public int hashCode() {
+      int result;
+      result = (parent != null ? parent.hashCode() : 0);
+      result = 29 * result + (leftChild != null ? leftChild.hashCode() : 0);
+      result = 29 * result + (rightChild != null ? rightChild.hashCode() : 0);
+      return result;
+    }
+
+    public String toString() {
+      return parent + " -> " + leftChild + " " + rightChild + " %% "+score;
+    }
+
+    public BinaryRule(String parent, String leftChild, String rightChild) {
+      this.parent = parent;
+      this.leftChild = leftChild;
+      this.rightChild = rightChild;
+    }
+  }
+
+  // UnaryRule ==================================================================
+
+  /** A unary grammar rule with score representing its probability. */
+  public static class UnaryRule {
+
+    String parent;
+    String child;
+    double score;
+
+    public String getParent() {
+      return parent;
+    }
+
+    public String getChild() {
+      return child;
+    }
+
+    public double getScore() {
+      return score;
+    }
+
+    public void setScore(double score) {
+      this.score = score;
+    }
+
+    public boolean equals(Object o) {
+      if (this == o) return true;
+      if (!(o instanceof UnaryRule)) return false;
+
+      final UnaryRule unaryRule = (UnaryRule) o;
+
+      if (child != null ? !child.equals(unaryRule.child) : unaryRule.child != null) return false;
+      if (parent != null ? !parent.equals(unaryRule.parent) : unaryRule.parent != null) return false;
+
+      return true;
+    }
+
+    public int hashCode() {
+      int result;
+      result = (parent != null ? parent.hashCode() : 0);
+      result = 29 * result + (child != null ? child.hashCode() : 0);
+      return result;
+    }
+
+    public String toString() {
+      return parent + " -> " + child + " %% "+score;
+    }
+
+    public UnaryRule(String parent, String child) {
+      this.parent = parent;
+      this.child = child;
+    }
+  }
+
+
+  // PCFGParserTester ===========================================================
+
+    // Longest sentence length that will be tested on.
+    private static int MAX_LENGTH = 20;
+ 
+    private static double testParser(Parser parser, List<Tree<String>> testTrees) {
+        EnglishPennTreebankParseEvaluator.LabeledConstituentEval<String> eval = 
+            new EnglishPennTreebankParseEvaluator.LabeledConstituentEval<String>(
+                Collections.singleton("ROOT"), 
+                new HashSet<String>(Arrays.asList(new String[] {"''", "``", ".", ":", ","})));
+        for (Tree<String> testTree : testTrees) {
+            List<String> testSentence = testTree.getYield();
+
+            if (testSentence.size() > MAX_LENGTH)
+                continue;
+            Tree<String> guessedTree = parser.getBestParse(testSentence);
+            System.out.println("Guess:\n"+Trees.PennTreeRenderer.render(guessedTree));
+            System.out.println("Gold:\n"+Trees.PennTreeRenderer.render(testTree));
+            eval.evaluate(guessedTree, testTree);
+        }   
+        System.out.println();
+        return eval.display(true);
+    }
+  
+    private static List<Tree<String>> readTrees(String basePath, int low, int high) {
+        Collection<Tree<String>> trees = PennTreebankReader.readTrees(basePath, low, high);
+        // normalize trees
+        Trees.TreeTransformer<String> treeTransformer = new Trees.StandardTreeNormalizer();
+        List<Tree<String>> normalizedTreeList = new ArrayList<Tree<String>>();
+        for (Tree<String> tree : trees) {
+            Tree<String> normalizedTree = treeTransformer.transformTree(tree);
+            // System.out.println(Trees.PennTreeRenderer.render(normalizedTree));
+            normalizedTreeList.add(normalizedTree);
+        }
+        return normalizedTreeList;
+    }
+
+    private static List<Tree<String>> readTrees(String basePath) {
+        Collection<Tree<String>> trees = PennTreebankReader.readTrees(basePath);
+        // normalize trees
+        Trees.TreeTransformer<String> treeTransformer = new Trees.StandardTreeNormalizer();
+        List<Tree<String>> normalizedTreeList = new ArrayList<Tree<String>>();
+        for (Tree<String> tree : trees) {
+          //      System.err.println(tree);
+          Tree<String> normalizedTree = treeTransformer.transformTree(tree);
+          // System.out.println(Trees.PennTreeRenderer.render(normalizedTree));
+          normalizedTreeList.add(normalizedTree);
+        }
+        return normalizedTreeList;
+    }
+
+
+  private static List<Tree<String>> readMASCTrees(String basePath, int low, int high) {
+    System.out.println("MASC basepath: " + basePath);
+    Collection<Tree<String>> trees = MASCTreebankReader.readTrees(basePath, low, high);
+    // normalize trees
+    Trees.TreeTransformer<String> treeTransformer = new Trees.StandardTreeNormalizer();
+    List<Tree<String>> normalizedTreeList = new ArrayList<Tree<String>>();
+    for (Tree<String> tree : trees) {
+      Tree<String> normalizedTree = treeTransformer.transformTree(tree);
+      // System.out.println(Trees.PennTreeRenderer.render(normalizedTree));
+      normalizedTreeList.add(normalizedTree);
