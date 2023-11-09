@@ -185,3 +185,211 @@ public class Trees {
         public boolean isLeftParen(int ch) {
             return ch == '(';
         }
+
+        public boolean isRightParen(int ch) {
+            return ch == ')';
+        }
+        
+        public boolean isSemicolon(int ch) {
+            return ch == ';';
+        }
+
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+    }
+
+    public static class BioIETreeReader extends TreeReader implements Iterator<Tree<String>> {
+        
+        public Tree<String> readRootTree() {
+            try {
+                for (;;) {
+                    readCommentsAndWhiteSpace();
+                    if (!isLeftParen(peek()))
+                        return null;
+                    in.read(); // (
+                    String str = readText();
+                    if ( str.equals("SENT") )
+                        break; // read the sentence
+                    else if ( str.equals("SEC") ) {
+                        // read in the section, "("-less tree, then throw it away
+                        readTree(false);
+                    } else {
+                        //System.out.println("Failed: "+str);
+                        return null; // reading error
+                    }
+                }
+                // We have stripped off "(SENT", so read a "("-less tree.
+                return new Tree<String>(ROOT_LABEL, Collections.singletonList(readTree(false)));
+            } catch (IOException e) {
+                throw new RuntimeException("Error reading tree."+e.toString());
+            }
+        }
+
+        private Tree<String> readTree(boolean matchparen) throws IOException {
+            if ( matchparen )
+                readLeftParen();
+            String label = readColonizedLabel();
+            //System.out.println("  "+label);
+            List<Tree<String>> children = readChildren();
+            readRightParen();
+            return new Tree<String>(label, children);
+        }
+        
+        public String readColonizedLabel() throws IOException {
+            readWhiteSpace();
+            String ret = readText();
+            int i = ret.indexOf(":");
+            if ( i == -1 )
+                return ret;
+            else
+                return ret.substring(0,i);
+        }
+        
+        private List<Tree<String>> readChildren() throws IOException {
+            readWhiteSpace();
+            if (!isLeftParen(peek()))
+                return Collections.singletonList(readLeaf());
+            else
+                return readChildList();
+        }
+
+        private List<Tree<String>> readChildList() throws IOException {
+            List<Tree<String>> children = new ArrayList<Tree<String>>();
+            readWhiteSpace();
+            while (!isRightParen(peek())) {
+                children.add(readTree(true));
+                readWhiteSpace();
+            }
+            return children;
+        }
+                
+        private void readCommentsAndWhiteSpace() throws IOException {
+            int ch;
+            for (;;) {
+                readWhiteSpace();
+                if ( !isSemicolon(peek()) )
+                    return;
+                // read a line
+                ch = in.read();
+                while ( ch != '\n' )
+                    ch = in.read();
+            }
+        }
+
+        public BioIETreeReader(Reader in) {
+            this.in = new PushbackReader(in);
+            nextTree = readRootTree();
+        }
+    }
+
+    public static class PennTreeReader extends TreeReader implements Iterator<Tree<String>> {
+        
+        public Tree<String> readRootTree() {
+            try {
+                readWhiteSpace();
+                if (!isLeftParen(peek()))
+                    return null;
+                return readTree(true);
+            } catch (IOException e) {
+                throw new RuntimeException("Error reading tree.");
+            }
+        }
+
+        private Tree<String> readTree(boolean isRoot) throws IOException {
+            readLeftParen();
+            String label = readLabel();
+            if (label.length() == 0 && isRoot)
+                label = ROOT_LABEL;
+            List<Tree<String>> children = readChildren();
+            readRightParen();
+            return new Tree<String>(label, children);
+        }
+
+        private List<Tree<String>> readChildren() throws IOException {
+            readWhiteSpace();
+            if (!isLeftParen(peek()))
+                return Collections.singletonList(readLeaf());
+            return readChildList();
+        }
+
+        private List<Tree<String>> readChildList() throws IOException {
+            List<Tree<String>> children = new ArrayList<Tree<String>>();
+            readWhiteSpace();
+            while (!isRightParen(peek())) {
+                children.add(readTree(false));
+                readWhiteSpace();
+            }
+            return children;
+        }
+
+        public PennTreeReader(Reader in) {
+            this.in = new PushbackReader(in);
+            nextTree = readRootTree();
+        }
+    }
+
+    public static class GENIATreeReader extends TreeReader implements Iterator<Tree<String>> {
+
+        public Tree<String> readRootTree() {
+            try {
+                readWhiteSpace();
+                if (!isLeftParen(peek()))
+                    return null;
+                return new Tree<String>(ROOT_LABEL, Collections.singletonList(readTree(false)));
+            } catch (IOException e) {
+                throw new RuntimeException("Error reading tree.");
+            }
+        }
+
+        private Tree<String> readTree(boolean isRoot) throws IOException {
+            readLeftParen();
+            String label = readLabel();
+            if (label.length() == 0 && isRoot)
+                label = ROOT_LABEL;
+            List<Tree<String>> children = readChildren();
+            readRightParen();
+            return new Tree<String>(label, children);
+        }
+
+        private List<Tree<String>> readChildren() throws IOException {
+            List<Tree<String>> children = new ArrayList<Tree<String>>();
+            readWhiteSpace();
+            while (!isRightParen(peek())) {
+                if ( isLeftParen(peek()) ) {
+                    children.add(readTree(false));
+                } else {
+                    Tree<String> ret = readSlashLabel();
+                    if ( ret != null )
+                        children.add(ret);
+                }
+                readWhiteSpace();
+            }
+            return children;
+        }
+        
+        private Tree<String> readSlashLabel() throws IOException {
+            String label = readText();
+            int i = label.lastIndexOf("/");
+            if ( i == -1 ) return null;
+            while ( i > 0 && label.charAt(i-1) == '\\' ) {
+                i = label.lastIndexOf("/",i-1);
+            }
+            return new Tree<String>(label.substring(i+1),
+                    Collections.singletonList(new Tree<String>( label.substring(0,i).replaceAll("\\\\\\/","\\/") )));
+        }
+
+        public GENIATreeReader(Reader in) {
+            this.in = new PushbackReader(in);
+            nextTree = readRootTree();
+        }
+    }
+
+    /**
+     * Renderer for pretty-printing trees according to the Penn Treebank indenting
+     * guidelines (mutliline).  Adapted from code originally written by Dan Klein
+     * and modified by Chris Manning.
+     */
+    public static class PennTreeRenderer {
+
+        /**
