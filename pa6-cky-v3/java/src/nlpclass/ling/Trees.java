@@ -393,3 +393,146 @@ public class Trees {
     public static class PennTreeRenderer {
 
         /**
+         * Print the tree as done in Penn Treebank merged files. The formatting
+         * should be exactly the same, but we don't print the trailing whitespace
+         * found in Penn Treebank trees. The basic deviation from a bracketed
+         * indented tree is to in general collapse the printing of adjacent
+         * preterminals onto one line of tags and words.  Additional complexities
+         * are that conjunctions (tag CC) are not collapsed in this way, and that
+         * the unlabeled outer brackets are collapsed onto the same line as the next
+         * bracket down.
+         */
+        public static <L> String render(Tree<L> tree) {
+            StringBuilder sb = new StringBuilder();
+            renderTree(tree, 0, false, false, false, true, sb);
+            sb.append('\n');
+            return sb.toString();
+        }
+
+        /**
+         * Display a node, implementing Penn Treebank style layout
+         */
+        private static <L> void renderTree(Tree<L> tree, int indent,
+                boolean parentLabelNull, boolean firstSibling,
+                boolean leftSiblingPreTerminal, boolean topLevel,
+                StringBuilder sb) {
+            // the condition for staying on the same line in Penn Treebank
+            boolean suppressIndent = (parentLabelNull
+                    || (firstSibling && tree.isPreTerminal()) || (leftSiblingPreTerminal
+                    && tree.isPreTerminal() && (tree.getLabel() == null || !tree
+                    .getLabel().toString().startsWith("CC"))));
+            if (suppressIndent) {
+                sb.append(' ');
+            } else {
+                if (!topLevel) {
+                    sb.append('\n');
+                }
+                for (int i = 0; i < indent; i++) {
+                    sb.append("  ");
+                }
+            }
+            if (tree.isLeaf() || tree.isPreTerminal()) {
+                renderFlat(tree, sb);
+                return;
+            }
+            sb.append('(');
+            sb.append(tree.getLabel());
+            renderChildren(tree.getChildren(), indent + 1,
+                    tree.getLabel() == null
+                            || tree.getLabel().toString() == null, sb);
+            sb.append(')');
+        }
+
+        private static <L> void renderFlat(Tree<L> tree, StringBuilder sb) {
+            if (tree.isLeaf()) {
+                sb.append(tree.getLabel().toString());
+                return;
+            }
+            sb.append('(');
+            sb.append(tree.getLabel().toString());
+            sb.append(' ');
+            sb.append(tree.getChildren().get(0).getLabel().toString());
+            sb.append(')');
+        }
+
+        private static <L> void renderChildren(List<Tree<L>> children,
+                int indent, boolean parentLabelNull, StringBuilder sb) {
+            boolean firstSibling = true;
+            boolean leftSibIsPreTerm = true; // counts as true at beginning
+            for (Tree<L> child : children) {
+                renderTree(child, indent, parentLabelNull, firstSibling,
+                        leftSibIsPreTerm, false, sb);
+                leftSibIsPreTerm = child.isPreTerminal();
+                // CC is a special case
+                if (child.getLabel() != null
+                        && child.getLabel().toString().startsWith("CC")) {
+                    leftSibIsPreTerm = false;
+                }
+                firstSibling = false;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        PennTreeReader reader = new PennTreeReader(
+                new StringReader(
+                        "((S (NP (DT the) (JJ quick) (JJ brown) (NN fox)) (VP (VBD jumped) (PP (IN over) (NP (DT the) (JJ lazy) (NN dog)))) (. .)))"));
+        Tree<String> tree = reader.next();
+        System.out.println(PennTreeRenderer.render(tree));
+        System.out.println(tree);
+    }
+
+    /**
+     * Splices out all nodes which match the provided filter.
+     *
+     * @param tree
+     * @param filter
+     */
+    public static <L> Tree<L> spliceNodes(Tree<L> tree, Filter<L> filter) {
+        List<Tree<L>> rootList = spliceNodesHelper(tree, filter);
+        if (rootList.size() > 1) {
+            throw new IllegalArgumentException("spliceNodes: no unique root after splicing");
+        }
+        if (rootList.size() < 1) {
+            return null;
+        }
+        return rootList.get(0);
+    }
+
+    private static <L> List<Tree<L>> spliceNodesHelper(Tree<L> tree, Filter<L> filter) {
+        List<Tree<L>> splicedChildren = new ArrayList<Tree<L>>();
+        for (Tree<L> child : tree.getChildren()) {
+            List<Tree<L>> splicedChildList = spliceNodesHelper(child, filter);
+            splicedChildren.addAll(splicedChildList);
+        }
+        if (filter.accept(tree.getLabel())) {
+            return splicedChildren;
+        }
+        return Collections.singletonList(new Tree<L>(tree.getLabel(),splicedChildren));
+    }
+
+    /**
+     * Prunes out all nodes which match the provided filter (and nodes which dominate only pruned nodes).
+     *
+     * @param tree
+     * @param filter
+     */
+    public static <L> Tree<L> pruneNodes(Tree<L> tree, Filter<L> filter) {
+        return pruneNodesHelper(tree, filter);
+    }
+
+    private static <L> Tree<L> pruneNodesHelper(Tree<L> tree, Filter<L> filter) {
+        if (filter.accept(tree.getLabel()))
+            return null;
+        List<Tree<L>> prunedChildren = new ArrayList<Tree<L>>();
+        for (Tree<L> child : tree.getChildren()) {
+            Tree<L> prunedChild = pruneNodesHelper(child, filter);
+            if (prunedChild != null)
+                prunedChildren.add(prunedChild);
+        }
+        if (prunedChildren.isEmpty() && !tree.isLeaf())
+            return null;
+        return new Tree<L>(tree.getLabel(), prunedChildren);
+    }
+
+}
