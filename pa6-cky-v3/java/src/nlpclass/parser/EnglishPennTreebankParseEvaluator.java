@@ -12,4 +12,13 @@ import java.io.StringReader;
  * trees.  NOTE: Unlike the standard evaluation, multiplicity over
  * each span is ignored.  Also, punctuation is NOT currently deleted
  * properly (approximate hack), and other normalizations (like AVDP ~
- * 
+ * PRT) are NOT done.
+ *
+ * @author Dan Klein
+ */
+public class EnglishPennTreebankParseEvaluator<L> {
+    abstract static class AbstractEval<L> {
+
+    protected String str = "";
+
+    private int exact
