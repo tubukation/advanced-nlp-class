@@ -21,4 +21,11 @@ public class EnglishPennTreebankParseEvaluator<L> {
 
     protected String str = "";
 
-    private int exact
+    private int exact = 0;
+    private int total = 0;
+
+    private int correctEvents = 0;
+    private int guessedEvents = 0;
+    private int goldEvents = 0;
+
+    abstract Set<Object> ma
