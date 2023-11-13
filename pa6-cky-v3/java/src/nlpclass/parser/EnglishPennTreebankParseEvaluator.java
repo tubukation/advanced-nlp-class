@@ -34,4 +34,7 @@ public class EnglishPennTreebankParseEvaluator<L> {
       evaluate(guess, gold, new PrintWriter(System.out, true));
     }
 
-    /* evaluates precision and re
+    /* evaluates precision and recall by calling makeObjects() to make a
+     * set of structures for guess Tree and gold Tree, and compares them
+     * with each other.  */
+    public double evaluate(Tree<L> guess
