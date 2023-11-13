@@ -28,4 +28,10 @@ public class EnglishPennTreebankParseEvaluator<L> {
     private int guessedEvents = 0;
     private int goldEvents = 0;
 
-    abstract Set<Object> ma
+    abstract Set<Object> makeObjects(Tree<L> tree);
+
+    public void evaluate(Tree<L> guess, Tree<L> gold) {
+      evaluate(guess, gold, new PrintWriter(System.out, true));
+    }
+
+    /* evaluates precision and re
