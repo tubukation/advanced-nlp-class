@@ -37,4 +37,7 @@ public class EnglishPennTreebankParseEvaluator<L> {
     /* evaluates precision and recall by calling makeObjects() to make a
      * set of structures for guess Tree and gold Tree, and compares them
      * with each other.  */
-    public double evaluate(Tree<L> guess
+    public double evaluate(Tree<L> guess, Tree<L> gold, PrintWriter pw) {
+      Set<Object> guessedSet = makeObjects(guess);
+      Set<Object> goldSet = makeObjects(gold);
+      Set<Object> correctSet = ne
