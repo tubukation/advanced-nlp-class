@@ -59,4 +59,10 @@ public class EnglishPennTreebankParseEvaluator<L> {
       // guess.pennPrint(pw);
       // gold.pennPrint(pw);
       return displayPRF(str + " [Current] ", 
-            
+                 correctSet.size(), guessedSet.size(), goldSet.size(), 
+                 currentExact, 1, pw);
+
+    }
+
+    private double displayPRF(String prefixStr,
+                        
