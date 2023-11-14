@@ -51,4 +51,12 @@ public class EnglishPennTreebankParseEvaluator<L> {
       int currentExact = 0;
       if (correctSet.size() == guessedSet.size() &&
           correctSet.size() == goldSet.size()) {
-        exact
+        exact++;
+        currentExact = 1;
+      }
+      total++;
+
+      // guess.pennPrint(pw);
+      // gold.pennPrint(pw);
+      return displayPRF(str + " [Current] ", 
+            
