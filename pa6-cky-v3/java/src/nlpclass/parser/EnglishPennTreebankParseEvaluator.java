@@ -45,4 +45,10 @@ public class EnglishPennTreebankParseEvaluator<L> {
       correctSet.retainAll(guessedSet);
 
       correctEvents += correctSet.size();
-      guessedEvents += guessedSet.s
+      guessedEvents += guessedSet.size();
+      goldEvents += goldSet.size();
+
+      int currentExact = 0;
+      if (correctSet.size() == guessedSet.size() &&
+          correctSet.size() == goldSet.size()) {
+        exact
