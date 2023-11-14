@@ -40,4 +40,9 @@ public class EnglishPennTreebankParseEvaluator<L> {
     public double evaluate(Tree<L> guess, Tree<L> gold, PrintWriter pw) {
       Set<Object> guessedSet = makeObjects(guess);
       Set<Object> goldSet = makeObjects(gold);
-      Set<Object> correctSet = ne
+      Set<Object> correctSet = new HashSet<Object>();
+      correctSet.addAll(goldSet);
+      correctSet.retainAll(guessedSet);
+
+      correctEvents += correctSet.size();
+      guessedEvents += guessedSet.s
