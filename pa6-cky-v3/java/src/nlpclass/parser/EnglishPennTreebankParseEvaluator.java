@@ -65,4 +65,9 @@ public class EnglishPennTreebankParseEvaluator<L> {
     }
 
     private double displayPRF(String prefixStr,
-                        
+                            int correct,
+                            int guessed,
+                            int gold,
+                            int exact,
+                            int total,
+       
