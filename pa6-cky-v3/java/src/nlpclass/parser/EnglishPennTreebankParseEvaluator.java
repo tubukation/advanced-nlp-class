@@ -73,4 +73,8 @@ public class EnglishPennTreebankParseEvaluator<L> {
                             PrintWriter pw) {
 
       double precision = (guessed > 0 ? correct / (double) guessed : 1.0);
-      double recall    = (gold    > 0 ? correct / (double) gold 
+      double recall    = (gold    > 0 ? correct / (double) gold    : 1.0);
+      double f1 = ((precision > 0.0 && recall > 0.0) ? 
+                   2.0 / (1.0 / precision + 1.0 / recall) :
+                   0.0);
+      double exactMatch
