@@ -77,4 +77,10 @@ public class EnglishPennTreebankParseEvaluator<L> {
       double f1 = ((precision > 0.0 && recall > 0.0) ? 
                    2.0 / (1.0 / precision + 1.0 / recall) :
                    0.0);
-      double exactMatch
+      double exactMatch = exact / (double) total;
+
+      pw.printf
+        ("%s   P: %5.2f   R: %5.2f   F1: %5.2f   EX: %5.2f %n",
+         prefixStr,
+         100.0 * precision,
+         100.0 * recal
