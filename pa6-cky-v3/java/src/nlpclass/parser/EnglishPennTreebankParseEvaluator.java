@@ -91,4 +91,8 @@ public class EnglishPennTreebankParseEvaluator<L> {
     }
 
     public double display(boolean verbose) {
-      return display(verbose, new PrintWr
+      return display(verbose, new PrintWriter(System.out, true));
+    }
+
+    public double display(boolean verbose, PrintWriter pw) {
+      return displayPRF(str+" [Average] ", correctEvents, guessedEvents, goldEvents, 
