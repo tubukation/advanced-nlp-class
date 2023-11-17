@@ -83,4 +83,12 @@ public class EnglishPennTreebankParseEvaluator<L> {
         ("%s   P: %5.2f   R: %5.2f   F1: %5.2f   EX: %5.2f %n",
          prefixStr,
          100.0 * precision,
-         100.0 * recal
+         100.0 * recall,
+         100.0 * f1,
+         100.0 * exactMatch);
+
+      return 100.0 * f1;
+    }
+
+    public double display(boolean verbose) {
+      return display(verbose, new PrintWr
