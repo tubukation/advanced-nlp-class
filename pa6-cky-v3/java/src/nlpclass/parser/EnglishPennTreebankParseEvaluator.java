@@ -108,4 +108,14 @@ public class EnglishPennTreebankParseEvaluator<L> {
       return label;
     }
 
-    public int getSta
+    public int getStart() {
+      return start;
+    }
+
+    public int getEnd() {
+      return end;
+    }
+
+    public boolean equals(Object o) {
+      if (this == o) return true;
+      if (!(o instance
