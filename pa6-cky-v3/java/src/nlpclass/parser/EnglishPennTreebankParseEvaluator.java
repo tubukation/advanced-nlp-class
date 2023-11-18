@@ -95,4 +95,17 @@ public class EnglishPennTreebankParseEvaluator<L> {
     }
 
     public double display(boolean verbose, PrintWriter pw) {
-      return displayPRF(str+" [Average] ", correctEvents, guessedEvents, goldEvents, 
+      return displayPRF(str+" [Average] ", correctEvents, guessedEvents, goldEvents, exact, total, pw);
+    }
+  }
+
+  static class LabeledConstituent<L> {
+    L label;
+    int start;
+    int end;
+
+    public L getLabel() {
+      return label;
+    }
+
+    public int getSta
