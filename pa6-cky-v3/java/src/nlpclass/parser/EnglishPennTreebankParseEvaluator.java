@@ -118,4 +118,9 @@ public class EnglishPennTreebankParseEvaluator<L> {
 
     public boolean equals(Object o) {
       if (this == o) return true;
-      if (!(o instance
+      if (!(o instanceof LabeledConstituent)) return false;
+
+      final LabeledConstituent labeledConstituent = (LabeledConstituent) o;
+
+      if (end != labeledConstituent.end) return false;
+      if (st
