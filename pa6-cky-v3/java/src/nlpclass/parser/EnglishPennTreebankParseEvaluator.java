@@ -123,4 +123,8 @@ public class EnglishPennTreebankParseEvaluator<L> {
       final LabeledConstituent labeledConstituent = (LabeledConstituent) o;
 
       if (end != labeledConstituent.end) return false;
-      if (st
+      if (start != labeledConstituent.start) return false;
+      if (label != null ? !label.equals(labeledConstituent.label) : labeledConstituent.label != null) return false;
+
+      return true;
+   
