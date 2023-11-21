@@ -127,4 +127,11 @@ public class EnglishPennTreebankParseEvaluator<L> {
       if (label != null ? !label.equals(labeledConstituent.label) : labeledConstituent.label != null) return false;
 
       return true;
-   
+    }
+
+    public int hashCode() {
+      int result;
+      result = (label != null ? label.hashCode() : 0);
+      result = 29 * result + start;
+      result = 29 * result + end;
+      ret
