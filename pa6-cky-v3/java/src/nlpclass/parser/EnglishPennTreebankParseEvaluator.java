@@ -151,4 +151,10 @@ public class EnglishPennTreebankParseEvaluator<L> {
   public static class LabeledConstituentEval<L> extends AbstractEval<L> {
 
     Set<L> labelsToIgnore;
-    Set<L> pu
+    Set<L> punctuationTags;
+
+    static <L> Tree<L> stripLeaves(Tree<L> tree) {
+      if (tree.isLeaf())
+        return null;
+      if (tree.isPreTerminal())
+        return new Tree<L>(tree.get
