@@ -134,4 +134,12 @@ public class EnglishPennTreebankParseEvaluator<L> {
       result = (label != null ? label.hashCode() : 0);
       result = 29 * result + start;
       result = 29 * result + end;
-      ret
+      return result;
+    }
+
+    public String toString() {
+      return label+"["+start+","+end+"]";
+    }
+
+    public LabeledConstituent(L label, int start, int end) {
+      this.label =
