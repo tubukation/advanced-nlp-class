@@ -142,4 +142,13 @@ public class EnglishPennTreebankParseEvaluator<L> {
     }
 
     public LabeledConstituent(L label, int start, int end) {
-      this.label =
+      this.label = label;
+      this.start = start;
+      this.end = end;
+    }
+  }
+
+  public static class LabeledConstituentEval<L> extends AbstractEval<L> {
+
+    Set<L> labelsToIgnore;
+    Set<L> pu
