@@ -162,4 +162,9 @@ public class EnglishPennTreebankParseEvaluator<L> {
       for (Tree<L> child : tree.getChildren()) {
         children.add(stripLeaves(child));
       }
-      r
+      return new Tree<L>(tree.getLabel(), children);
+    }
+
+    Set<Object> makeObjects(Tree<L> tree) {
+      Tree<L> noLeafTree = stripLeaves(tree);
+      Set<Object> 
