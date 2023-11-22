@@ -167,4 +167,9 @@ public class EnglishPennTreebankParseEvaluator<L> {
 
     Set<Object> makeObjects(Tree<L> tree) {
       Tree<L> noLeafTree = stripLeaves(tree);
-      Set<Object> 
+      Set<Object> set = new HashSet<Object>();
+      addConstituents(noLeafTree, set, 0);
+      return set;
+    }
+
+    private int addConstituents(Tree<L> tree, Set<Object> set, int
