@@ -157,4 +157,9 @@ public class EnglishPennTreebankParseEvaluator<L> {
       if (tree.isLeaf())
         return null;
       if (tree.isPreTerminal())
-        return new Tree<L>(tree.get
+        return new Tree<L>(tree.getLabel());
+      List<Tree<L>> children = new ArrayList<Tree<L>>();
+      for (Tree<L> child : tree.getChildren()) {
+        children.add(stripLeaves(child));
+      }
+      r
