@@ -172,4 +172,12 @@ public class EnglishPennTreebankParseEvaluator<L> {
       return set;
     }
 
-    private int addConstituents(Tree<L> tree, Set<Object> set, int
+    private int addConstituents(Tree<L> tree, Set<Object> set, int start) {
+      if (tree.isLeaf()) {
+        if (punctuationTags.contains(tree.getLabel()))
+          return 0;
+        else
+          return 1;
+      }
+      int end = start;
+      f
