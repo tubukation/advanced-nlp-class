@@ -185,4 +185,11 @@ public class EnglishPennTreebankParseEvaluator<L> {
         end += childSpan;
       }
       L label = tree.getLabel();
-      if (! labelsToI
+      if (! labelsToIgnore.contains(label)) {
+        set.add(new LabeledConstituent<L>(label, start, end));
+      }
+      return end - start;
+    }
+
+
+    public LabeledConstituentEval(Set<L> labelsToIgnore, Set<
