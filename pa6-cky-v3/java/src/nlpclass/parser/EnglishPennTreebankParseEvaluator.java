@@ -180,4 +180,9 @@ public class EnglishPennTreebankParseEvaluator<L> {
           return 1;
       }
       int end = start;
-      f
+      for (Tree<L> child : tree.getChildren()) {
+        int childSpan = addConstituents(child, set, end);
+        end += childSpan;
+      }
+      L label = tree.getLabel();
+      if (! labelsToI
