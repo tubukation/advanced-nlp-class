@@ -192,4 +192,11 @@ public class EnglishPennTreebankParseEvaluator<L> {
     }
 
 
-    public LabeledConstituentEval(Set<L> labelsToIgnore, Set<
+    public LabeledConstituentEval(Set<L> labelsToIgnore, Set<L> punctuationTags) {
+      this.labelsToIgnore = labelsToIgnore;
+      this.punctuationTags = punctuationTags;
+    }
+
+  }
+
+  public static void main(String[] ar
