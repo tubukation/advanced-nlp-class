@@ -40,3 +40,9 @@ public class BoundedList <E> extends AbstractList<E> {
 
   public BoundedList(List<E> list, E boundary) {
     this(list, boundary, boundary);
+  }
+
+  public BoundedList(List<E> list) {
+    this(list, null);
+  }
+}
