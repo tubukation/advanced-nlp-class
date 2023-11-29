@@ -22,4 +22,7 @@ public class CommandLineUtils {
         for (int i = 0; i <= args.length; i++) {
             String key = (i > 0 ? args[i-1] : null);
             String value = (i < args.length ? args[i] : null);
-        
+            if (key == null || key.startsWith("-")) {
+                if (value != null && value.startsWith("-"))
+                    value = null;
+                if (key != null || 
