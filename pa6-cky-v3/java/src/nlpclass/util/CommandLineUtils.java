@@ -19,4 +19,7 @@ public class CommandLineUtils {
    */
     public static Map<String, String> simpleCommandLineParser(String[] args) {
         Map<String, String> map = new HashMap<String, String>();
+        for (int i = 0; i <= args.length; i++) {
+            String key = (i > 0 ? args[i-1] : null);
+            String value = (i < args.length ? args[i] : null);
         
