@@ -25,4 +25,11 @@ public class CommandLineUtils {
             if (key == null || key.startsWith("-")) {
                 if (value != null && value.startsWith("-"))
                     value = null;
-                if (key != null || 
+                if (key != null || value != null)
+                    map.put(key, value);
+            }
+        }
+        return map;
+    }
+
+}
