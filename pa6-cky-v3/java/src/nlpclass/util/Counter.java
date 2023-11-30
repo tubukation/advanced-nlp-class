@@ -179,3 +179,14 @@ public class Counter <E> implements Serializable {
         System.out.println(counter);
         counter.incrementCount("planets", 7);
         System.out.println(counter);
+        counter.incrementCount("planets", 1);
+        System.out.println(counter);
+        counter.setCount("suns", 1);
+        System.out.println(counter);
+        counter.setCount("aliens", 0);
+        System.out.println(counter);
+        System.out.println(counter.toString(2));
+        System.out.println("Total: " + counter.totalCount());
+    }
+
+}
