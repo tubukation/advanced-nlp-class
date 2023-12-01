@@ -5,4 +5,5 @@ package nlpclass.util;
  * @author Dan Klein
  */
 public interface Filter<T> {
- 
+  boolean accept(T t);
+}
