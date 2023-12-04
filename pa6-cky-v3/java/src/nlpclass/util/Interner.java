@@ -11,4 +11,6 @@ import java.util.Map;
  * simply the first object that equals(x) which is passed to the interner.  In
  * this case, it can be true that intern(x) == x.  The backing map can be
  * specified by passing a MapFactory on construction (though the only standard
- * option wh
+ * option which makes much sense is the WeakHashMap, which is slower than a
+ * HashMap, but which allows unneeded keys to be reclaimed by the garbage
+ * collector).  The source of ca
