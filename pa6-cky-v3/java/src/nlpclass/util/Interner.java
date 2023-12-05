@@ -20,4 +20,7 @@ import java.util.Map;
  */
 public class Interner <T> {
   /**
-   * The source of can
+   * The source of canonical objects when a non-interned object is presented to
+   * the interner.  The default implementation is an identity map.
+   */
+  public static interface Canon
