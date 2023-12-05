@@ -13,4 +13,11 @@ import java.util.Map;
  * specified by passing a MapFactory on construction (though the only standard
  * option which makes much sense is the WeakHashMap, which is slower than a
  * HashMap, but which allows unneeded keys to be reclaimed by the garbage
- * collector).  The source of ca
+ * collector).  The source of canonical elements can be changed by specifying an
+ * Interner.Factory on construction.
+ *
+ * @author Dan Klein
+ */
+public class Interner <T> {
+  /**
+   * The source of can
