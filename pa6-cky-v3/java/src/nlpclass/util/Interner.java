@@ -23,4 +23,10 @@ public class Interner <T> {
    * The source of canonical objects when a non-interned object is presented to
    * the interner.  The default implementation is an identity map.
    */
-  public static interface Canon
+  public static interface CanonicalFactory <T> {
+    T build(T object);
+  }
+
+  static class IdentityCanonicalFactory <T> implements CanonicalFactory<T> {
+    public T build(T object) {
+      return obje
