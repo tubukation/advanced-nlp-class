@@ -38,4 +38,9 @@ public class Interner <T> {
 
   /**
    * Returns a canonical representation of the given object.  If the object has
-   * no canonical representation, o
+   * no canonical representation, one is built using the interner's
+   * CanonicalFactory.  The default is that new objects will be their own
+   * canonical instances.
+   *
+   * @param object
+   * @return a canonical representation of tha
