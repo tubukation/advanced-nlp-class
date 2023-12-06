@@ -29,4 +29,13 @@ public class Interner <T> {
 
   static class IdentityCanonicalFactory <T> implements CanonicalFactory<T> {
     public T build(T object) {
-      return obje
+      return object;
+    }
+  }
+
+  Map<T, T> canonicalMap;
+  CanonicalFactory<T> cf;
+
+  /**
+   * Returns a canonical representation of the given object.  If the object has
+   * no canonical representation, o
