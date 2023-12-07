@@ -43,4 +43,10 @@ public class Interner <T> {
    * canonical instances.
    *
    * @param object
-   * @return a canonical representation of tha
+   * @return a canonical representation of that object
+   */
+  public T intern(T object) {
+    T canonical = canonicalMap.get(object);
+    if (canonical == null) {
+      canonical = cf.build(object);
+      canonicalMap.put(canonical, cano
