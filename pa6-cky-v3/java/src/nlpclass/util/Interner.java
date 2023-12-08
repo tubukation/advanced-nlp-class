@@ -49,4 +49,13 @@ public class Interner <T> {
     T canonical = canonicalMap.get(object);
     if (canonical == null) {
       canonical = cf.build(object);
-      canonicalMap.put(canonical, cano
+      canonicalMap.put(canonical, canonical);
+    }
+    return canonical;
+  }
+
+  public Interner() {
+    this(new MapFactory.HashMapFactory<T,T>(), new IdentityCanonicalFactory<T>());
+  }
+
+  public Interner(MapFactory<T,T
