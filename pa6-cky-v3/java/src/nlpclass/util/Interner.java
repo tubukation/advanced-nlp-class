@@ -58,4 +58,12 @@ public class Interner <T> {
     this(new MapFactory.HashMapFactory<T,T>(), new IdentityCanonicalFactory<T>());
   }
 
-  public Interner(MapFactory<T,T
+  public Interner(MapFactory<T,T> mf) {
+    this(mf, new IdentityCanonicalFactory<T>());
+  }
+
+  public Interner(CanonicalFactory<T> f) {
+    this(new MapFactory.HashMapFactory<T,T>(), f);
+  }
+
+  public Interner(MapFactor
