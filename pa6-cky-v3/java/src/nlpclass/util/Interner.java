@@ -66,4 +66,8 @@ public class Interner <T> {
     this(new MapFactory.HashMapFactory<T,T>(), f);
   }
 
-  public Interner(MapFactor
+  public Interner(MapFactory<T,T> mf, CanonicalFactory<T> cf) {
+    canonicalMap = mf.buildMap();
+    this.cf = cf;
+  }
+}
