@@ -21,4 +21,10 @@ public abstract class MapFactory<K,V> implements Serializable {
   }
 
   public static class IdentityHashMapFactory<K,V> extends MapFactory<K,V> {
-    p
+    public Map<K,V> buildMap() {
+      return new IdentityHashMap<K,V>();
+    }
+  }
+
+  public static class TreeMapFactory<K,V> extends MapFactory<K,V> {
+    public Map<K,V> buildMa
