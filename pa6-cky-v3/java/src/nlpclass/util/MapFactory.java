@@ -14,4 +14,11 @@ import java.io.Serializable;
 
 public abstract class MapFactory<K,V> implements Serializable {
 
-  public static class HashMapFactory<
+  public static class HashMapFactory<K,V> extends MapFactory<K,V> {
+    public Map<K,V> buildMap() {
+      return new HashMap<K,V>();
+    }
+  }
+
+  public static class IdentityHashMapFactory<K,V> extends MapFactory<K,V> {
+    p
