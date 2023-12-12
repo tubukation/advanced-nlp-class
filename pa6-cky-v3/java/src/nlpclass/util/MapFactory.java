@@ -27,4 +27,11 @@ public abstract class MapFactory<K,V> implements Serializable {
   }
 
   public static class TreeMapFactory<K,V> extends MapFactory<K,V> {
-    public Map<K,V> buildMa
+    public Map<K,V> buildMap() {
+      return new TreeMap<K,V>();
+    }
+  }
+
+    public static class WeakHashMapFactory<K,V> extends MapFactory<K,V> {
+        public Map<K,V> buildMap() {
+            return new W
