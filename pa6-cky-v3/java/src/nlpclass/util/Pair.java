@@ -17,4 +17,10 @@ public class Pair<F,S> {
   }
 
   public boolean equals(Object o) {
-    if (this == o) ret
+    if (this == o) return true;
+    if (!(o instanceof Pair)) return false;
+    
+    @SuppressWarnings("unchecked")
+    final Pair pair = (Pair) o;
+
+    if (first != null ? !first.equals(pair.first) : pair.first 
