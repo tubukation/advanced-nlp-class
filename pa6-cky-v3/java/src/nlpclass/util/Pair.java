@@ -31,4 +31,10 @@ public class Pair<F,S> {
 
   public int hashCode() {
     int result;
-    result 
+    result = (first != null ? first.hashCode() : 0);
+    result = 29 * result + (second != null ? second.hashCode() : 0);
+    return result;
+  }
+
+  public String toString() {
+    return "(" + getFirst() + ", " + getSec
