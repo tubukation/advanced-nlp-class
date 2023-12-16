@@ -37,4 +37,11 @@ public class Pair<F,S> {
   }
 
   public String toString() {
-    return "(" + getFirst() + ", " + getSec
+    return "(" + getFirst() + ", " + getSecond() + ")";
+  }
+
+  public Pair(F first, S second) {
+    this.first = first;
+    this.second = second;
+  }
+}
