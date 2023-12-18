@@ -13,4 +13,11 @@ import java.io.Serializable;
  *
  * @author Dan Klein
  */
-public class PriorityQueue <E> i
+public class PriorityQueue <E> implements Iterator<E>, Serializable, Cloneable {
+  int size;
+  int capacity;
+  List<E> elements;
+  double[] priorities;
+
+  protected void grow(int newCapacity) {
+    
