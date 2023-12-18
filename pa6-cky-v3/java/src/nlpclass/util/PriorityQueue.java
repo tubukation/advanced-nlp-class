@@ -24,4 +24,15 @@ public class PriorityQueue <E> implements Iterator<E>, Serializable, Cloneable {
     double[] newPriorities = new double[newCapacity];
     if (size > 0) {
       newElements.addAll(elements);
-      System.arraycopy(priorities, 0, ne
+      System.arraycopy(priorities, 0, newPriorities, 0, priorities.length);
+    }
+    elements = newElements;
+    priorities = newPriorities;
+    capacity = newCapacity;
+  }
+
+  protected int parent(int loc) {
+    return (loc - 1) / 2;
+  }
+
+  p
