@@ -57,4 +57,8 @@ public class PriorityQueue <E> implements Iterator<E>, Serializable, Cloneable {
     int leftChild = leftChild(loc);
     if (leftChild < size()) {
       double priority = priorities[loc];
-      double leftChildPriorit
+      double leftChildPriority = priorities[leftChild];
+      if (leftChildPriority > priority)
+        max = leftChild;
+      int rightChild = rightChild(loc);
+      if (rightChild < size(
