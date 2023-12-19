@@ -44,4 +44,12 @@ public class PriorityQueue <E> implements Iterator<E>, Serializable, Cloneable {
   }
 
   protected void heapifyUp(int loc) {
-    if (loc ==
+    if (loc == 0) return;
+    int parent = parent(loc);
+    if (priorities[loc] > priorities[parent]) {
+      swap(loc, parent);
+      heapifyUp(parent);
+    }
+  }
+
+  protected void heapifyDo
