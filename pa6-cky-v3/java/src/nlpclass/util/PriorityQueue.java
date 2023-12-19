@@ -52,4 +52,9 @@ public class PriorityQueue <E> implements Iterator<E>, Serializable, Cloneable {
     }
   }
 
-  protected void heapifyDo
+  protected void heapifyDown(int loc) {
+    int max = loc;
+    int leftChild = leftChild(loc);
+    if (leftChild < size()) {
+      double priority = priorities[loc];
+      double leftChildPriorit
