@@ -35,4 +35,13 @@ public class PriorityQueue <E> implements Iterator<E>, Serializable, Cloneable {
     return (loc - 1) / 2;
   }
 
-  p
+  protected int leftChild(int loc) {
+    return 2 * loc + 1;
+  }
+
+  protected int rightChild(int loc) {
+    return 2 * loc + 2;
+  }
+
+  protected void heapifyUp(int loc) {
+    if (loc ==
