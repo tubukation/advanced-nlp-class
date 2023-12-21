@@ -74,4 +74,9 @@ public class PriorityQueue <E> implements Iterator<E>, Serializable, Cloneable {
   }
 
   protected void swap(int loc1, int loc2) {
-    double tempPriority = pri
+    double tempPriority = priorities[loc1];
+    E tempElement = elements.get(loc1);
+    priorities[loc1] = priorities[loc2];
+    elements.set(loc1, elements.get(loc2));
+    priorities[loc2] = tempPriority;
+    elements.s
