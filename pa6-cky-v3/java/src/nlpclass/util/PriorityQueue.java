@@ -66,3 +66,12 @@ public class PriorityQueue <E> implements Iterator<E>, Serializable, Cloneable {
         if (rightChildPriority > priority && rightChildPriority > leftChildPriority)
           max = rightChild;
       }
+    }
+    if (max == loc)
+      return;
+    swap(loc, max);
+    heapifyDown(max);
+  }
+
+  protected void swap(int loc1, int loc2) {
+    double tempPriority = pri
