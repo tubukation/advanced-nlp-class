@@ -88,3 +88,14 @@ public class PriorityQueue <E> implements Iterator<E>, Serializable, Cloneable {
     size--;
     elements.remove(size);
     heapifyDown(0);
+  }
+
+  /**
+   * Returns true if the priority queue is non-empty
+   */
+  public boolean hasNext() {
+    return ! isEmpty();
+  }
+
+  /**
+   * Returns the element in the queue with highe
