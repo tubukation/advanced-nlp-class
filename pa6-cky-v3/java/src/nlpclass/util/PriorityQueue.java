@@ -79,4 +79,12 @@ public class PriorityQueue <E> implements Iterator<E>, Serializable, Cloneable {
     priorities[loc1] = priorities[loc2];
     elements.set(loc1, elements.get(loc2));
     priorities[loc2] = tempPriority;
-    elements.s
+    elements.set(loc2, tempElement);
+  }
+
+  protected void removeFirst() {
+    if (size < 1) return;
+    swap(0, size - 1);
+    size--;
+    elements.remove(size);
+    heapifyDown(0);
