@@ -108,4 +108,11 @@ public class PriorityQueue <E> implements Iterator<E>, Serializable, Cloneable {
   }
 
   /**
-   * Not supported -- next() already removes the
+   * Not supported -- next() already removes the head of the queue.
+   */
+  public void remove() {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * Returns the highest-priority element in the queue, but doe
