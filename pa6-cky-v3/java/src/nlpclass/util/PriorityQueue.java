@@ -115,4 +115,13 @@ public class PriorityQueue <E> implements Iterator<E>, Serializable, Cloneable {
   }
 
   /**
-   * Returns the highest-priority element in the queue, but doe
+   * Returns the highest-priority element in the queue, but does not pop it.
+   */
+  public E peek() {
+    if (size() > 0)
+      return elements.get(0);
+    throw new NoSuchElementException();
+  }
+
+  /**
+   * Gets the priority of 
