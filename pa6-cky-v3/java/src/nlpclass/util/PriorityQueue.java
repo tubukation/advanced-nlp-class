@@ -98,4 +98,14 @@ public class PriorityQueue <E> implements Iterator<E>, Serializable, Cloneable {
   }
 
   /**
-   * Returns the element in the queue with highe
+   * Returns the element in the queue with highest priority, and pops it from
+   * the queue.
+   */
+  public E next() {
+    E first = peek();
+    removeFirst();
+    return first;
+  }
+
+  /**
+   * Not supported -- next() already removes the
