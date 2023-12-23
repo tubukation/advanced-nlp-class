@@ -124,4 +124,13 @@ public class PriorityQueue <E> implements Iterator<E>, Serializable, Cloneable {
   }
 
   /**
-   * Gets the priority of 
+   * Gets the priority of the highest-priority element of the queue.
+   */
+  public double getPriority() {
+    if (size() > 0)
+      return priorities[0];
+    throw new NoSuchElementException();
+  }
+
+  /**
+   * Number o
