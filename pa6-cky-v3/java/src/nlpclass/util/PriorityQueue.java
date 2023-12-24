@@ -133,4 +133,14 @@ public class PriorityQueue <E> implements Iterator<E>, Serializable, Cloneable {
   }
 
   /**
-   * Number o
+   * Number of elements in the queue.
+   */
+  public int size() {
+    return size;
+  }
+
+  /**
+   * True if the queue is empty (size == 0).
+   */
+  public boolean isEmpty() {
+    return size =
