@@ -143,4 +143,10 @@ public class PriorityQueue <E> implements Iterator<E>, Serializable, Cloneable {
    * True if the queue is empty (size == 0).
    */
   public boolean isEmpty() {
-    return size =
+    return size == 0;
+  }
+
+  /**
+   * Adds a key to the queue with the given priority.  If the key is already in
+   * the queue, it will be added an additional time, NOT promoted/demoted.
+   
