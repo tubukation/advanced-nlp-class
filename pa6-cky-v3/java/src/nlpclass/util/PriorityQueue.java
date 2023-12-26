@@ -158,4 +158,13 @@ public class PriorityQueue <E> implements Iterator<E>, Serializable, Cloneable {
       grow(2 * capacity + 1);
     }
     elements.add(key);
-    pri
+    priorities[size] = priority;
+    heapifyUp(size);
+    size++;
+    return true;
+  }
+
+  /**
+   * Returns a representation of the queue in decreasing priority order.
+   */
+  public String toS
