@@ -149,4 +149,13 @@ public class PriorityQueue <E> implements Iterator<E>, Serializable, Cloneable {
   /**
    * Adds a key to the queue with the given priority.  If the key is already in
    * the queue, it will be added an additional time, NOT promoted/demoted.
-   
+   *
+   * @param key
+   * @param priority
+   */
+  public boolean add(E key, double priority) {
+    if (size == capacity) {
+      grow(2 * capacity + 1);
+    }
+    elements.add(key);
+    pri
