@@ -185,4 +185,11 @@ public class PriorityQueue <E> implements Iterator<E>, Serializable, Cloneable {
       double priority = pq.getPriority();
       E element = pq.next();
       sb.append(element.toString());
-    
+      sb.append(" : ");
+      sb.append(priority);
+      if (numKeysPrinted < size() - 1)
+        sb.append(", ");
+      numKeysPrinted++;
+    }
+    if (numKeysPrinted < size())
+      sb.append("..
