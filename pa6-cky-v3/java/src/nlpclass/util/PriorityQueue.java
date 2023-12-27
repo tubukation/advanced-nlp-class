@@ -180,4 +180,9 @@ public class PriorityQueue <E> implements Iterator<E>, Serializable, Cloneable {
   public String toString(int maxKeysToPrint) {
     PriorityQueue<E> pq = clone();
     StringBuilder sb = new StringBuilder("[");
-    int numKeysPrinte
+    int numKeysPrinted = 0;
+    while (numKeysPrinted < maxKeysToPrint && pq.hasNext()) {
+      double priority = pq.getPriority();
+      E element = pq.next();
+      sb.append(element.toString());
+    
