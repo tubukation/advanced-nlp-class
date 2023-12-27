@@ -167,4 +167,12 @@ public class PriorityQueue <E> implements Iterator<E>, Serializable, Cloneable {
   /**
    * Returns a representation of the queue in decreasing priority order.
    */
-  public String toS
+  public String toString() {
+    return toString(size());
+  }
+
+  /**
+   * Returns a representation of the queue in decreasing priority order,
+   * displaying at most maxKeysToPring elements.
+   *
+  
