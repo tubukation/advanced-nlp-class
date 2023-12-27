@@ -175,4 +175,9 @@ public class PriorityQueue <E> implements Iterator<E>, Serializable, Cloneable {
    * Returns a representation of the queue in decreasing priority order,
    * displaying at most maxKeysToPring elements.
    *
-  
+   * @param maxKeysToPrint
+   */
+  public String toString(int maxKeysToPrint) {
+    PriorityQueue<E> pq = clone();
+    StringBuilder sb = new StringBuilder("[");
+    int numKeysPrinte
