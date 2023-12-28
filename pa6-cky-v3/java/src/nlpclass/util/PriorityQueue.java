@@ -192,4 +192,11 @@ public class PriorityQueue <E> implements Iterator<E>, Serializable, Cloneable {
       numKeysPrinted++;
     }
     if (numKeysPrinted < size())
-      sb.append("..
+      sb.append("...");
+    sb.append("]");
+    return sb.toString();
+  }
+
+  /**
+   * Returns a counter whose keys are the elements in this priority queue, and
+   * whose counts are the priorities in th
