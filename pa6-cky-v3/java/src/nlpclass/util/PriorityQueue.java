@@ -199,4 +199,9 @@ public class PriorityQueue <E> implements Iterator<E>, Serializable, Cloneable {
 
   /**
    * Returns a counter whose keys are the elements in this priority queue, and
-   * whose counts are the priorities in th
+   * whose counts are the priorities in this queue.  In the event there are
+   * multiple instances of the same element in the queue, the counter's count
+   * will be the sum of the instances' priorities.
+   *
+   */
+  public Counter 
