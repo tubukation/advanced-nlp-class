@@ -204,4 +204,9 @@ public class PriorityQueue <E> implements Iterator<E>, Serializable, Cloneable {
    * will be the sum of the instances' priorities.
    *
    */
-  public Counter 
+  public Counter asCounter() {
+    PriorityQueue<E> pq = clone();
+    Counter<E> counter = new Counter<E>();
+    while (pq.hasNext()) {
+      double priority = pq.getPriority();
+      E elemen
