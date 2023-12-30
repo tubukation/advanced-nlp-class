@@ -216,4 +216,10 @@ public class PriorityQueue <E> implements Iterator<E>, Serializable, Cloneable {
   }
 
   /**
-   * Returns a clone of this priority queue.  Modifications to one will no
+   * Returns a clone of this priority queue.  Modifications to one will not
+   * affect modifications to the other.
+   */
+  public PriorityQueue<E> clone() {
+    PriorityQueue<E> clonePQ = new PriorityQueue<E>();
+    clonePQ.size = size;
+    clonePQ.capacity = capacity
