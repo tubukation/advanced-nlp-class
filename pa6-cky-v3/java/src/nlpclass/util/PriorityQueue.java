@@ -245,4 +245,9 @@ public class PriorityQueue <E> implements Iterator<E>, Serializable, Cloneable {
   }
 
   public static void main(String[] args) {
-    Prior
+    PriorityQueue<String> pq = new PriorityQueue<String>();
+    System.out.println(pq);
+    pq.add("one",1);
+    System.out.println(pq);
+    pq.add("three",3);
+    System.out.println
