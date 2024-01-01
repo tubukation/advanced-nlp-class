@@ -238,4 +238,11 @@ public class PriorityQueue <E> implements Iterator<E>, Serializable, Cloneable {
 
   public PriorityQueue(int capacity) {
     int legalCapacity = 0;
-    while 
+    while (legalCapacity < capacity) {
+      legalCapacity = 2 * legalCapacity + 1;
+    }
+    grow(legalCapacity);
+  }
+
+  public static void main(String[] args) {
+    Prior
