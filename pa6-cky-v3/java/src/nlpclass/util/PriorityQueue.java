@@ -222,4 +222,9 @@ public class PriorityQueue <E> implements Iterator<E>, Serializable, Cloneable {
   public PriorityQueue<E> clone() {
     PriorityQueue<E> clonePQ = new PriorityQueue<E>();
     clonePQ.size = size;
-    clonePQ.capacity = capacity
+    clonePQ.capacity = capacity;
+    clonePQ.elements = new ArrayList<E>(capacity);
+    clonePQ.priorities = new double[capacity];
+    if (size() > 0) {
+      clonePQ.elements.addAll(elements);
+      System.arraycopy(pri
