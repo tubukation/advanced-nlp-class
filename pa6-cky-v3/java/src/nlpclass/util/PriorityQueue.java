@@ -257,4 +257,7 @@ public class PriorityQueue <E> implements Iterator<E>, Serializable, Cloneable {
     System.out.println(pq);
     System.out.println(pq.toString(2));
     while (pq.hasNext()) {
-      Sys
+      System.out.println(pq.next());
+    }
+  }
+}
