@@ -21,4 +21,9 @@ public class Triplet<F,S,T> {
         return third;
     }
 
-    public b
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Triplet)) return false;
+
+        @SuppressWarnings("unchecked")
+        final Triplet triplet = (Triplet) o;
