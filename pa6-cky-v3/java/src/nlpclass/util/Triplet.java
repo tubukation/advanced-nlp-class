@@ -27,3 +27,6 @@ public class Triplet<F,S,T> {
 
         @SuppressWarnings("unchecked")
         final Triplet triplet = (Triplet) o;
+        
+        if (first != null  ? !first.equals(triplet.first)   : triplet.first != null)  return false;
+        if (second != null ? !second.equals(triplet.second) : triplet.
