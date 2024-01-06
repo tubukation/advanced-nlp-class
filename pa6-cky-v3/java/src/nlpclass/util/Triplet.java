@@ -29,4 +29,10 @@ public class Triplet<F,S,T> {
         final Triplet triplet = (Triplet) o;
         
         if (first != null  ? !first.equals(triplet.first)   : triplet.first != null)  return false;
-        if (second != null ? !second.equals(triplet.second) : triplet.
+        if (second != null ? !second.equals(triplet.second) : triplet.second != null) return false;
+        if (third != null  ? !third.equals(triplet.third)   : triplet.third != null)  return false;
+        
+        return true;
+    }
+
+  
