@@ -35,4 +35,8 @@ public class Triplet<F,S,T> {
         return true;
     }
 
-  
+    public int hashCode() {
+        int result;
+        result = (first != null ? first.hashCode() : 0);
+        result = 29 * result + (second != null ? second.hashCode() : 0);
+        r
