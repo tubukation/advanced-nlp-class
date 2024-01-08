@@ -44,4 +44,12 @@ public class Triplet<F,S,T> {
     }
 
     public String toString() {
-        return "(" + getFirst() + ", " + getSecond() + ", " + g
+        return "(" + getFirst() + ", " + getSecond() + ", " + getThird() + ")";
+    }
+
+    public Triplet(F first, S second, T third) {
+        this.first = first;
+        this.second = second;
+        this.third = third;
+    }
+}
