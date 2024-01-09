@@ -18,4 +18,9 @@ public class UnorderedPair<F,S> {
 
   public boolean equals(Object o) {
     if (this == o) return true;
-    if (!(o instanceof UnorderedPai
+    if (!(o instanceof UnorderedPair)) return false;
+
+    @SuppressWarnings("unchecked")
+    final UnorderedPair pair = (UnorderedPair) o;
+
+    return (((first == null ? pair.first == null : first.equals(pair.first)) && (second == null ? pair
