@@ -8,4 +8,14 @@ public class UnorderedPair<F,S> {
   F first;
   S second;
 
-  public F getFirs
+  public F getFirst() {
+    return first;
+  }
+
+  public S getSecond() {
+    return second;
+  }
+
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof UnorderedPai
