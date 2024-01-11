@@ -29,4 +29,12 @@ public class UnorderedPair<F,S> {
   public int hashCode() {
     int firstHashCode = (first == null ? 0 : first.hashCode());
     int secondHashCode = (second == null ? 0 : second.hashCode());
-    if (firstHashCode != secon
+    if (firstHashCode != secondHashCode) {
+      return (((firstHashCode & secondHashCode) << 16) ^ ((firstHashCode | secondHashCode)));
+    } else {
+      return firstHashCode;
+    }
+  }
+
+  public String toString() {
+    String firstS
