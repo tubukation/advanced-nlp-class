@@ -37,4 +37,8 @@ public class UnorderedPair<F,S> {
   }
 
   public String toString() {
-    String firstS
+    String firstString = getFirst().toString();
+    String secondString = getSecond().toString();
+    if (firstString.compareTo(secondString) > 0) {
+      String tempString = firstString;
+      firstString = secondSt
