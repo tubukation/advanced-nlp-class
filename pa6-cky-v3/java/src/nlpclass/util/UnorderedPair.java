@@ -41,4 +41,12 @@ public class UnorderedPair<F,S> {
     String secondString = getSecond().toString();
     if (firstString.compareTo(secondString) > 0) {
       String tempString = firstString;
-      firstString = secondSt
+      firstString = secondString;
+      secondString = tempString;
+    }
+    return "(" + firstString + ", " + secondString + ")";
+  }
+
+  public UnorderedPair(F first, S second) {
+    this.first = first;
+    this.second =
