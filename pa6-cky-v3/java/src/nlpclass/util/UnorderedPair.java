@@ -49,4 +49,6 @@ public class UnorderedPair<F,S> {
 
   public UnorderedPair(F first, S second) {
     this.first = first;
-    this.second =
+    this.second = second;
+  }
+}
