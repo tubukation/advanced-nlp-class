@@ -358,3 +358,203 @@ class BaselineParser(Parser):
                 self.span_to_categories[end-start][category] = 1
             else:
                 self.span_to_categories[end-start][category] += 1
+        return end - start
+
+class TreeAnnotations:
+
+    @classmethod
+    def annotate_tree(cls, unannotated_tree):
+        """
+            Currently, the only annotation done is a lossless binarization
+        """
+
+        # TODO: change the annotation from a lossless binarization to a
+        # finite-order markov process (try at least 1st and 2nd order)
+        # mark nodes with the label of their parent nodes, giving a second
+        # order vertical markov process
+
+        return TreeAnnotations.binarize_tree(unannotated_tree)
+
+    @classmethod
+    def binarize_tree(cls, tree):
+        label = tree.label
+        if tree.is_leaf():
+            return Tree(label)
+        if len(tree.children) <= 2:    
+            children = [TreeAnnotations.binarize_tree(child) for child in tree.children]
+            return Tree(label, children)
+       
+        intermediate_label = '@%s->' % label
+        intermediate_tree = TreeAnnotations.binarize_tree_helper(tree, 0, intermediate_label)
+        return Tree(label, intermediate_tree.children)
+
+    @classmethod
+    def binarize_tree_helper(cls, tree, num_children_generated, intermediate_label):
+        left_tree = tree.children[num_children_generated]
+        children = []
+        children.append(TreeAnnotations.binarize_tree(left_tree))
+        if num_children_generated < len(tree.children) - 1:
+            right_tree = TreeAnnotations.binarize_tree_helper(
+                    tree, num_children_generated + 1, intermediate_label + '_' + left_tree.label)
+            children.append(right_tree)
+        return Tree(intermediate_label, children)
+
+    @classmethod
+    def at_filter(cls, string):
+        return string.startswith('@')
+
+    @classmethod
+    def unannotate_tree(cls, annotated_tree):
+        """
+            Remove intermediate nodes (labels beginning with "@")
+            Remove all material on node labels which follow their base
+            symbol (cuts at the leftmost -, ^, or : character)
+            Examples: a node with label @NP->DT_JJ will be spliced out,
+            and a node with label NP^S will be reduced to NP
+        """
+        debinarized_tree = Trees.splice_nodes(annotated_tree, TreeAnnotations.at_filter)
+        unannotated_tree = Trees.FunctionNodeStripper.transform_tree(debinarized_tree)
+        return unannotated_tree
+
+class Lexicon:
+    """
+        Simple default implementation of a lexicon, which scores word,
+        tag pairs with a smoothed estimate of P(tag|word)/P(tag).
+
+        Instance variables:
+            word_to_tag_counters
+            total_tokens
+            total_word_types
+            tag_counter
+            word_counter
+            type_tag_counter
+    """
+
+    def __init__(self, train_trees):
+        """
+            Builds a lexicon from the observed tags in a list of training
+            trees.
+        """
+        self.total_tokens = 0.0
+        self.total_word_types = 0.0
+        self.word_to_tag_counters = collections.defaultdict(lambda: collections.defaultdict(lambda: 0.0))
+        self.tag_counter = collections.defaultdict(lambda: 0.0)
+        self.word_counter = collections.defaultdict(lambda: 0.0)
+        self.type_to_tag_counter = collections.defaultdict(lambda: 0.0)
+
+        for train_tree in train_trees:
+            words = train_tree.get_yield()
+            tags = train_tree.get_preterminal_yield()
+            for word, tag in zip(words, tags):
+                self.tally_tagging(word, tag)
+                
+    def tally_tagging(self, word, tag):
+        """Add word:tag to lexicon?"""
+        if not self.is_known(word):
+            self.total_word_types += 1
+            self.type_to_tag_counter[tag] += 1
+        self.total_tokens += 1
+        self.tag_counter[tag] += 1
+        self.word_counter[word] += 1
+        self.word_to_tag_counters[word][tag] += 1
+
+    def get_all_tags(self):
+        return self.tag_counter.keys()
+
+    def is_known(self, word):
+        return word in self.word_counter
+
+    def score_tagging(self, word, tag):
+        p_tag = float(self.tag_counter[tag]) / self.total_tokens
+        c_word = float(self.word_counter[word])
+        c_tag_and_word = float(self.word_to_tag_counters[word][tag])
+        if c_word < 10:
+            c_word += 1
+            c_tag_and_word += float(self.type_to_tag_counter[tag]) / self.total_word_types
+        p_word = (1.0 + c_word) / (self.total_tokens + self.total_word_types)
+        p_tag_given_word = c_tag_and_word / c_word
+        return p_tag_given_word / p_tag * p_word
+        
+    def __str__(self):
+        wc =  dict(self.word_counter)
+        wtc = dict(((k,dict(v)) for k,v in self.word_to_tag_counters.items())) 
+        return 'word_counter=%s\nword_to_tag_counters=%s' % (wc, wtc)
+
+class Grammar:
+    """
+        Simple implementation of a PCFG grammar, offering the ability to
+        look up rules by their child symbols. Rule probability estimates
+        are just relative frequency estimates off of training trees.
+
+        self.binary_rules_by_left_child
+        self.binary_rules_by_right_child
+        self.unary_rules_by_child
+    """
+
+    def __init__(self, train_trees):
+        self.unary_rules_by_child = collections.defaultdict(lambda: [])
+        self.binary_rules_by_left_child = collections.defaultdict(lambda: [])
+        self.binary_rules_by_right_child = collections.defaultdict(lambda: [])
+
+        unary_rule_counter = collections.defaultdict(lambda: 0)
+        binary_rule_counter = collections.defaultdict(lambda: 0)
+        symbol_counter = collections.defaultdict(lambda: 0)
+
+        for train_tree in train_trees:
+            self.tally_tree(train_tree, symbol_counter, unary_rule_counter, binary_rule_counter)
+        for unary_rule in unary_rule_counter:
+            unary_prob = float(unary_rule_counter[unary_rule]) / symbol_counter[unary_rule.parent]
+            unary_rule.score = unary_prob
+            self.add_unary(unary_rule)
+        for binary_rule in binary_rule_counter:
+            binary_prob = float(binary_rule_counter[binary_rule]) / symbol_counter[binary_rule.parent]
+            binary_rule.score = binary_prob
+            self.add_binary(binary_rule)
+
+    def __unicode__(self):
+        rule_strings = []
+        for left_child in self.binary_rules_by_left_child:
+            for binary_rule in self.get_binary_rules_by_left_child(left_child):
+                rule_strings.append(str(binary_rule))
+        for child in self.unary_rules_by_child:
+            for unary_rule in self.get_unary_rules_by_child(child):
+                rule_strings.append(str(unary_rule))
+               
+        return '%s\n' % '\n'.join(rule_strings)
+        
+    def __str__(self):   
+        return unicode(self).encode('utf-8')
+
+    def add_binary(self, binary_rule):
+        self.binary_rules_by_left_child[binary_rule.left_child].append(binary_rule)
+        self.binary_rules_by_right_child[binary_rule.right_child].append(binary_rule)
+
+    def add_unary(self, unary_rule):
+        self.unary_rules_by_child[unary_rule.child].append(unary_rule)
+
+    def get_binary_rules_by_left_child(self, left_child):
+        return self.binary_rules_by_left_child[left_child]
+
+    def get_binary_rules_by_right_child(self, right_child):
+        return self.binary_rules_by_right_child[right_child]
+
+    def get_unary_rules_by_child(self, child):
+        return self.unary_rules_by_child[child]
+
+    def tally_tree(self, tree, symbol_counter, unary_rule_counter, binary_rule_counter):
+        if tree.is_leaf():
+            return
+        if tree.is_preterminal():
+            return
+        if len(tree.children) == 1:
+            unary_rule = self.make_unary_rule(tree)
+            symbol_counter[tree.label] += 1
+            unary_rule_counter[unary_rule] += 1
+        if len(tree.children) == 2:
+            binary_rule = self.make_binary_rule(tree)
+            symbol_counter[tree.label] += 1
+            binary_rule_counter[binary_rule] += 1
+        if len(tree.children) < 1 or len(tree.children) > 2:
+            raise Exception('Attempted to construct a Grammar with ' \
+                    + 'an illegal tree (most likely not binarized): ' + str(tree))
+        for child in tree.children:
