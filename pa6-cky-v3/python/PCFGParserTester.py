@@ -558,3 +558,172 @@ class Grammar:
             raise Exception('Attempted to construct a Grammar with ' \
                     + 'an illegal tree (most likely not binarized): ' + str(tree))
         for child in tree.children:
+            self.tally_tree(child, symbol_counter, unary_rule_counter, binary_rule_counter)
+
+    def make_unary_rule(self, tree):
+        return UnaryRule(tree.label, tree.children[0].label)
+
+    def make_binary_rule(self, tree):
+        return BinaryRule(tree.label, tree.children[0].label, tree.children[1].label)
+
+class BinaryRule:
+    """
+        A binary grammar rule with score representing its probability.
+    """
+
+    def __init__(self, parent, left_child, right_child):
+        self.parent = parent
+        self.left_child = left_child
+        self.right_child = right_child
+        self.score = 0.0
+
+    def __str__(self):
+        return '%s->%s %s %% %s' % (self.parent, self.left_child, self.right_child, self.score)
+
+    def __hash__(self):
+        result = hash(self.parent)
+        result = 29 * result + hash(self.left_child)
+        result = 29 * result + hash(self.right_child)
+        return result
+
+    def __eq__(self, o):
+        if self is o:
+            return True
+
+        if not isinstance(o, BinaryRule):
+            return False
+
+        if (self.left_child != o.left_child):
+            return False
+        if (self.right_child != o.right_child):
+            return False
+        if (self.parent != o.parent):
+            return False
+        return True
+
+class UnaryRule:
+    """
+        A unary grammar rule with score representing its probability.
+    """
+    def __init__(self, parent, child):
+        self.parent = parent
+        self.child = child
+        self.score = 0.0
+
+    def __str__(self):
+        return '%s->%s %% %s' % (self.parent, self.child, self.score)
+
+    def __hash__(self):
+        return 29 * hash(self.parent) + hash(self.child)
+
+    def __eq__(self, o):
+        if self is o:
+            return True
+
+        return isinstance(o, UnaryRule) and self.child == o.child \
+                and self.parent == o.parent
+
+MAX_LENGTH = 20
+
+def test_parser(parser, test_trees):
+    evaluator = EnglishPennTreebankParseEvaluator.LabeledConstituentEval(
+            ['ROOT'], set(["''", "``", ".", ":", ","]))
+    for test_tree in test_trees: 
+        test_sentence = test_tree.get_yield()
+        if len(test_sentence) > 20:
+            continue
+        guessed_tree = parser.get_best_parse(test_sentence)
+        print 'Guess:\n%s' % Trees.PennTreeRenderer.render(guessed_tree)
+        print 'Gold:\n%s' % Trees.PennTreeRenderer.render(test_tree)
+        evaluator.evaluate(guessed_tree, test_tree)
+    print ''
+    return evaluator.display(True)
+
+def read_trees(base_path, low=None, high=None):
+    trees = PennTreebankReader.read_trees(base_path, low, high)
+    return [Trees.StandardTreeNormalizer.transform_tree(tree) for tree in trees]
+
+def read_masc_trees(base_path, low=None, high=None):
+    print "Reading MASC from %s" % base_path
+    trees = MASCTreebankReader.read_trees(base_path, low, high)
+    return [Trees.StandardTreeNormalizer.transform_tree(tree) for tree in trees]
+
+if __name__ == '__main__':
+    opt_parser = optparse.OptionParser()
+    opt_parser.add_option('--path', dest='path', default='../data/parser')
+    opt_parser.add_option('--data', dest='data', default = 'masc')
+    opt_parser.add_option('--parser', dest='parser', default='BaselineParser')
+    opt_parser.add_option('--maxLength', dest='max_length', default='20')
+    opt_parser.add_option('--testData', dest='test_data', default='')
+
+    options, args = opt_parser.parse_args()
+    options = vars(options)
+
+    print 'PCFGParserTest options:'
+    for k, v in options.items():
+        print '  %-12s: %s' % (k, v)
+    print ''
+    MAX_LENGTH = int(options['max_length'])
+
+    parser = globals()[options['parser']]()
+    print 'Using parser: %s' % parser.__class__.__name__
+
+    base_path = options['path']
+    # pre_base_path = base_path
+    data_set = options['data']
+    if not base_path.endswith('/'):
+        base_path += '/'
+
+    print 'Data will be loaded from: %s' % base_path
+
+    train_trees = []
+    validation_trees = []
+    test_trees = []
+
+    if data_set == 'miniTest':
+        base_path += 'parser/%s' % data_set
+
+        # training data: first 3 of 4 datums
+        print 'Loading training trees...'
+        train_trees = read_trees(base_path, 1, 3)
+        print 'done.'
+
+        # test data: last of 4 datums
+        print 'Loading test trees...'
+        test_trees = read_trees(base_path, 4, 4)
+        print 'done.'
+
+    if data_set == 'masc':
+        base_path += 'parser/'
+
+        # training data: MASC train
+        logging.info('Loading MASC training trees')
+        print 'Loading MASC training trees... from: %smasc/train' % base_path
+        train_trees.extend(read_masc_trees('%smasc/train' % base_path, 0, 38))
+        print 'done.'
+        print 'Train trees size: %d' % len(train_trees)
+        print 'First train tree: %s' % Trees.PennTreeRenderer.render(train_trees[0])
+        print 'Last train tree: %s' % Trees.PennTreeRenderer.render(train_trees[-1])
+
+        # test data: MASC devtest
+        print 'Loading MASC test trees...'
+        test_trees.extend(read_masc_trees('%smasc/devtest' % base_path, 0, 11))
+        #test_trees.extend(read_masc_trees('%smasc/blindtest' % base_path, 0, 8))
+        print 'done.'
+        print 'Test trees size: %d' % len(test_trees)
+        print 'First test tree: %s' % Trees.PennTreeRenderer.render(test_trees[0])
+        print 'Last test tree: %s' %  Trees.PennTreeRenderer.render(test_trees[-1])
+
+    if data_set not in ['miniTest', 'masc']:
+        raise Exception('Bad data set: %s: use miniTest or masc.' % data_set)
+
+    print ''
+    print 'Training parser...'
+    logging.info('Training parser')
+    parser.train(train_trees)
+
+    print 'Testing parser'
+    logging.info('Testing parser')
+    test_parser(parser, test_trees)
+    
+    logging.info('done')
