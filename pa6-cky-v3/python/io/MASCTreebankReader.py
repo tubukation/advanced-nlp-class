@@ -14,4 +14,14 @@ class TreeCollection:
         self.file_filter = NumberRangeFileFilter(
                 ".mrg", low_filenum, high_filenum, True)
         self.files = self.get_files_under(path)
-    
+        self.trees = self.get_trees()
+        self.index = 0
+
+
+    def __iter__(self):
+        return self
+
+
+    def next(self):
+        if self.index < len(self.trees):
+            tree = self.t
