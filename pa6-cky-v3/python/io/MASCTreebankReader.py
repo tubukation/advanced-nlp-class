@@ -24,4 +24,13 @@ class TreeCollection:
 
     def next(self):
         if self.index < len(self.trees):
-            tree = self.t
+            tree = self.trees[self.index]
+            self.index += 1
+            return tree
+        else:
+            raise StopIteration
+
+
+    def get_files_under(self, path):
+        files = []
+ 
