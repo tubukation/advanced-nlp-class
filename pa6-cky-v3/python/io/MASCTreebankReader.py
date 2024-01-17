@@ -46,4 +46,10 @@ class TreeCollection:
             files.append(root)
             return
 
-        if os.path.isdir(root)
+        if os.path.isdir(root):
+            children = os.listdir(root)
+            for child in children:
+                self.add_files_under(os.path.join(root, child), files)
+
+
+    def get_tre
