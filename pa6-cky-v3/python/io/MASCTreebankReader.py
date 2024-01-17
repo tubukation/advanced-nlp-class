@@ -39,4 +39,11 @@ class TreeCollection:
 
     def add_files_under(self, root, files):
         #if not filter(root, self.file_filter.accept):
-        if no
+        if not self.file_filter.accept_sequential(root):
+            return
+
+        if os.path.isfile(root):
+            files.append(root)
+            return
+
+        if os.path.isdir(root)
