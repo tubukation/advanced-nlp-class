@@ -33,4 +33,10 @@ class TreeCollection:
 
     def get_files_under(self, path):
         files = []
- 
+        self.add_files_under(path, files)
+        return files
+
+
+    def add_files_under(self, root, files):
+        #if not filter(root, self.file_filter.accept):
+        if no
