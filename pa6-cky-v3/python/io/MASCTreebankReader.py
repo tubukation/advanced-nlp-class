@@ -57,4 +57,11 @@ class TreeCollection:
         for i, tree_file in enumerate(self.files):
             if (i + 1) % 100 == 0:
                 print "Tree %d" % (i + 1)
-            ff
+            ff = open(tree_file, 'rb')
+            for tree in Trees.PennTreeReader(ff):
+                trees.append(tree)
+            ff.close()
+        return trees
+
+
+def read_t
