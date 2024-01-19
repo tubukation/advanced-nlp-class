@@ -76,4 +76,5 @@ if __name__ == '__main__':
     trees = read_trees(sys.argv[1])
     none_trees = []
     for tree in trees:
-        tree = Trees.StandardTreeNormali
+        tree = Trees.StandardTreeNormalizer.transform_tree(tree)
+        print Trees.PennTreeRenderer.render(tree)
