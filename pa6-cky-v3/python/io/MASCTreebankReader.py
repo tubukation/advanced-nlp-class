@@ -69,4 +69,11 @@ def read_trees(path, low_filenum=None, high_filenum=None):
         low_filenum = 0
     if high_filenum is None:
         high_filenum = float('inf')
-    return TreeCollection(pat
+    return TreeCollection(path, low_filenum, high_filenum)
+
+
+if __name__ == '__main__':
+    trees = read_trees(sys.argv[1])
+    none_trees = []
+    for tree in trees:
+        tree = Trees.StandardTreeNormali
