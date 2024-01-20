@@ -17,4 +17,9 @@ class NumberRangeFileFilter:
     def accept(self, pathname):
         if os.path.isdir(pathname):
             return self.recurse
-        name = os.path.bas
+        name = os.path.basename(pathname)
+        if not name.endswith(self.extension):
+            return False
+        last_num_index = self.get_last_number_index(name)
+        if last_num_index == -1:
+            return Fals
