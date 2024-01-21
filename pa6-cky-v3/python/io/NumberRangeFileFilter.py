@@ -32,4 +32,10 @@ class NumberRangeFileFilter:
 
 
     def accept_sequential(self, pathname):
-        if os.path.isdir(pathname)
+        if os.path.isdir(pathname):
+            return self.recurse
+        name = os.path.basename(pathname)
+        if not name.endswith(self.extension):
+            return False
+        self.i += 1
+        return se
