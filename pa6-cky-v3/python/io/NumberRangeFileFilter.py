@@ -26,4 +26,10 @@ class NumberRangeFileFilter:
         num_end_loc = last_num_index + 1
         num_start_loc = self.get_last_non_number_index(name, last_num_index) + 1
         file_num = int(name[num_start_loc:num_end_loc])
-    
+        if file_num >= self.low_filenum and file_num <= self.high_filenum:
+            return True
+        return False
+
+
+    def accept_sequential(self, pathname):
+        if os.path.isdir(pathname)
