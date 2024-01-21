@@ -22,4 +22,8 @@ class NumberRangeFileFilter:
             return False
         last_num_index = self.get_last_number_index(name)
         if last_num_index == -1:
-            return Fals
+            return False
+        num_end_loc = last_num_index + 1
+        num_start_loc = self.get_last_non_number_index(name, last_num_index) + 1
+        file_num = int(name[num_start_loc:num_end_loc])
+    
