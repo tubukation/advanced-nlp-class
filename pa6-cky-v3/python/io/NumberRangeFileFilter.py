@@ -51,4 +51,9 @@ class NumberRangeFileFilter:
 
 
     def get_last_non_number_index(self, name, last_number_index):
-        index = la
+        index = last_number_index - 1
+        while index >= 0 and name[index].isdigit():
+            index -= 1
+        if index < -1:
+            return -1
+        return index
