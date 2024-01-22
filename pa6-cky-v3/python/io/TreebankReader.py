@@ -10,8 +10,9 @@ class TreeCollection:
         Collection of Trees.
     """
 
-    def __init__(self, path, low_filenum, high_filenum):
-        self.file_filter = NumberRangeFileFilter('.mrg', low_filenum, high_filenum, True)
+    def __init__(self, path, extension, low_filenum, high_filenum):
+        self.file_filter = NumberRangeFileFilter(
+                extension, low_filenum, high_filenum, True)
         self.files = self.get_files_under(path)
         self.trees = self.get_trees()
         self.index = 0
@@ -50,22 +51,25 @@ class TreeCollection:
         trees = []
         for i, tree_file in enumerate(self.files):
             if (i + 1) % 100 == 0:
-                print 'Tree %d' % (i + 1)
+                print "Tree %d" % (i + 1)
             ff = open(tree_file, 'rb')
             for tree in Trees.PennTreeReader(ff):
                 trees.append(tree)
             ff.close()
         return trees
 
-def read_trees(path, low_filenum=None, high_filenum=None):
+def read_trees(path, extension, low_filenum=None, high_filenum=None):
     if low_filenum is None:
         low_filenum = 0
     if high_filenum is None:
         high_filenum = float('inf')
-    return TreeCollection(path, low_filenum, high_filenum)
+    return TreeCollection(path, extension, low_filenum, high_filenum)
 
 if __name__ == '__main__':
-    trees = read_trees(sys.argv[1])
+    if sys.argv[1].endswith('genia') or sys.argv[1].endswith('genia/'):
+        trees = read_trees(sys.argv[1], '.tree')
+    else:
+        trees = read_trees(sys.argv[1], '.mrg')
     none_trees = []
     for tree in trees:
         tree = Trees.StandardTreeNormalizer.transform_tree(tree)
