@@ -38,4 +38,9 @@ class NumberRangeFileFilter:
         if not name.endswith(self.extension):
             return False
         self.i += 1
-        return se
+        return self.i >= self.low_filenum and self.i <= self.high_filenum
+
+
+    def get_last_number_index(self, name):
+        index = len(name) - 1
+        while index >= 0 and not nam
