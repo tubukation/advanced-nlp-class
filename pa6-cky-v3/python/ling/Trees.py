@@ -9,4 +9,13 @@ ROOT_LABEL = "ROOT"
 
 class TreeTransformer:
     """
-        Abstract base class for different Tree transf
+        Abstract base class for different Tree transformation classes.
+    """
+    @classmethod
+    def transform_tree(cls, tree):
+        raise NotImplementedError()
+
+class FunctionNodeStripper(TreeTransformer):
+
+    @classmethod
+    def tr
