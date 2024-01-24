@@ -22,4 +22,7 @@ class FunctionNodeStripper(TreeTransformer):
         transformed_label = tree.label
         cut_idx = transformed_label.find('-')
         cut_idx2 = transformed_label.find('=')
-        if cut_
+        if cut_idx2 > 0 and (cut_idx2 < cut_idx or cut_idx == -1):
+            cut_idx = cut_idx2
+        cut_idx2 = transformed_label.find('^')
+        if cut_idx2 > 0 and (cut_idx2 < cut_idx or cut_idx 
