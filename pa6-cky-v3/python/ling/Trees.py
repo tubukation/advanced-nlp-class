@@ -18,4 +18,8 @@ class TreeTransformer:
 class FunctionNodeStripper(TreeTransformer):
 
     @classmethod
-    def tr
+    def transform_tree(cls, tree):
+        transformed_label = tree.label
+        cut_idx = transformed_label.find('-')
+        cut_idx2 = transformed_label.find('=')
+        if cut_
