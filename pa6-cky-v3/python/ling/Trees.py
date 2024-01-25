@@ -31,4 +31,10 @@ class FunctionNodeStripper(TreeTransformer):
         if cut_idx2 > 0 and (cut_idx2 < cut_idx or cut_idx == -1):
             cut_idx = cut_idx2
 
-       
+        if cut_idx > 0 and not tree.is_leaf():
+            transformed_label = transformed_label[:cut_idx]
+        if tree.is_leaf():
+            return Tree(transformed_label)
+
+        transformed_children = []
+        
