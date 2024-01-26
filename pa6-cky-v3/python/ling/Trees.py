@@ -37,4 +37,9 @@ class FunctionNodeStripper(TreeTransformer):
             return Tree(transformed_label)
 
         transformed_children = []
-        
+        for child in tree.children:
+            transformed_children.append(FunctionNodeStripper.transform_tree(child))
+
+        return Tree(transformed_label, transformed_children)
+
+class Empty
