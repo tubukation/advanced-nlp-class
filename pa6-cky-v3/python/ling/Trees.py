@@ -54,4 +54,8 @@ class EmptyNodeStripper(TreeTransformer):
         children = tree.children
         transformed_children = []
         for child in children:
-            transformed_child = EmptyNodeStrip
+            transformed_child = EmptyNodeStripper.transform_tree(child)
+            if transformed_child is not None:
+                transformed_children.append(transformed_child)
+        if len(transformed_children) == 0:
+          
