@@ -58,4 +58,11 @@ class EmptyNodeStripper(TreeTransformer):
             if transformed_child is not None:
                 transformed_children.append(transformed_child)
         if len(transformed_children) == 0:
-          
+            return None
+        return Tree(label, transformed_children)
+
+class XOverXRemover(TreeTransformer):
+
+    @classmethod
+    def transform_tree(cls, tree):
+        label = tree.labe
