@@ -50,4 +50,8 @@ class EmptyNodeStripper(TreeTransformer):
         if label == "-NONE-":
             return None
         if tree.is_leaf():
-   
+            return Tree(label)
+        children = tree.children
+        transformed_children = []
+        for child in children:
+            transformed_child = EmptyNodeStrip
