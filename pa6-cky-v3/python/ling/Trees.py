@@ -42,4 +42,12 @@ class FunctionNodeStripper(TreeTransformer):
 
         return Tree(transformed_label, transformed_children)
 
-class Empty
+class EmptyNodeStripper(TreeTransformer):
+
+    @classmethod
+    def transform_tree(cls, tree):
+        label = tree.label
+        if label == "-NONE-":
+            return None
+        if tree.is_leaf():
+   
