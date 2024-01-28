@@ -73,4 +73,11 @@ class XOverXRemover(TreeTransformer):
         transformed_children = []
         for child in children:
             transformed_children.append(XOverXRemover.transform_tree(child))
-        return Tree(label, transfo
+        return Tree(label, transformed_children)
+
+class StandardTreeNormalizer(TreeTransformer):
+
+    @classmethod
+    def transform_tree(cls, tree):
+        tree = FunctionNodeStripper.transform_tree(tree)
+        tree = EmptyNodeStrip
