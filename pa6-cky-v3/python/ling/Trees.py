@@ -69,4 +69,8 @@ class XOverXRemover(TreeTransformer):
         children = tree.children
         while len(children) == 1 and not children[0].is_leaf() \
                 and label == children[0].label:
-            children = children[0
+            children = children[0].children
+        transformed_children = []
+        for child in children:
+            transformed_children.append(XOverXRemover.transform_tree(child))
+        return Tree(label, transfo
