@@ -80,4 +80,11 @@ class StandardTreeNormalizer(TreeTransformer):
     @classmethod
     def transform_tree(cls, tree):
         tree = FunctionNodeStripper.transform_tree(tree)
-        tree = EmptyNodeStrip
+        tree = EmptyNodeStripper.transform_tree(tree)
+        tree = XOverXRemover.transform_tree(tree)
+        return tree
+
+class TreeReader:
+    """
+        Abstract base class for tree readers.
+        NOTE: Does
