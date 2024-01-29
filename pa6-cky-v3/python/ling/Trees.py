@@ -87,4 +87,12 @@ class StandardTreeNormalizer(TreeTransformer):
 class TreeReader:
     """
         Abstract base class for tree readers.
-        NOTE: Does
+        NOTE: Does not implement read_root_tree()
+        NOTE: self.ff is an open file object for reading a file
+    """
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        
