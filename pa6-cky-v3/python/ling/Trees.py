@@ -95,4 +95,11 @@ class TreeReader:
         return self
 
     def next(self):
-        
+        if self.next_tree is None:
+            raise StopIteration
+        else:
+            tree = self.next_tree
+            self.next_tree = self.read_root_tree()
+            return tree
+
+  
