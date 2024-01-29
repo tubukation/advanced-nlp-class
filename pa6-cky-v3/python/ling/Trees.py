@@ -102,4 +102,11 @@ class TreeReader:
             self.next_tree = self.read_root_tree()
             return tree
 
-  
+    # Java version of iterable...
+    """
+    def has_next(self):
+        return self.next_tree is not None
+
+    def next(self):
+        if not self.has_next():
+            raise Looku
