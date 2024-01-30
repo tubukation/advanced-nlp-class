@@ -109,4 +109,11 @@ class TreeReader:
 
     def next(self):
         if not self.has_next():
-            raise Looku
+            raise LookupError("No more trees!")
+        tree = self.next_tree
+        self.next_tree = self.read_root_tree()
+        return tree
+    """
+
+    def read_root_tree(self):
+        raise NotImplemente
