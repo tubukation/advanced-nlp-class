@@ -116,4 +116,12 @@ class TreeReader:
     """
 
     def read_root_tree(self):
-        raise NotImplemente
+        raise NotImplementedError()
+
+    def peek(self):
+        ch = self.ff.read(1)  # read a byte
+        self.ff.seek(-1, 1)   # move back one byte
+        return ch
+
+    def read_label(self):
+      
