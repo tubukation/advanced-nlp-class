@@ -124,4 +124,11 @@ class TreeReader:
         return ch
 
     def read_label(self):
-      
+        self.read_whitespace()
+        return self.read_text()
+
+    def read_leaf(self):
+        label = self.read_text()
+        return Tree(label)
+
+    def read_text(s
