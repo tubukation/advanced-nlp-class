@@ -142,4 +142,9 @@ class TreeReader:
         self.ff.seek(-1, 1)
         return ''.join(s)
 
-    def read_left_paren(sel
+    def read_left_paren(self):
+        self.read_whitespace()
+        ch = self.ff.read(1)
+        if not TreeReader.is_left_paren(ch):
+            raise ValueError("Format error reading tree. Character %d." % \
+     
