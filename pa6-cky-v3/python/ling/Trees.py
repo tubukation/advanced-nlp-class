@@ -131,4 +131,9 @@ class TreeReader:
         label = self.read_text()
         return Tree(label)
 
-    def read_text(s
+    def read_text(self):
+        s = []
+        ch = self.ff.read(1)
+        while not TreeReader.is_whitespace(ch) and \
+                not TreeReader.is_left_paren(ch) and \
+                no
