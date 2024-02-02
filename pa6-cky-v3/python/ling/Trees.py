@@ -136,4 +136,10 @@ class TreeReader:
         ch = self.ff.read(1)
         while not TreeReader.is_whitespace(ch) and \
                 not TreeReader.is_left_paren(ch) and \
-                no
+                not TreeReader.is_right_paren(ch):
+            s.append(ch)
+            ch = self.ff.read(1)
+        self.ff.seek(-1, 1)
+        return ''.join(s)
+
+    def read_left_paren(sel
