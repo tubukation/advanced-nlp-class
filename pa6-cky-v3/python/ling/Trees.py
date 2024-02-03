@@ -157,4 +157,11 @@ class TreeReader:
             raise ValueError("Format error reading tree. (filename: %s)" % self.ff.name)
 
     def read_whitespace(self):
-    
+        ch = self.ff.read(1)
+        while TreeReader.is_whitespace(ch):
+            ch = self.ff.read(1)
+        self.ff.seek(-1, 1)
+
+    @classmethod
+    def is_whitespace(cls, ch):
+        re
