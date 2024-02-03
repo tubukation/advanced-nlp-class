@@ -147,4 +147,9 @@ class TreeReader:
         ch = self.ff.read(1)
         if not TreeReader.is_left_paren(ch):
             raise ValueError("Format error reading tree. Character %d." % \
-     
+                    (self.ff.tell() - 1))
+
+    def read_right_paren(self):
+        self.read_whitespace()
+        ch = self.ff.read(1)
+        if not TreeReader.is_right_pare
