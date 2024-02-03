@@ -152,4 +152,9 @@ class TreeReader:
     def read_right_paren(self):
         self.read_whitespace()
         ch = self.ff.read(1)
-        if not TreeReader.is_right_pare
+        if not TreeReader.is_right_paren(ch):
+            import ipdb; ipdb.set_trace()
+            raise ValueError("Format error reading tree. (filename: %s)" % self.ff.name)
+
+    def read_whitespace(self):
+    
