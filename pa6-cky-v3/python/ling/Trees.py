@@ -164,4 +164,11 @@ class TreeReader:
 
     @classmethod
     def is_whitespace(cls, ch):
-        re
+        return ch == ' ' or ch == '\t' or ch == '\f' or ch == '\r' or ch == '\n'
+
+    @classmethod
+    def is_left_paren(cls, ch):
+        return ch == '('
+
+    @classmethod
+    def is_right_pa
