@@ -190,4 +190,8 @@ class BioIETreeReader(TreeReader):
     def read_root_tree(self):
         try:
             while True:
-     
+                self.read_comments_and_whitespace()
+                if not TreeReader.is_left_paren(self.peek()):
+                    return None
+                self.ff.read(1)
+      
