@@ -181,4 +181,13 @@ class TreeReader:
     def remove(self):
         return NotImplementedError()
 
-class BioIETreeRe
+class BioIETreeReader(TreeReader):
+
+    def __init__(self, ff):
+        self.ff = ff
+        self.next_tree = self.read_root_tree()
+
+    def read_root_tree(self):
+        try:
+            while True:
+     
