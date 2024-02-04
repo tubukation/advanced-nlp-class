@@ -171,4 +171,14 @@ class TreeReader:
         return ch == '('
 
     @classmethod
-    def is_right_pa
+    def is_right_paren(cls, ch):
+        return ch == ')'
+
+    @classmethod
+    def is_semicolon(cls, ch):
+        return ch == ';'
+
+    def remove(self):
+        return NotImplementedError()
+
+class BioIETreeRe
