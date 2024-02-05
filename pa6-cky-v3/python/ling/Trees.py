@@ -199,4 +199,8 @@ class BioIETreeReader(TreeReader):
                     break
                 elif string == "SEC":
                     self.read_tree(False)
-  
+                else:
+                    return None
+            # Collections.singletonList(readTree(false)) ??
+            return Tree(ROOT_LABEL, [self.read_tree(False)])
+    
