@@ -203,4 +203,10 @@ class BioIETreeReader(TreeReader):
                     return None
             # Collections.singletonList(readTree(false)) ??
             return Tree(ROOT_LABEL, [self.read_tree(False)])
-    
+        except IOError:
+            raise Exception("Error reading tree: %s\n" % self.ff.name)
+
+    def read_tree(self, matchparen):
+        if matchparen:
+            self.read_left_paren()
+     
