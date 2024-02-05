@@ -209,4 +209,9 @@ class BioIETreeReader(TreeReader):
     def read_tree(self, matchparen):
         if matchparen:
             self.read_left_paren()
-     
+        label = self.read_colonized_label()
+        children = self.read_children()
+        self.read_right_paren()
+        return Tree(label, children)
+
+    def read_colonized_label(self
