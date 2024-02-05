@@ -194,4 +194,9 @@ class BioIETreeReader(TreeReader):
                 if not TreeReader.is_left_paren(self.peek()):
                     return None
                 self.ff.read(1)
-      
+                string = self.read_text()
+                if string == "SENT":
+                    break
+                elif string == "SEC":
+                    self.read_tree(False)
+  
