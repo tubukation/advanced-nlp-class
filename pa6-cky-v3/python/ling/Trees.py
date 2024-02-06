@@ -227,4 +227,10 @@ class BioIETreeReader(TreeReader):
         self.read_whitespace()
         if not TreeReader.is_left_paren(self.peek()):
             return [self.read_leaf()] # Collections.singletonList(readLeaf())
-      
+        else:
+            return self.read_child_list()
+
+    def read_child_list(self):
+        children = []
+        self.read_whitespace()
+        while not TreeReader.is_right_paren(self.p
