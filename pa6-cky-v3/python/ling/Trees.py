@@ -214,4 +214,13 @@ class BioIETreeReader(TreeReader):
         self.read_right_paren()
         return Tree(label, children)
 
-    def read_colonized_label(self
+    def read_colonized_label(self):
+        self.read_whitespace()
+        ret = self.read_text()
+        i = ret.find(':')
+        if i == -1:
+            return ret
+        else:
+            return ret[:i]
+
+    def read_
