@@ -223,4 +223,8 @@ class BioIETreeReader(TreeReader):
         else:
             return ret[:i]
 
-    def read_
+    def read_children(self):
+        self.read_whitespace()
+        if not TreeReader.is_left_paren(self.peek()):
+            return [self.read_leaf()] # Collections.singletonList(readLeaf())
+      
