@@ -233,4 +233,10 @@ class BioIETreeReader(TreeReader):
     def read_child_list(self):
         children = []
         self.read_whitespace()
-        while not TreeReader.is_right_paren(self.p
+        while not TreeReader.is_right_paren(self.peek()):
+            children.append(self.read_tree(True))
+            self.read_whitespace()
+        return children
+
+    def read_comments_and_whitespace(self):
+ 
