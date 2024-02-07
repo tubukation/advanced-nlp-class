@@ -244,4 +244,11 @@ class BioIETreeReader(TreeReader):
             if not TreeReader.is_semicolon(self.peek()):
                 return
             ch = self.ff.read(1)
-           
+            while not ch == '\n':
+                ch = self.ff.read(1)
+
+class PennTreeReader(TreeReader):
+
+    def __init__(self, ff):
+        self.ff = ff
+        self.next_tree = se
