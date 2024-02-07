@@ -239,4 +239,9 @@ class BioIETreeReader(TreeReader):
         return children
 
     def read_comments_and_whitespace(self):
- 
+        while True:
+            self.read_whitespace()
+            if not TreeReader.is_semicolon(self.peek()):
+                return
+            ch = self.ff.read(1)
+           
