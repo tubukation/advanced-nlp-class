@@ -257,4 +257,10 @@ class PennTreeReader(TreeReader):
         try:
             self.read_whitespace()
             if not TreeReader.is_left_paren(self.peek()):
-                return
+                return None
+            return self.read_tree(True)
+        except IOError:
+            raise Exception('Error reading tree: %s\n' % self.ff.name)
+
+    def read_tree(self, is_root):
+        s
