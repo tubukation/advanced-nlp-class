@@ -263,4 +263,10 @@ class PennTreeReader(TreeReader):
             raise Exception('Error reading tree: %s\n' % self.ff.name)
 
     def read_tree(self, is_root):
-        s
+        self.read_left_paren()
+        label = self.read_label()
+        if len(label) == 0 and is_root:
+            label = ROOT_LABEL
+        children = self.read_children()
+        self.read_right_paren()
+        return T
