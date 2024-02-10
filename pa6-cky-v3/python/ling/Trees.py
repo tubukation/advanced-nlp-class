@@ -269,4 +269,9 @@ class PennTreeReader(TreeReader):
             label = ROOT_LABEL
         children = self.read_children()
         self.read_right_paren()
-        return T
+        return Tree(label, children)
+
+    def read_children(self):
+        self.read_whitespace()
+        if not TreeReader.is_left_paren(self.peek()):
+            return [self.read_leaf()] # C
