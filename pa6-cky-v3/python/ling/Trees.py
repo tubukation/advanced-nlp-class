@@ -274,4 +274,10 @@ class PennTreeReader(TreeReader):
     def read_children(self):
         self.read_whitespace()
         if not TreeReader.is_left_paren(self.peek()):
-            return [self.read_leaf()] # C
+            return [self.read_leaf()] # Collections.singletonList
+        return self.read_child_list()
+
+    def read_child_list(self):
+        children = []
+        self.read_whitespace()
+        while not TreeReader
