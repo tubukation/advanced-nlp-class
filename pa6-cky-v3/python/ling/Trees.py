@@ -280,4 +280,11 @@ class PennTreeReader(TreeReader):
     def read_child_list(self):
         children = []
         self.read_whitespace()
-        while not TreeReader
+        while not TreeReader.is_right_paren(self.peek()):
+            children.append(self.read_tree(False))
+            self.read_whitespace()
+        return children
+
+class GENIATreeReader(TreeReader):
+
+  
