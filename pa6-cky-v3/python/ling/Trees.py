@@ -293,4 +293,9 @@ class GENIATreeReader(TreeReader):
 
     def read_root_tree(self):
         try:
-            self.read_whit
+            self.read_whitespace()
+            if not TreeReader.is_left_paren(self.peek()):
+                return None
+            return Tree(ROOT_LABEL, [self.read_tree(False)])
+        except IOError:
+            raise Excepti
