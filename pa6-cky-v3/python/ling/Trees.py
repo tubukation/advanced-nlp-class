@@ -298,4 +298,10 @@ class GENIATreeReader(TreeReader):
                 return None
             return Tree(ROOT_LABEL, [self.read_tree(False)])
         except IOError:
-            raise Excepti
+            raise Exception("Error reading tree: %s\n" % self.ff.name)
+
+    def read_tree(self, is_root):
+        self.read_left_paren()
+        label = self.read_label()
+        if len(label) == 0 and is_root:
+  
