@@ -304,4 +304,11 @@ class GENIATreeReader(TreeReader):
         self.read_left_paren()
         label = self.read_label()
         if len(label) == 0 and is_root:
-  
+            label = ROOT_LABEL
+        children = self.read_children()
+        self.read_right_paren()
+        return Tree(label, children)
+
+    def read_children(self):
+        children = []
+      
