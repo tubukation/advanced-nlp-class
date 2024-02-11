@@ -287,4 +287,10 @@ class PennTreeReader(TreeReader):
 
 class GENIATreeReader(TreeReader):
 
-  
+    def __init__(self, ff):
+        self.ff = ff
+        self.next_tree = self.read_root_tree()
+
+    def read_root_tree(self):
+        try:
+            self.read_whit
