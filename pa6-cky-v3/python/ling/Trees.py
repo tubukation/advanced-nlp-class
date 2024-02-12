@@ -314,4 +314,10 @@ class GENIATreeReader(TreeReader):
         self.read_whitespace()
         while not TreeReader.is_right_paren(self.peek()):
             if TreeReader.is_left_paren(self.peek()):
-                children.append(self.read_
+                children.append(self.read_tree(False))
+            else:
+                ret = self.read_slash_label()
+                if ret is not None:
+                    children.append(ret)
+            self.read_whitespace()
+        return chil
