@@ -311,4 +311,7 @@ class GENIATreeReader(TreeReader):
 
     def read_children(self):
         children = []
-      
+        self.read_whitespace()
+        while not TreeReader.is_right_paren(self.peek()):
+            if TreeReader.is_left_paren(self.peek()):
+                children.append(self.read_
