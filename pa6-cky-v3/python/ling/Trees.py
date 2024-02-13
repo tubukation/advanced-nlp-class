@@ -320,4 +320,11 @@ class GENIATreeReader(TreeReader):
                 if ret is not None:
                     children.append(ret)
             self.read_whitespace()
-        return chil
+        return children
+
+    def read_slash_label(self):
+        label = self.read_text()
+        i = label.rfind('/')
+        if i == -1:
+            return None
+        while i > 0 and
