@@ -327,4 +327,9 @@ class GENIATreeReader(TreeReader):
         i = label.rfind('/')
         if i == -1:
             return None
-        while i > 0 and
+        while i > 0 and label[i-1] == '\\':
+            i = label.rfind('/', 0, i-1)
+        child_label = label[:i].replace('\\\\\\/', '\\/')
+        return Tree(label[i+1:], [Tree(child_label)])
+
+class 
