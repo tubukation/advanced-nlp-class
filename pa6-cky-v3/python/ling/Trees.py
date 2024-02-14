@@ -335,4 +335,10 @@ class GENIATreeReader(TreeReader):
 class PennTreeRenderer:
     """
         Renderer for pretty-printing trees according to the Penn Treebank indenting
-        guidelines (mutliline).  Adapted from code originally wri
+        guidelines (mutliline).  Adapted from code originally written by Dan Klein
+        and modified by Chris Manning.
+    """
+    @classmethod
+    def render(cls, tree):
+        s = []
+        PennTreeRenderer.render_tree(tree, 0, False, False, Fals
