@@ -332,4 +332,7 @@ class GENIATreeReader(TreeReader):
         child_label = label[:i].replace('\\\\\\/', '\\/')
         return Tree(label[i+1:], [Tree(child_label)])
 
-class 
+class PennTreeRenderer:
+    """
+        Renderer for pretty-printing trees according to the Penn Treebank indenting
+        guidelines (mutliline).  Adapted from code originally wri
