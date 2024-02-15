@@ -341,4 +341,10 @@ class PennTreeRenderer:
     @classmethod
     def render(cls, tree):
         s = []
-        PennTreeRenderer.render_tree(tree, 0, False, False, Fals
+        PennTreeRenderer.render_tree(tree, 0, False, False, False, True, s)
+        s.append('\n')
+        return ''.join(s)
+
+    @classmethod
+    def render_tree(cls, tree, indent, parent_label_null, first_sibling, \
+            left_sibli
