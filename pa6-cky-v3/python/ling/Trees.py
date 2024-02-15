@@ -351,4 +351,6 @@ class PennTreeRenderer:
         # Condition for staying on same line in Penn Treebank
         suppress_indent = parent_label_null or \
                 (first_sibling and tree.is_preterminal()) or \
- 
+                (left_sibling_preterminal and tree.is_preterminal() and \
+                (tree.label is None or not tree.label.startswith('CC')))
+        if supp
