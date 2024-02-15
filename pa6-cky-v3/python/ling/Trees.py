@@ -347,4 +347,8 @@ class PennTreeRenderer:
 
     @classmethod
     def render_tree(cls, tree, indent, parent_label_null, first_sibling, \
-            left_sibli
+            left_sibling_preterminal, top_level, s):
+        # Condition for staying on same line in Penn Treebank
+        suppress_indent = parent_label_null or \
+                (first_sibling and tree.is_preterminal()) or \
+ 
