@@ -353,4 +353,10 @@ class PennTreeRenderer:
                 (first_sibling and tree.is_preterminal()) or \
                 (left_sibling_preterminal and tree.is_preterminal() and \
                 (tree.label is None or not tree.label.startswith('CC')))
-        if supp
+        if suppress_indent:
+            s.append(' ')
+        else:
+            if not top_level:
+                s.append('\n')
+            for i in range(indent):
+         
