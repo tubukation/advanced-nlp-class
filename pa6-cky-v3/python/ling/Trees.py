@@ -359,4 +359,9 @@ class PennTreeRenderer:
             if not top_level:
                 s.append('\n')
             for i in range(indent):
-         
+                s.append('  ')
+        if tree.is_leaf() or tree.is_preterminal():
+            PennTreeRenderer.render_flat(tree, s)
+            return
+        s.append('(')
+        s
