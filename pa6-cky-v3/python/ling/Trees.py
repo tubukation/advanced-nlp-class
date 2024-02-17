@@ -367,4 +367,12 @@ class PennTreeRenderer:
         s.append(tree.label)
         # TODO: tree.label is None or str(tree.label) is None...
         PennTreeRenderer.render_children(tree.children, indent + 1,
-                tre
+                tree.label is None, s)
+        s.append(')')
+
+    @classmethod
+    def render_flat(cls, tree, s):
+        if tree.is_leaf():
+            s.append(tree.label)
+            return
+        s.append('('
