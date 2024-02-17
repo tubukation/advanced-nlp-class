@@ -364,4 +364,7 @@ class PennTreeRenderer:
             PennTreeRenderer.render_flat(tree, s)
             return
         s.append('(')
-        s
+        s.append(tree.label)
+        # TODO: tree.label is None or str(tree.label) is None...
+        PennTreeRenderer.render_children(tree.children, indent + 1,
+                tre
