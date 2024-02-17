@@ -375,4 +375,11 @@ class PennTreeRenderer:
         if tree.is_leaf():
             s.append(tree.label)
             return
-        s.append('('
+        s.append('(')
+        s.append(tree.label)
+        s.append(' ')
+        s.append(tree.children[0].label)
+        s.append(')')
+
+    @classmethod
+    def render_children(cls, children, indent, parent_la
