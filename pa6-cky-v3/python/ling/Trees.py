@@ -382,4 +382,9 @@ class PennTreeRenderer:
         s.append(')')
 
     @classmethod
-    def render_children(cls, children, indent, parent_la
+    def render_children(cls, children, indent, parent_label_null, s):
+        first_sibling = True
+        left_sib_is_preterm = True
+        for child in children:
+            PennTreeRenderer.render_tree(child, indent, parent_label_null,
+      
