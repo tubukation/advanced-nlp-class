@@ -395,4 +395,10 @@ class PennTreeRenderer:
 
 def splice_nodes(tree, filter_func):
     root_list = splice_nodes_helper(tree, filter_func)
- 
+    if len(root_list) > 1:
+        raise Exception('splice_nodes: no unique root after splicing')
+    if len(root_list) < 1:
+        return None
+    return root_list[0]
+
+def 
