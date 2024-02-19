@@ -401,4 +401,8 @@ def splice_nodes(tree, filter_func):
         return None
     return root_list[0]
 
-def 
+def splice_nodes_helper(tree, filter_func):
+    spliced_children = []
+    for child in tree.children:
+        #spliced_child_list = splice_nodes_helper(child, filter_func)
+        #spliced_children.extend(s
