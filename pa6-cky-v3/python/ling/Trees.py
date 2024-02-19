@@ -387,4 +387,7 @@ class PennTreeRenderer:
         left_sib_is_preterm = True
         for child in children:
             PennTreeRenderer.render_tree(child, indent, parent_label_null,
-      
+                    first_sibling, left_sib_is_preterm, False, s)
+            left_sib_is_preterm = child.is_preterminal()
+            if child.label is not None and child.label.startswith('CC'):
+   
