@@ -390,4 +390,9 @@ class PennTreeRenderer:
                     first_sibling, left_sib_is_preterm, False, s)
             left_sib_is_preterm = child.is_preterminal()
             if child.label is not None and child.label.startswith('CC'):
-   
+                left_sib_is_preterm = False
+            first_sibling = False
+
+def splice_nodes(tree, filter_func):
+    root_list = splice_nodes_helper(tree, filter_func)
+ 
