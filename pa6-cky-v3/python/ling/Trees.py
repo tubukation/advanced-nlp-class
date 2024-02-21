@@ -409,4 +409,11 @@ def splice_nodes_helper(tree, filter_func):
         spliced_children += splice_nodes_helper(child, filter_func)
     if filter_func(tree.label):
         return spliced_children
-    return [Tree(tree.label, spliced_childre
+    return [Tree(tree.label, spliced_children)]
+
+def prune_nodes(tree, filt):
+    """
+        Prunes out all nodes which match the provided filter (and nodes
+        which dominate only pruned nodes).
+    """
+    return prune_nodes_
