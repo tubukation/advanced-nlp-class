@@ -423,4 +423,8 @@ def prune_nodes_helper(tree, filt):
         return None
     pruned_children = []
     for child in tree.children:
-        pruned_child = prune_nod
+        pruned_child = prune_nodes_helper(child, filt)
+        if pruned_child is not None:
+            pruned_children.append(pruned_child)
+    if len(pruned_children) == 0 and not tree.is_leaf():
+        return None
