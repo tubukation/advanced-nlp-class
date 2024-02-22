@@ -416,4 +416,11 @@ def prune_nodes(tree, filt):
         Prunes out all nodes which match the provided filter (and nodes
         which dominate only pruned nodes).
     """
-    return prune_nodes_
+    return prune_nodes_helper(tree, filt)
+
+def prune_nodes_helper(tree, filt):
+    if filt.accept(tree.label):
+        return None
+    pruned_children = []
+    for child in tree.children:
+        pruned_child = prune_nod
