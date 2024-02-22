@@ -428,3 +428,8 @@ def prune_nodes_helper(tree, filt):
             pruned_children.append(pruned_child)
     if len(pruned_children) == 0 and not tree.is_leaf():
         return None
+    return Tree(label, pruned_children)
+
+if __name__ == '__main__':
+    import StringIO
+    test_string = "((S (NP (DT the) (JJ quick) (JJ brown) (NN fox)) " 
