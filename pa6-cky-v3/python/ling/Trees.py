@@ -438,4 +438,7 @@ if __name__ == '__main__':
     o = StringIO.StringIO()
     o.write(test_string)
     o.seek(0)
-    reader = PennT
+    reader = PennTreeReader(o)
+    tree = reader.next()
+    print PennTreeRenderer.render(tree)
+    print tree
