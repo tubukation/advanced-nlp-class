@@ -432,4 +432,10 @@ def prune_nodes_helper(tree, filt):
 
 if __name__ == '__main__':
     import StringIO
-    test_string = "((S (NP (DT the) (JJ quick) (JJ brown) (NN fox)) " 
+    test_string = "((S (NP (DT the) (JJ quick) (JJ brown) (NN fox)) " + \
+            "(VP (VBD jumped) (PP (IN over) (NP (DT the) (JJ lazy) " + \
+            "(NN dog)))) (. .)))"
+    o = StringIO.StringIO()
+    o.write(test_string)
+    o.seek(0)
+    reader = PennT
