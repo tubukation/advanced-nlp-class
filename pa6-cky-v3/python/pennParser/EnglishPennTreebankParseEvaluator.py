@@ -77,3 +77,80 @@ class LabeledConstituent:
     def __eq__(self, o):
         if self is o:     # tests if they are the same exact object
             return True
+        if not isinstance(o, LabeledConstituent):
+            return False
+        if self.end != o.end or self.start != o.start or \
+                self.label != o.label:
+            return False
+        return True
+
+    def __hash__(self):
+        # For comparison (with sets)
+        result = hash(self.label)
+        result = 29 * result + self.start
+        result = 29 * result + self.end
+        return result
+
+    def __unicode__(self):
+        return "%s[%d,%d]" % (self.label, self.start, self.end)
+
+    def __str__(self):
+        return unicode(self).encode('utf-8')
+
+class LabeledConstituentEval(AbstractEval):
+
+    def __init__(self, labels_to_ignore, punctuation_tags):
+        AbstractEval.__init__(self)
+        #super(LabeledConstituentEval, self).__init__()
+        self.labels_to_ignore = set(labels_to_ignore)
+        self.punctuation_tags = set(punctuation_tags)
+
+    def strip_leaves(self, tree):
+        if tree.is_leaf():
+            return None
+        if tree.is_preterminal():
+            return Tree(tree.label)
+        children = []
+        for child in tree.children:
+            children.append(self.strip_leaves(child))
+        return Tree(tree.label, children)
+
+    def make_objects(self, tree):
+        no_leaf_tree = self.strip_leaves(tree)
+        aset = set()
+        self.add_constituents(no_leaf_tree, aset, 0)
+        return aset
+
+    def add_constituents(self, tree, aset, start):
+        if tree.is_leaf():
+            if tree.label in self.punctuation_tags:
+                return 0
+            else:
+                return 1
+        end = start
+        for child in tree.children:
+            child_span = self.add_constituents(child, aset, end)
+            end += child_span
+        label = tree.label
+        if label not in self.labels_to_ignore:
+            aset.add(LabeledConstituent(label, start, end))
+        return end - start
+
+if __name__ == '__main__':
+    import StringIO
+
+    gold_string = "(ROOT (S (NP (DT the) (NN can)) (VP (VBD fell))))"
+    gold_io = StringIO.StringIO()
+    gold_io.write(gold_string)
+    gold_io.seek(0)
+    gold_tree = Trees.PennTreeReader(gold_io).next()
+
+    guess_string = "(ROOT (S (NP (DT the)) (VP (MB can) (VP (VBD fell)))))"
+    guess_io = StringIO.StringIO()
+    guess_io.write(guess_string)
+    guess_io.seek(0)
+    guess_tree = Trees.PennTreeReader(guess_io).next()
+
+    evaluator = LabeledConstituentEval(["ROOT"], set())
+    evaluator.evaluate(guess_tree, gold_tree)
+    evaluator.display(True)
