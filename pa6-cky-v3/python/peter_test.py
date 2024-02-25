@@ -5,4 +5,6 @@ import os
 
 import ling.Tree as Tree
 import ling.Trees as Trees
-impor
+import pennParser.EnglishPennTreebankParseEvaluator as EnglishPennTreebankParseEvaluator
+import io.PennTreebankReader as PennTreebankReader
+import io.MASCTreebankReader as MASCTreebankReader
