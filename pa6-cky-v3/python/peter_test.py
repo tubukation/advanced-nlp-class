@@ -20,4 +20,11 @@ if __name__ == '__main__':
     options, args = opt_parser.parse_args()
     options = vars(options)
 
-    print '
+    print 'PCFGParserTest options:'
+    for k, v in options.items():
+        print '  %-12s: %s' % (k, v)
+    print ''
+    MAX_LENGTH = int(options['max_length'])
+
+    parser = BaselineParser()
+    print 'Using pa
