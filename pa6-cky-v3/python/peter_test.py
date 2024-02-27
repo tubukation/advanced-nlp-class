@@ -27,4 +27,12 @@ if __name__ == '__main__':
     MAX_LENGTH = int(options['max_length'])
 
     parser = BaselineParser()
-    print 'Using pa
+    print 'Using parser: %s' % parser.__class__.__name__
+
+    base_path = '../data/parser/miniTest/'
+
+    print 'Data will be loaded from: %s' % base_path
+
+    train_trees = []
+    validation_trees = []
+    test_
