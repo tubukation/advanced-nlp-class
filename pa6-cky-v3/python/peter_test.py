@@ -35,4 +35,11 @@ if __name__ == '__main__':
 
     train_trees = []
     validation_trees = []
-    test_
+    test_trees = []
+
+    # training data: first 3 of 4 datums
+    print 'Loading training trees from %s ...' % base_path
+    train_trees = read_trees(base_path, 7, 7)
+    print 'done.'
+    
+ 
