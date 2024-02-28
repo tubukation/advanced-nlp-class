@@ -42,4 +42,7 @@ if __name__ == '__main__':
     train_trees = read_trees(base_path, 7, 7)
     print 'done.'
     
- 
+    print '%d train_trees ' % len(train_trees)
+    tree = train_trees[0]
+    annotated_tree = TreeAnnotations.annotate_tree(tree)
+    unannotated_tree = TreeAnnotations.unannotate_tree(anno
