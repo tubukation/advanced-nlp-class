@@ -52,4 +52,13 @@ if __name__ == '__main__':
         val = locals()[key]
         print key 
         print val
-        print Trees.Pe
+        print Trees.PennTreeRenderer.render(val)
+     
+
+    # test data: last of 4 datums
+    print "Loading test trees..."
+    test_trees = read_trees(base_path, 4, 4)
+    print "done."
+
+    print ""
+    print "Train
