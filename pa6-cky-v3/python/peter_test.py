@@ -61,4 +61,8 @@ if __name__ == '__main__':
     print "done."
 
     print ""
-    print "Train
+    print "Training parser..."
+    parser.train(train_trees)
+
+    print "Testing parser"
+    test_parser(parser, test_trees)
