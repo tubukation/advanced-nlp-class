@@ -45,4 +45,11 @@ if __name__ == '__main__':
     print '%d train_trees ' % len(train_trees)
     tree = train_trees[0]
     annotated_tree = TreeAnnotations.annotate_tree(tree)
-    unannotated_tree = TreeAnnotations.unannotate_tree(anno
+    unannotated_tree = TreeAnnotations.unannotate_tree(annotated_tree)
+
+    for key in ['tree', 'annotated_tree', 'unannotated_tree']:
+        print '-' * 80
+        val = locals()[key]
+        print key 
+        print val
+        print Trees.Pe
