@@ -240,3 +240,150 @@ class IRSystem:
         """
         # ------------------------------------------------------------------
         # TODO: Implement cosine similarity between a document and a list of
+        #       query words.
+        # Use ltc.lnn method
+
+        # Construct the query vector as a dict word:log(tf)
+        query_vec = {}
+        for word in query: 
+            query_vec[word] = query_vec.get(word,0) + 1
+        query_vec = dict((word, math.log(query_vec[word], 10) + 1.0) for word in query_vec)
+  
+        def get_score(d):
+            """Return score for document d
+                This is cos(query_vec * d_vec/norm) where 
+                    d_vec[word] = tfidf of word in doc number d 
+                    norm = sqrt(d_vec[w]**2) for all words w in doc number d
+            """
+            
+            d_vec = dict((word, self.tfidf[word].get(d,0.0)) for word in query_vec)    
+            return sum(query_vec[word] * d_vec[word] for word in d_vec)/self.tfidf_l2norm[d]
+        
+        # Compute scores and add to a priority queue
+        scores = []
+        for d in range(len(self.docs)):
+            heapq.heappush(scores, (get_score(d), d))
+        # Return top 10 scores
+        return [(k,v) for v,k in heapq.nlargest(10,scores)]
+
+    def process_query(self, query_str):
+        """
+        Given a query string, process it and return the list of lowercase,
+        alphanumeric, stemmed words in the string.
+        """
+        # make sure everything is lower case
+        query = query_str.lower()
+        # split on whitespace
+        query = query.split()
+        # remove non alphanumeric characters
+        query = [self.re_alphanum.sub('', xx) for xx in query]
+        # stem words
+        query = [self.p.stem(xx) for xx in query]
+        return query
+
+    def query_retrieve(self, query_str):
+        """
+        Given a string, process and then return the list of matching documents
+        found by boolean_retrieve().
+        """
+        query = self.process_query(query_str)
+        return self.boolean_retrieve(query)
+
+    def query_rank(self, query_str):
+        """
+        Given a string, process and then return the list of the top matching
+        documents, rank-ordered.
+        """
+        query = self.process_query(query_str)
+        return self.rank_retrieve(query)
+
+def run_tests(irsys):
+    print '===== Running tests ====='
+
+    ff = open('../data/queries.txt')
+    questions = [xx.strip() for xx in ff.readlines()]
+    ff.close()
+    ff = open('../data/solutions.txt')
+    solutions = [xx.strip() for xx in ff.readlines()]
+    ff.close()
+
+    epsilon = 1e-4
+    for part in range(4):
+        points = 0
+        num_correct = 0
+        num_total = 0
+
+        prob = questions[part]
+        soln = json.loads(solutions[part])
+
+        if part == 0:     # inverted index test
+            print 'Inverted Index Test'
+            words = prob.split(', ')
+            for i, word in enumerate(words):
+                num_total += 1
+                posting = irsys.get_posting_unstemmed(word)
+                if set(posting) == set(soln[i]):
+                    num_correct += 1
+
+        elif part == 1:   # boolean retrieval test
+            print 'Boolean Retrieval Test'
+            queries = prob.split(', ')
+            for i, query in enumerate(queries):
+                num_total += 1
+                guess = irsys.query_retrieve(query)
+                if set(guess) == set(soln[i]):
+                    num_correct += 1
+
+        elif part == 2:   # tfidf test
+            print 'TF-IDF Test'
+            queries = prob.split('; ')
+            queries = [xx.split(', ') for xx in queries]
+            queries = [(xx[0], int(xx[1])) for xx in queries]
+            for i, (word, doc) in enumerate(queries):
+                num_total += 1
+                guess = irsys.get_tfidf_unstemmed(word, doc)
+                #print guess, '-', float(soln[i])
+                if abs(guess - float(soln[i])) <= epsilon:
+                    num_correct += 1
+
+        elif part == 3:   # cosine similarity test
+            print 'Cosine Similarity Test'
+            queries = prob.split(', ')
+            for i, query in enumerate(queries):
+                num_total += 1
+                ranked = irsys.query_rank(query)
+                top_rank = ranked[0]
+                if top_rank[0] == soln[i][0]:
+                    if abs(top_rank[1] - float(soln[i][1])) <= epsilon:
+                        num_correct += 1
+
+        feedback = '%d/%d Correct. Accuracy: %f' % (num_correct, num_total, float(num_correct)/num_total)
+        if num_correct == num_total:
+            points = 3
+        elif num_correct > 0.75 * num_total:
+            points = 2
+        elif num_correct > 0:
+            points = 1
+        else:
+            points = 0
+
+        print '    Score: %d Feedback: %s' % (points, feedback)
+
+def main(args):
+    irsys = IRSystem()
+    irsys.read_data(os.path.join('..', 'data', 'RiderHaggard'))
+    irsys.index()
+    irsys.compute_tfidf()
+
+    if len(args) == 0:
+        run_tests(irsys)
+    else:
+        query = ' '.join(args)
+        print "Best matching documents to '%s':" % query
+        results = irsys.query_rank(query)
+        for docId, score in results:
+            print '%s: %e' % (irsys.titles[docId], score)
+
+if __name__ == '__main__':
+    args = sys.argv[1:]
+    main(args)
