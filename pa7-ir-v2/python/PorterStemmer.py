@@ -228,3 +228,145 @@ class PorterStemmer:
         elif self.b[self.k - 1] == 's':
             if self.ends("alism"):     self.r("al")
             elif self.ends("iveness"): self.r("ive")
+            elif self.ends("fulness"): self.r("ful")
+            elif self.ends("ousness"): self.r("ous")
+        elif self.b[self.k - 1] == 't':
+            if self.ends("aliti"):     self.r("al")
+            elif self.ends("iviti"):   self.r("ive")
+            elif self.ends("biliti"):  self.r("ble")
+        elif self.b[self.k - 1] == 'g': # --DEPARTURE--
+            if self.ends("logi"):      self.r("log")
+        # To match the published algorithm, delete this phrase
+
+    def step3(self):
+        """step3() dels with -ic-, -full, -ness etc. similar strategy to step2."""
+        if self.b[self.k] == 'e':
+            if self.ends("icate"):     self.r("ic")
+            elif self.ends("ative"):   self.r("")
+            elif self.ends("alize"):   self.r("al")
+        elif self.b[self.k] == 'i':
+            if self.ends("iciti"):     self.r("ic")
+        elif self.b[self.k] == 'l':
+            if self.ends("ical"):      self.r("ic")
+            elif self.ends("ful"):     self.r("")
+        elif self.b[self.k] == 's':
+            if self.ends("ness"):      self.r("")
+
+    def step4(self):
+        """step4() takes off -ant, -ence etc., in context <c>vcvc<v>."""
+        if self.b[self.k - 1] == 'a':
+            if self.ends("al"): pass
+            else: return
+        elif self.b[self.k - 1] == 'c':
+            if self.ends("ance"): pass
+            elif self.ends("ence"): pass
+            else: return
+        elif self.b[self.k - 1] == 'e':
+            if self.ends("er"): pass
+            else: return
+        elif self.b[self.k - 1] == 'i':
+            if self.ends("ic"): pass
+            else: return
+        elif self.b[self.k - 1] == 'l':
+            if self.ends("able"): pass
+            elif self.ends("ible"): pass
+            else: return
+        elif self.b[self.k - 1] == 'n':
+            if self.ends("ant"): pass
+            elif self.ends("ement"): pass
+            elif self.ends("ment"): pass
+            elif self.ends("ent"): pass
+            else: return
+        elif self.b[self.k - 1] == 'o':
+            if self.ends("ion") and (self.b[self.j] == 's' or self.b[self.j] == 't'): pass
+            elif self.ends("ou"): pass
+            # takes care of -ous
+            else: return
+        elif self.b[self.k - 1] == 's':
+            if self.ends("ism"): pass
+            else: return
+        elif self.b[self.k - 1] == 't':
+            if self.ends("ate"): pass
+            elif self.ends("iti"): pass
+            else: return
+        elif self.b[self.k - 1] == 'u':
+            if self.ends("ous"): pass
+            else: return
+        elif self.b[self.k - 1] == 'v':
+            if self.ends("ive"): pass
+            else: return
+        elif self.b[self.k - 1] == 'z':
+            if self.ends("ize"): pass
+            else: return
+        else:
+            return
+        if self.m() > 1:
+            self.k = self.j
+
+    def step5(self):
+        """step5() removes a final -e if m() > 1, and changes -ll to -l if
+        m() > 1.
+        """
+        self.j = self.k
+        if self.b[self.k] == 'e':
+            a = self.m()
+            if a > 1 or (a == 1 and not self.cvc(self.k-1)):
+                self.k = self.k - 1
+        if self.b[self.k] == 'l' and self.doublec(self.k) and self.m() > 1:
+            self.k = self.k -1
+
+    def stem(self, p, i=None, j=None):
+        """In stem(p,i,j), p is a char pointer, and the string to be stemmed
+        is from p[i] to p[j] inclusive. Typically i is zero and j is the
+        offset to the last character of a string, (p[j+1] == '\0'). The
+        stemmer adjusts the characters p[i] ... p[j] and returns the new
+        end-point of the string, k. Stemming never increases word length, so
+        i <= k <= j. To turn the stemmer into a module, declare 'stem' as
+        extern, and delete the remainder of this file.
+        """
+        if i is None:
+            i = 0
+        if j is None:
+            j = len(p) - 1
+        # copy the parameters into statics
+        self.b = p
+        self.k = j
+        self.k0 = i
+        if self.k <= self.k0 + 1:
+            return self.b # --DEPARTURE--
+
+        # With this line, strings of length 1 or 2 don't go through the
+        # stemming process, although no mention is made of this in the
+        # published algorithm. Remove the line to match the published
+        # algorithm.
+
+        self.step1ab()
+        self.step1c()
+        self.step2()
+        self.step3()
+        self.step4()
+        self.step5()
+        return self.b[self.k0:self.k+1]
+
+
+if __name__ == '__main__':
+    p = PorterStemmer()
+    if len(sys.argv) > 1:
+        for f in sys.argv[1:]:
+            infile = open(f, 'r')
+            while 1:
+                output = ''
+                word = ''
+                line = infile.readline()
+                if line == '':
+                    break
+                for c in line:
+                    if c.isalpha():
+                        word += c.lower()
+                    else:
+                        if word:
+                            output += p.stem(word, 0,len(word)-1)
+                            word = ''
+                        output += c.lower()
+                print output,
+            infile.close()
