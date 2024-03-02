@@ -197,3 +197,67 @@ class Googling:
     
     # loops through each of the data associated with each query and passes it into the
     # guessLocation method, which returns the guess of the user
+    def processQueries(self, queryData):
+        #TODO: this todo is optional. this is for anyone who might want to write any initialization code that should 
+        # only be performed once.
+        guesses = [''] * len(queryData)
+        for i in range(len(queryData)):
+            guesses[i] = self.guessLocation(queryData[i])
+        return guesses
+    
+    # prints out the results as described in the handout
+    def printResults(self, correctCities, incorrectCities, noguessCities, correctCountries, incorrectCountries, 
+                noguessCountries, landmarks, guesses, gold):
+        print('LANDMARK\tYOUR GUESSED CITY\tCORRECT CITY/CITIES\tYOUR GUESSED COUNTRY\tCORRECT COUNTRY')
+        correctGuesses = set(correctCities).intersection(set(correctCountries))
+        noGuesses = set(noguessCities).union(set(noguessCountries))
+        incorrectGuesses = set(incorrectCities).union(set(incorrectCountries))
+        print('=====CORRECT GUESSES=====')
+        for i in correctGuesses:
+            print(landmarks[i] + '\t' + guesses[i].city + '\t' + str(gold[i].cities) + '\t' + guesses[i].country + '\t' + gold[i].country)
+        print('=====NO GUESSES=====')
+        for i in noGuesses:
+            print(landmarks[i] + '\t' + guesses[i].city + '\t' + str(gold[i].cities) + '\t' + guesses[i].country + '\t' + gold[i].country)
+        print('=====INCORRECT GUESSES=====')
+        for i in incorrectGuesses:
+            print(landmarks[i] + '\t' + guesses[i].city + '\t' + str(gold[i].cities) + '\t' + guesses[i].country + '\t' + gold[i].country)
+        print('=====TOTAL SCORE=====')
+        correctTotal = len(correctCities) + len(correctCountries)
+        noguessTotal = len(noguessCities) + len(noguessCountries)
+        incorrectTotal = len(incorrectCities) + len(incorrectCountries)
+        print('correct guesses: ' + str(correctTotal))
+        print('no guesses: ' + str(noguessTotal))
+        print('incorrect guesses: ' + str(incorrectTotal))
+        print('total score: ' + str(correctTotal - incorrectTotal) + ' out of ' + str(correctTotal + noguessTotal + incorrectTotal))
+    
+    # takes a list of Location objects and prints a list of correct and incorrect answers as well as scores the results
+    def scoreAnswers(self, guesses, gold, landmarks):
+        correctCities = []
+        incorrectCities = []
+        noguessCities = []
+        correctCountries = []
+        incorrectCountries = []
+        noguessCountries = []
+        for i in range(len(guesses)):
+            if guesses[i].city.lower() in gold[i].cities:
+                correctCities.append(i)
+            elif guesses[i].city == '':
+                noguessCities.append(i)
+            else:
+                incorrectCities.append(i)
+            if guesses[i].country.lower() == gold[i].country.lower():
+                correctCountries.append(i)
+            elif guesses[i].country == '':
+                noguessCountries.append(i)
+            else:
+                incorrectCountries.append(i)
+        self.printResults(correctCities, incorrectCities, noguessCities, correctCountries, incorrectCountries, noguessCountries, landmarks, guesses, gold)
+    
+if __name__ == '__main__':
+    googleResultsFile = '../data/googleResults_tagged.txt' # file where Google query results are read
+    goldFile = '../data/landmarks.txt' # contains the results 
+    googling = Googling()
+    queryData = googling.readInData(googleResultsFile)
+    goldData, landmarks = googling.readInGold(goldFile)
+    guesses = googling.processQueries(queryData)
+    googling.scoreAnswers(guesses, goldData, landmarks)
