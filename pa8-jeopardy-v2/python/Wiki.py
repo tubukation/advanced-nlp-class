@@ -304,3 +304,191 @@ def get_spouses(text):
             if spouse:
                 spouses.append((spouse,rank)) 
     if do_test: 
+        print '-' * 80
+        print spouses
+        #exit()
+        print '~' * 80
+    return spouses
+
+if False:    
+    text = 'Crystal has been married to Janice Goldfinger  whom he met when he was 18 and she 17  since 1970   They have two daughters  actresses Jennifer and Lindsay  and are now grandparents  They reside in Pacific Palisades  California \n'    
+    text = '   Marriage to Priscilla   \n {{main|Priscilla Presley|Lisa Marie Presley}}\n'
+    print text
+    spouses = get_spouses(text)
+    print spouses
+    exit()
+    
+# Also use [[First Last]]
+#   
+def find_married_pairs(f):
+    pairs = []
+    last_lines = collections.deque([''] * 3) 
+    for line in f:
+        last_lines.popleft()
+        last_lines.append(line)
+        if 'married' in last_lines[1].lower():
+            spouse1,spouse2 = get_spouses(''.join(last_lines))
+            if spouse1 and spouse2:
+                pairs.append((spouse1,spouse2))
+    return pairs 
+ 
+_RE_TITLE = re.compile(r'<title>\s*(.+)\s*</title>') 
+def find_married_pairs2(f):
+    pairs = []
+    last_lines = collections.deque([''] * 3) 
+    name = None
+    in_page = False
+    is_billy = False
+    for line in f:
+        if not in_page:
+            if '<page>' in line:
+                in_page = True
+                name = None
+        else:
+            if '</page>' in line:
+                in_page = False
+                if is_billy: 
+                    print '=' * 80
+                    #exit()
+            else:         
+                if not name:
+                    m = _RE_TITLE.search(line)
+                    if m:
+                        name = m.group(1)
+                        #if name == 'Edgar Allan Poe':
+                        #   print '*' * 80
+                        #   print m.group(0)
+                        #   is_billy = True
+                        continue
+                # Strip the markup
+                line = preprocess(line)        
+                last_lines.popleft()
+                last_lines.append(line)
+                if 'married' in last_lines[1].lower() or 'marriage' in last_lines[1].lower():
+                    if is_billy: print last_lines
+                    spouses = get_spouses(''.join(last_lines))
+                    if is_billy: print spouses
+                    if spouses:
+                        if len(spouses) > 1:
+                            #print ' ***', spouses
+                            pairs.append((spouses[0][0], spouses[1][0], 0))
+                        
+                        spouse,rank = spouses[0]
+                        pairs.append((name,spouse,rank))   
+                    if is_billy: 
+                        print pairs[-4:] 
+                        print '=' * 80
+    
+    return pairs    
+
+class Wiki:
+
+    # reads in the list of wives
+    def addWives(self, wivesFile):
+        try:
+            input = open(wivesFile)
+            wives = input.readlines()
+            input.close()
+        except IOError:
+            exc_type, exc_value, exc_traceback = sys.exc_info()
+            traceback.print_tb(exc_traceback)
+            sys.exit(1)    
+        return wives
+
+    # read through the wikipedia file and attempts to extract the matching husbands. note that you will need to provide
+    # two different implementations based upon the useInfoBox flag. 
+    def processFile(self, f, wives, useInfoBox):
+
+        husbands = [] 
+        
+        if useInfoBox: 
+            wife_husband_map = dict((wife,name) for name,wife in parse_infobox(f))
+            for wife in wife_husband_map.keys()[:]:
+                parts = wife.split(' ')
+                if len(parts) >= 3:
+                    parts = parts[:-1]
+                    wife2 = ' '.join(parts)
+                    wife_husband_map[wife2] = wife_husband_map[wife]
+           
+            #print wife_husband_map
+            #exit()
+        else:
+            pairs = find_married_pairs2(f)
+            married_map = {}
+            for k,v,r in sorted(pairs):
+                #print k,v,r
+                if k >= 2:
+                    married_map[k] = married_map.get(k, []) + [(v,r)]
+                married_map[v] = married_map.get(v, []) + [(k,r)]
+            #exit()    
+            #dict([(v,(k,r)) for k,v,r in pairs] + [(k,(v,r)) for k,v,r in pairs])
+            #pprint(married_map)
+            for k in married_map:
+                married_map[k] = min(married_map[k], key = lambda x : x[1])[0] 
+            def short_wife(wife):
+                return ' '.join(wife.split(' ')[:-1])
+            married_map2 = dict((short_wife(k),v) for k,v in married_map.items())
+            #pprint(married_map)
+
+        # TODO:
+        # Process the wiki file and fill the husbands Array
+        # +1 for correct Answer, 0 for no answer, -1 for wrong answers
+        # add 'No Answer' string as the answer when you dont want to answer
+
+        for wife in wives:
+            wife = wife.strip()
+            if useInfoBox: 
+                if wife in wife_husband_map:
+                    husband = 'Who is %s?' % wife_husband_map[wife] 
+                else:
+                    husband = 'No Answer'
+            else:
+                if wife in married_map:
+                    husband = 'Who is %s?' % married_map[wife] 
+                elif wife in married_map2:
+                    husband = 'Who is %s?' % married_map2[wife]     
+                else:
+                    husband = 'No Answer'
+            print 'Q = "%s", A = "%s"' % (wife, husband)  
+            husbands.append(husband)
+        f.close()
+        return husbands
+
+    # scores the results based upon the aforementioned criteria
+    def evaluateAnswers(self, useInfoBox, husbandsLines, goldFile):
+        correct = 0
+        wrong = 0
+        noAnswers = 0
+        score = 0 
+        try:
+            goldData = open(goldFile)
+            goldLines = goldData.readlines()
+            goldData.close()
+            
+            goldLength = len(goldLines)
+            husbandsLength = len(husbandsLines)
+            
+            if goldLength != husbandsLength:
+                print('Number of lines in husbands file should be same as number of wives!')
+                sys.exit(1)
+            for i in range(goldLength):
+                if husbandsLines[i].strip() in set(goldLines[i].strip().split('|')):
+                    correct += 1
+                    score += 1
+                elif husbandsLines[i].strip() == 'No Answer':
+                    noAnswers += 1
+                else:
+                    wrong += 1
+                    score -= 1
+                    #print husbandsLines[i].strip(), set(goldLines[i].strip().split('|'))
+                    
+        except IOError:
+            exc_type, exc_value, exc_traceback = sys.exc_info()
+            traceback.print_tb(exc_traceback)
+        if useInfoBox:
+            print('Using Info Box...')
+        else:
+            print('No Info Box...')
+        print('Correct Answers: ' + str(correct))
+        print('No Answers: ' + str(noAnswers))
+        print('Wrong Answers: ' + str(wrong))
