@@ -492,3 +492,15 @@ class Wiki:
         print('Correct Answers: ' + str(correct))
         print('No Answers: ' + str(noAnswers))
         print('Wrong Answers: ' + str(wrong))
+        print('Total Score: ' + str(score)) 
+
+if __name__ == '__main__':
+    wikiFile = '../data/small-wiki.xml'
+    wivesFile = '../data/wives.txt'
+    goldFile = '../data/gold.txt'
+    useInfoBox = True
+    wiki = Wiki()
+    wives = wiki.addWives(wivesFile)
+    husbands = wiki.processFile(open(wikiFile), wives, useInfoBox)
+    wiki.evaluateAnswers(useInfoBox, husbands, goldFile)
+    
