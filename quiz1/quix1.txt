@@ -1,1 +1,1 @@
-In linguistic morphology and information retrieval, stemming is the process for reducing inf
+In linguistic morphology and information retrieval, stemming is the process for reducing inflected words to their stem, base or root form-generally a written word form. The stem need not be identical to the morphological root of the word; it is usually sufficient that related words ma
