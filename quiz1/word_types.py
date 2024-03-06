@@ -8,4 +8,9 @@ def tokenize(text):
       
 def get_variants(types): 
     """types is a set of words
-   
+        Returns dict of types that differ only in case
+            key = lowercase variant of a word
+            value = all case variants of key in types
+    """
+    case_variations = {}
+    f
