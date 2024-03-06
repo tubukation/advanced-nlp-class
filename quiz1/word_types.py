@@ -13,4 +13,8 @@ def get_variants(types):
             value = all case variants of key in types
     """
     case_variations = {}
-    f
+    for w in types:
+        case_variations[w.lower()] = case_variations.get(w.lower(), set([])) | set([w])
+    return dict([(k,v) for (k,v) in case_variations.items() if len(v) > 1])   
+
+i
