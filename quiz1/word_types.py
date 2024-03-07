@@ -24,4 +24,9 @@ if __name__ == '__main__':
     text = file(sys.argv[1], 'rt').read()
    
     #
-    # Compute tokens, types, types without case variations, case variants and coun
+    # Compute tokens, types, types without case variations, case variants and count of types that   
+    # only in case
+    #
+    tokens = tokenize(text)                     # words in text
+    types = set(tokens)                         # unique words in text with case variants
+    normalized = set(tokeniz
