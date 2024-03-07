@@ -29,4 +29,6 @@ if __name__ == '__main__':
     #
     tokens = tokenize(text)                     # words in text
     types = set(tokens)                         # unique words in text with case variants
-    normalized = set(tokeniz
+    normalized = set(tokenize(text.lower()))    # unique words in text without case variants   
+    variants = get_variants(types)              # dict of case variants
+    case_only = sum([len(x) - 1 for 
