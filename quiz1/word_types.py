@@ -17,4 +17,11 @@ def get_variants(types):
         case_variations[w.lower()] = case_variations.get(w.lower(), set([])) | set([w])
     return dict([(k,v) for (k,v) in case_variations.items() if len(v) > 1])   
 
-i
+if __name__ == '__main__':
+    import sys
+
+    # Read text from file
+    text = file(sys.argv[1], 'rt').read()
+   
+    #
+    # Compute tokens, types, types without case variations, case variants and coun
