@@ -31,4 +31,10 @@ if __name__ == '__main__':
     types = set(tokens)                         # unique words in text with case variants
     normalized = set(tokenize(text.lower()))    # unique words in text without case variants   
     variants = get_variants(types)              # dict of case variants
-    case_only = sum([len(x) - 1 for 
+    case_only = sum([len(x) - 1 for x in variants.values()]) # number types differing only in case
+
+    #
+    # Print results to stdout
+    #
+    def show_types(types, title):
+        print '-' * 40, '%s
