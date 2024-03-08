@@ -37,4 +37,10 @@ if __name__ == '__main__':
     # Print results to stdout
     #
     def show_types(types, title):
-        print '-' * 40, '%s
+        print '-' * 40, '%s: %d' % (title, len(types))
+        print sorted(types, key = lambda x: (x.lower(), x))
+    
+    print '=' * 40, 'original text: %d tokens' % len(tokens)
+    print text
+    show_types(types, 'total types')
+    sh
