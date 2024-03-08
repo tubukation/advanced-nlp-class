@@ -43,4 +43,7 @@ if __name__ == '__main__':
     print '=' * 40, 'original text: %d tokens' % len(tokens)
     print text
     show_types(types, 'total types')
-    sh
+    show_types(normalized, 'normalized types')
+    print '=' * 40, 'variants: %d' % len(variants)
+    for k in sorted(variants.keys()):
+        print '%20s : %d %s' % (k, len(variants[k]), sorted(va
