@@ -46,4 +46,7 @@ if __name__ == '__main__':
     show_types(normalized, 'normalized types')
     print '=' * 40, 'variants: %d' % len(variants)
     for k in sorted(variants.keys()):
-        print '%20s : %d %s' % (k, len(variants[k]), sorted(va
+        print '%20s : %d %s' % (k, len(variants[k]), sorted(variants[k], reverse=True))
+    print 'types that vary only in case: %d' % case_only    
+
+  
