@@ -16,4 +16,10 @@ def B(words):
     """Convert an N-gram to text. Safe because input text was tokenized on space"""
     return ' '.join(words)    
     
-def
+def get_bigrams(text):
+    def get_line_bigrams(line):
+        tokens = tokenize(line)
+        return [B(tokens[i-1:i+1]) for i in range(1,len(tokens))]
+
+    lines = get_lines(text)
+    return sum([get_line_bigrams(ln) for ln in
