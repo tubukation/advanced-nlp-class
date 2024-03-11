@@ -22,4 +22,12 @@ def get_bigrams(text):
         return [B(tokens[i-1:i+1]) for i in range(1,len(tokens))]
 
     lines = get_lines(text)
-    return sum([get_line_bigrams(ln) for ln in
+    return sum([get_line_bigrams(ln) for ln in lines], []) 
+
+def get_counts_dict(alist):
+    counts = {}
+    for t in alist:
+        counts[t] = counts.get(t, 0) + 1
+    return counts 
+
+def get_count(counts_dict, 
