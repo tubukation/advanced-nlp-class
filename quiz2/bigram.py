@@ -45,4 +45,13 @@ def show_dict(d, name):
 # Code execution starts here
 #        
 text = '''    
-    <s> I am Sa
+    <s> I am Sam </s>
+    <s> Sam I am </s>
+    <s> I am Sam </s>
+    <s> I do not like green eggs and Sam </s>   
+''' 
+
+unigrams = tokenize(text)
+bigrams = get_bigrams(text)
+unigram_counts = get_counts_dict(unigrams)
+bigram_counts 
