@@ -30,4 +30,11 @@ def get_counts_dict(alist):
         counts[t] = counts.get(t, 0) + 1
     return counts 
 
-def get_count(counts_dict, 
+def get_count(counts_dict, key):  
+    return counts_dict.get(key, 0)
+
+def header(name):
+    print '-- %s %s' % (name, '-' * (76 - len(name)))
+    
+def show_dict(d, name):
+    header('%s: keys=%d, vals=%d' % (name, len(d), sum(
