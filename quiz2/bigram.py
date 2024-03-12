@@ -37,4 +37,12 @@ def header(name):
     print '-- %s %s' % (name, '-' * (76 - len(name)))
     
 def show_dict(d, name):
-    header('%s: keys=%d, vals=%d' % (name, len(d), sum(
+    header('%s: keys=%d, vals=%d' % (name, len(d), sum(d.values())))
+    for k in sorted(d.keys(), key = lambda k: (-d[k], d)):
+        print '%20s : %s' % (k, d[k])
+
+#
+# Code execution starts here
+#        
+text = '''    
+    <s> I am Sa
