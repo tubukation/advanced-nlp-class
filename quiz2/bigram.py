@@ -54,4 +54,10 @@ text = '''
 unigrams = tokenize(text)
 bigrams = get_bigrams(text)
 unigram_counts = get_counts_dict(unigrams)
-bigram_counts 
+bigram_counts = get_counts_dict(bigrams)
+
+show_dict(unigram_counts, 'unigram_counts')
+show_dict(bigram_counts, 'bigram_counts')
+    
+# P(Sam | eggs) = Count(eggs,Sam)/Count(eggs)
+Csam_eggs = get_count(bigram_counts, B(['Sam','
