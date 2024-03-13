@@ -60,4 +60,11 @@ show_dict(unigram_counts, 'unigram_counts')
 show_dict(bigram_counts, 'bigram_counts')
     
 # P(Sam | eggs) = Count(eggs,Sam)/Count(eggs)
-Csam_eggs = get_count(bigram_counts, B(['Sam','
+Csam_eggs = get_count(bigram_counts, B(['Sam','eggs']))
+Ceggs = get_count(unigram_counts, 'eggs')
+
+header('Probabilities')
+print '%18s : P(Sam | eggs) = %d / %d' % ('Raw', Csam_eggs, Ceggs)
+
+# Apply Laplace smoothing
+print '%18
