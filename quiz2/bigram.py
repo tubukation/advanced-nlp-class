@@ -67,4 +67,5 @@ header('Probabilities')
 print '%18s : P(Sam | eggs) = %d / %d' % ('Raw', Csam_eggs, Ceggs)
 
 # Apply Laplace smoothing
-print '%18
+print '%18s : P(Sam | eggs) = %d / %d' % ('Laplace smoothed', 
+        Csam_eggs + 1, Ceggs +  len(unigram_counts))
