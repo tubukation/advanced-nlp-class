@@ -87,3 +87,23 @@ x = NP.array(weeks)
 A = NP.vstack([x, NP.ones(len(x))]).T
 y_ps = NP.array([ps_numbers[w] for w in weeks])
 y_pa = NP.array([pa_numbers[w] for w in weeks])
+
+# Compute least squares of log(y) vs x
+# First point looks like an outlier so omit it
+m1,c1 = NP.linalg.lstsq(A[1:,:], NP.log(y_ps[1:]))[0]
+m2,c2 = NP.linalg.lstsq(A[1:,:], NP.log(y_pa[1:]))[0]
+print 'm1=%.2f, c1=%.2f, week = %.2f x prev week' % (m1, c1, NP.exp(m1))
+print 'm2=%.2f, c2=%.2f, week = %.2f x prev week' % (m2, c2, NP.exp(m1))
+
+# Plot the data and fitted lines
+# and save as attrition.png in current directory
+plt.plot(x, y_ps, 'or', label='By problem sets', markersize=10)
+plt.plot(x, y_pa, 'ob', label='By programming assignment', markersize=10)
+plt.plot(x, NP.exp(m1*x+c1), 'r', label='Best fit - problems')
+plt.plot(x, NP.exp(m2*x+c2), 'b', label='Best fit - assignments')
+plt.xlabel('Week')
+plt.ylabel('Number of students')
+plt.title('NLP-Class Attrition by Week')
+plt.legend()
+#plt.show()
+plt.savefig('attrition.png', dpi=200)
